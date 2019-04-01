@@ -32,12 +32,10 @@ def time_since(time_last_seen):
 
     return time_since_last_seen
 
-def anybody_home(time_last_seen):
+def anybody_home(time_since_last_seen):
     somebody_home = False
 
-    check = time_since(time_last_seen)
-
-    if any(t < 20 for t in check):
+    if any(t < 20 for t in time_since_last_seen):
         somebody_home = True
 
     return somebody_home
