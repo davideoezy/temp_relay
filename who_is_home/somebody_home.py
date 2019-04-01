@@ -7,7 +7,7 @@ def last_seen():
     time_last_seen = [time.time()-7200] * 10
     last_seen = [999] * 10
 
-    for ip in range(1:10):
+    for ip in range(1,10):
         hostname = '192.168.0.'+str(ip+50)
         response = os.system("ping -c 1 " + hostname)
 
