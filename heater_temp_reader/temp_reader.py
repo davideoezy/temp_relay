@@ -95,22 +95,23 @@ def read_device_address():
 
 #Connect to mariadb
 
+if __name__ == "__main__":
 
-while True:
+    while True:
 
-    insert_stmt = """
-    INSERT INTO temperature
-    (device, temp, cpu_temp, device_ssid, device_address, wifi_signal_strength)
-    VALUES
-    ('{}',{},{},'{}','{}',{})""".format(device_label,read_temp(),read_cpu_temp(), 
-    read_wifi_signal_strength()[1], read_device_address(), read_wifi_signal_strength()[0])
+        insert_stmt = """
+        INSERT INTO heater_temp
+        (device, temp, cpu_temp, device_ssid, device_address, wifi_signal_strength)
+        VALUES
+        ('{}',{},{},'{}','{}',{})""".format(device_label,read_temp(),read_cpu_temp(), 
+        read_wifi_signal_strength()[1], read_device_address(), read_wifi_signal_strength()[0])
 
-    con = mariadb.connect(host = db_host, port = db_host_port, user = db_user, password = db_pass, database = db)
-    cur = con.cursor()
-    try:
-        cur.execute(insert_stmt)
-        con.commit()
-    except:
-        con.rollback()
-    con.close()
-    time.sleep(30)
+        con = mariadb.connect(host = db_host, port = db_host_port, user = db_user, password = db_pass, database = db)
+        cur = con.cursor()
+        try:
+            cur.execute(insert_stmt)
+            con.commit()
+        except:
+            con.rollback()
+        con.close()
+        time.sleep(30)
