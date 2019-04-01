@@ -2,7 +2,7 @@ import os
 import time
 
 
-def last_seen()
+def last_seen():
 
     time_last_seen = [time.time()-7200] * 10
     last_seen = [999] * 10
@@ -18,7 +18,7 @@ def last_seen()
 
     return last_seen
 
-def anybody_home()
+def anybody_home():
     somebody_home = False
 
     check = last_seen()
