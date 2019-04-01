@@ -4,18 +4,16 @@ import time
 
 def last_seen(time_last_seen):
 
-    for ip in range(1,10):
-        hostname = '192.168.0.'+str(ip+50)
+    for ip in range(0,9):
+        hostname = '192.168.0.'+str(ip+51)
         response = os.system("ping -c 1 " + hostname)
 
-        list_item = (ip - 1)
-
-        last_seen[list_item] = (time.time() - time_last_seen[list_item])/60
+        last_seen[ip] = (time.time() - time_last_seen[])/60
 
         if response == 0:
-            time_last_seen[list_item] = time.time()
+            time_last_seen[ip] = time.time()
 
-            last_seen[list_item] = (time.time() - time_last_seen[list_item])/60
+            last_seen[ip] = (time.time() - time_last_seen[ip])/60
 
     return last_seen
 
