@@ -1,5 +1,6 @@
 import os
 import time
+import mysql.connector as mariadb
 
 db_host = '192.168.0.10'
 db_host_port = '3306'
