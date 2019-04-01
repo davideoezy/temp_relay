@@ -22,6 +22,8 @@ def last_seen(time_last_seen):
 
 def time_since(time_last_seen):
     
+    time_since_last_seen = [999]*3
+
     time_last_seen = last_seen(time_last_seen)
 
     for ip in range(0, 3):
