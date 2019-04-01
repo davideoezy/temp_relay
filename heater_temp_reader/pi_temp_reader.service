@@ -4,8 +4,8 @@ After=multi-user.target
 
 [Service]
 Type = idle
-ExecStart=/usr/bin/python3 -u /home/pi/git/rasp_pi_heater_read/temp_reader.py
-WorkingDirectory=/home/pi/git/rasp_pi_heater_read
+ExecStart=/usr/bin/python3 -u /home/pi/git/rasp_pi_heater_read/heater_temp_reader/temp_reader.py
+WorkingDirectory=/home/pi/git/rasp_pi_heater_read/heater_temp_reader
 StandardOutput=inherit
 StandardError=inherit
 Restart=always
