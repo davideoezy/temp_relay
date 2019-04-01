@@ -9,11 +9,13 @@ def last_seen(time_last_seen):
         response = os.system("ping -c 1 " + hostname)
 
         list_item = (ip - 1)
-        
+
+        last_seen[list_item] = (time.time() - time_last_seen[list_item])/60
+
         if response == 0:
             time_last_seen[list_item] = time.time()
 
-        last_seen[list_item] = (time.time() - time_last_seen[list_item])/60
+            last_seen[list_item] = (time.time() - time_last_seen[list_item])/60
 
     return last_seen
 
