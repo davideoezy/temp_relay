@@ -8,10 +8,12 @@ def last_seen(time_last_seen):
         hostname = '192.168.0.'+str(ip+50)
         response = os.system("ping -c 1 " + hostname)
 
+        list_item = (ip - 1)
+        
         if response == 0:
-            time_last_seen[ip-1] = time.time()
+            time_last_seen[list_item] = time.time()
 
-        last_seen[ip-1] = (time.time() - time_last_seen[ip-1])/60
+        last_seen[list_item] = (time.time() - time_last_seen[list_item])/60
 
     return last_seen
 
@@ -28,7 +30,6 @@ def anybody_home(time_last_seen):
 if __name__ == "__main__":
     
     time_last_seen_init = [time.time()-7200] * 10
-    last_seen = [999] * 10
     
     while True:
         somebody_home = anybody_home(time_last_seen_init)
