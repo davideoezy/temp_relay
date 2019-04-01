@@ -1,9 +1,8 @@
 FROM jfloff/alpine-python:3.6-onbuild 
 COPY requirements.txt /tmp 
 WORKDIR /tmp 
-RUN dnf install python-devel mysql-devel
 RUN pip install --upgrade pip
-RUN pip install mysql-connector
+RUN pip install -r requirements.txt
 WORKDIR /.
 ADD somebody_home.py /
 CMD [ "python", "./somebody_home.py" ]
