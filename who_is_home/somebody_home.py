@@ -66,24 +66,26 @@ if __name__ == "__main__":
 
         somebody_home = anybody_home(time_since_connected)
 
-        insert_stmt = """
-        INSERT INTO somebody_home
-        (dev_1, dev_2, dev_3, dev_4, anybody_home)
-        VALUES
-        ({},{},{},{},{})""".format(time_since_connected[0], time_since_connected[1], time_since_connected[2], time_since_connected[3], somebody_home)
-
-        con = mariadb.connect(host=db_host, port=db_host_port,
-                              user=db_user, password=db_pass, database=db)
-        cur = con.cursor()
-        try:
-            cur.execute(insert_stmt)
-            con.commit()
-        except:
-            con.rollback()
-        con.close()
-
         last_seen_prev = last_seen_curr
-        
+
+        # insert_stmt = """
+        # INSERT INTO somebody_home
+        # (dev_1, dev_2, dev_3, dev_4, anybody_home)
+        # VALUES
+        # ({},{},{},{},{})""".format(time_since_connected[0], time_since_connected[1], time_since_connected[2], time_since_connected[3], somebody_home)
+
+        # con = mariadb.connect(host=db_host, port=db_host_port,
+        #                       user=db_user, password=db_pass, database=db)
+        # cur = con.cursor()
+        # try:
+        #     cur.execute(insert_stmt)
+        #     con.commit()
+        # except:
+        #     con.rollback()
+        # con.close()
+
+        print(somebody_home, time_since_connected, last_seen_curr)
+
         time.sleep(30)
 
     
