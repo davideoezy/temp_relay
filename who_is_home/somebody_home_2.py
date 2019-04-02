@@ -18,6 +18,8 @@ def whos_home(devices):
 
 def time_since_seen(prev_reading, current_reading, prev_log, devices):
 
+    last_seen = [0] * devices
+    
     for ip in range(0,devices):
         if current_reading[ip][1] == 1:
             last_seen[ip] = time.time()
