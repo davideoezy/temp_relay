@@ -15,7 +15,7 @@ def whos_home(devices):
 
     return home_list
 
-def last_time_seen(prev_reading, current_reading, prev_log, devices):
+def last_time_seen(current_reading, prev_log, devices):
 
     last_seen = [0] * devices
 
@@ -48,7 +48,6 @@ if __name__ == "__main__":
     last_seen_prev = [(time.time() - 10)] * devices
 
     while True:
-        home_list_prev = [0] * devices
         home_list_curr = whos_home(devices)
 
         last_seen_curr = last_time_seen(home_list_prev, home_list_curr, last_seen_prev, devices)
