@@ -30,7 +30,7 @@ if __name__ == "__main__":
 
     devices = 1
 
-    While True:
+    while True:
         home_list_prev = [0] * devices
         home_list_curr = whos_home(devices)
 
