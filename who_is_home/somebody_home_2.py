@@ -29,7 +29,7 @@ def last_time_seen(current_reading, prev_log, devices):
 
 def time_since_seen(last_seen, devices):
 
-    duration = [] * devices
+    duration = [0] * devices
 
     for ip in range(0,devices):
         duration[ip] = time.time() - last_seen[ip]
