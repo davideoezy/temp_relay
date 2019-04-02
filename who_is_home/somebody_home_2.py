@@ -28,7 +28,7 @@ def time_since_seen(prev_reading, current_reading, prev_log, devices):
 
 if __name__ == "__main__":
 
-    devices = 1
+    devices = 3
 
     while True:
         home_list_prev = [0] * devices
