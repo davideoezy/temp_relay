@@ -30,14 +30,17 @@ if __name__ == "__main__":
 
     devices = 1
 
-    home_list_prev = [0] * devices
-    home_list_curr = whos_home(devices)
+    While True:
+        home_list_prev = [0] * devices
+        home_list_curr = whos_home(devices)
 
-    prev_log = (time.time() - 10) * devices
+        prev_log = [(time.time() - 10)] * devices
 
-    curr_log = time_since_seen(home_list_prev, home_list_curr, prev_log, devices)
+        curr_log = time_since_seen(home_list_prev, home_list_curr, prev_log, devices)
 
+        print(curr_log)
 
+        prev_log = curr_log
+        time.sleep(30)
 
-
-    #prev_log = curr_log
+    
