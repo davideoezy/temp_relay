@@ -6,7 +6,7 @@ wifi_interface = "enp3s0"
 
 def whos_home(devices):
     
-    home_list = [time.time(),0] * devices
+    home_list = [(time.time(),0)] * devices
 
     for ip in range(0,devices):
         test = arpreq.arpreq('192.168.0.' + str(ip+51))
