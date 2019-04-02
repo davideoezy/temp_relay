@@ -32,7 +32,7 @@ def time_since_seen(last_seen, devices):
     duration = [0] * devices
 
     for ip in range(0,devices):
-        duration[ip] = round((time.time() - last_seen[ip])/60)
+        duration[ip] = round(((time.time() - last_seen[ip])/60),1)
 
     return duration
 
