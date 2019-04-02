@@ -8,7 +8,7 @@ devices = 4
 def whos_home(devices):
     home_list = [False] * devices
 
-    for ip in range(0:devices):
+    for ip in range(0,devices):
         test = arpreq.arpreq('192.168.0.' + str(ip+51))
         if test != "":
             home_list[ip] = True
