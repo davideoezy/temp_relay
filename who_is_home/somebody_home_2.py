@@ -5,7 +5,7 @@ import time
 wifi_interface = "enp3s0"
 devices = 4
 
-def whos_home(devices)
+def whos_home(devices):
     home_list = [False] * devices
 
     for ip in range(0:devices):
