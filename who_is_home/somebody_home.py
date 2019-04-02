@@ -70,7 +70,7 @@ if __name__ == "__main__":
         INSERT INTO somebody_home
         (dev_1, dev_2, dev_3, dev_4, anybody_home)
         VALUES
-        ({},{},{},{})""".format(time_since_connected[0], time_since_connected[1], time_since_connected[2], time_since_connected[3], somebody_home)
+        ({},{},{},{},{})""".format(time_since_connected[0], time_since_connected[1], time_since_connected[2], time_since_connected[3], somebody_home)
 
         con = mariadb.connect(host=db_host, port=db_host_port,
                               user=db_user, password=db_pass, database=db)
