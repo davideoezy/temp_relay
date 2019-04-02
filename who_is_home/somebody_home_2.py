@@ -16,7 +16,7 @@ def whos_home(devices):
 
     return home_list
 
-def time_since_seen(prev_reading, current_reading, prev_log, devices)
+def time_since_seen(prev_reading, current_reading, prev_log, devices):
 
     for ip in range(0,devices):
         if current_reading[ip][1] == 1:
