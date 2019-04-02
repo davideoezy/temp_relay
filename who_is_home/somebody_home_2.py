@@ -32,7 +32,7 @@ def time_since_seen(last_seen, devices):
     duration = [0] * devices
 
     for ip in range(0,devices):
-        duration[ip] = (time.time() - last_seen[ip])/60
+        duration[ip] = round((time.time() - last_seen[ip])/60)
 
     return duration
 
@@ -41,6 +41,8 @@ def anybody_home(time_since_connected):
 
     if any(t < 20 for t in time_since_connected):
         somebody_home = True
+    
+    return somebody_home
 
 if __name__ == "__main__":
 
