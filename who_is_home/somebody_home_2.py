@@ -15,7 +15,7 @@ def whos_home(devices):
 
     return home_list
 
-def time_since_seen(prev_reading, current_reading, prev_log, devices):
+def last_time_seen(prev_reading, current_reading, prev_log, devices):
 
     last_seen = [0] * devices
 
@@ -24,22 +24,42 @@ def time_since_seen(prev_reading, current_reading, prev_log, devices):
             last_seen[ip] = time.time()
         elif current_reading[ip][1] == 0:
             last_seen[ip] = prev_log[ip]
+
     return last_seen                
+
+def time_since_seen(last_seen, devices):
+
+    duration = [] * devices
+
+    for ip in range(0,devices):
+        duration[ip] = time.time() - last_seen[ip]
+
+    return duration
+
+def anybody_home(time_since_connected):
+    somebody_home = False
+
+    if any(t < 20 for t in time_since_connected):
+        somebody_home = True
 
 if __name__ == "__main__":
 
     devices = 3
-    prev_log = [(time.time() - 10)] * devices
+    last_seen_prev = [(time.time() - 10)] * devices
 
     while True:
         home_list_prev = [0] * devices
         home_list_curr = whos_home(devices)
 
-        curr_log = time_since_seen(home_list_prev, home_list_curr, prev_log, devices)
+        last_seen_curr = last_time_seen(home_list_prev, home_list_curr, prev_log, devices)
 
-        print(curr_log)
+        time_since_connected = time_since_seen(last_seen_curr, devices)
 
-        prev_log = curr_log
+        somebody_home = anybody_home(time_since_connected)
+
+        print(home_list_curr, time_since_connected, somebody_home)
+
+        last_seen_prev = last_seen_curr
         time.sleep(30)
 
     
