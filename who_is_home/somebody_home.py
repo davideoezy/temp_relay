@@ -1,4 +1,5 @@
-import os
+import subprocess
+import arpreq
 import time
 import mysql.connector as mariadb
 
@@ -8,52 +9,68 @@ db_user = 'rpi'
 db_pass = 'warm_me'
 db = 'temp_logger'
 
+wifi_interface = "enp3s0"
 
-def last_seen(time_last_seen):
-
-    for ip in range(0,3):
-        hostname = '192.168.0.'+str(ip+51)
-        response = os.system("ping -c 1 " + hostname)
-
-        if response == 0:
-            time_last_seen[ip] = time.time()
-
-    return time_last_seen
-
-
-def time_since(time_last_seen):
+def whos_home(devices):
     
-    time_since_last_seen = [999]*3
+    home_list = [(time.time(),0)] * devices
 
-    time_last_seen = last_seen(time_last_seen)
+    for ip in range(0,devices):
+        test = arpreq.arpreq('192.168.0.' + str(ip+51))
+        if test is not None:
+            home_list[ip] = time.time(),1
 
-    for ip in range(0, 3):
-        time_since_last_seen[ip] = (time.time() - time_last_seen[ip])/60
+    return home_list
 
-    return time_since_last_seen
+def last_time_seen(current_reading, prev_log, devices):
 
-def anybody_home(time_since_last_seen):
+    last_seen = [0] * devices
+
+    for ip in range(0,devices):
+        if current_reading[ip][1] == 1:
+            last_seen[ip] = time.time()
+        elif current_reading[ip][1] == 0:
+            last_seen[ip] = prev_log[ip]
+
+    return last_seen                
+
+def time_since_seen(last_seen, devices):
+
+    duration = [0] * devices
+
+    for ip in range(0,devices):
+        duration[ip] = round(((time.time() - last_seen[ip])/60),1)
+        if duration[ip] > 999: duration[ip] = 999
+
+    return duration
+
+def anybody_home(time_since_connected):
     somebody_home = False
 
-    if any(t < 20 for t in time_since_last_seen):
+    if any(t < 20 for t in time_since_connected):
         somebody_home = True
-
+    
     return somebody_home
 
 if __name__ == "__main__":
-    
-    time_last_seen = [time.time()-7200] * 3
-    
+
+    devices = 4
+    last_seen_prev = [(time.time() - 7200)] * devices
+
     while True:
-        
-        time_since_last_seen = time_since(time_last_seen)
-        somebody_home = anybody_home(time_last_seen)
-        
+        home_list_curr = whos_home(devices)
+
+        last_seen_curr = last_time_seen(home_list_curr, last_seen_prev, devices)
+
+        time_since_connected = time_since_seen(last_seen_curr, devices)
+
+        somebody_home = anybody_home(time_since_connected)
+
         insert_stmt = """
         INSERT INTO somebody_home
-        (dev_1, dev_2, dev_3, anybody_home)
+        (dev_1, dev_2, dev_3, dev_4, anybody_home)
         VALUES
-        ({},{},{},{})""".format(time_since_last_seen[0], time_since_last_seen[1], time_since_last_seen[2], somebody_home)
+        ({},{},{},{})""".format(time_since_connected[0], time_since_connected[1], time_since_connected[2], somebody_home)
 
         con = mariadb.connect(host=db_host, port=db_host_port,
                               user=db_user, password=db_pass, database=db)
@@ -67,8 +84,3 @@ if __name__ == "__main__":
         time.sleep(30)
 
     
-
-
-
-
-
