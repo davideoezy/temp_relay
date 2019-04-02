@@ -3,7 +3,6 @@ import arpreq
 import time
 
 wifi_interface = "enp3s0"
-devices = 1
 
 def whos_home(devices):
     
@@ -19,7 +18,7 @@ def whos_home(devices):
 def time_since_seen(prev_reading, current_reading, prev_log, devices):
 
     last_seen = [0] * devices
-    
+
     for ip in range(0,devices):
         if current_reading[ip][1] == 1:
             last_seen[ip] = time.time()
@@ -28,8 +27,11 @@ def time_since_seen(prev_reading, current_reading, prev_log, devices):
     return last_seen                
 
 if __name__ == "__main__":
+
+    devices = 1
+
     home_list_prev = [0] * devices
-    home_list_curr = whos_home(4)
+    home_list_curr = whos_home(devices)
 
     prev_log = (time.time() - 10) * devices
 
