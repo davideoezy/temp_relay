@@ -50,7 +50,7 @@ if __name__ == "__main__":
     while True:
         home_list_curr = whos_home(devices)
 
-        last_seen_curr = last_time_seen(home_list_prev, home_list_curr, last_seen_prev, devices)
+        last_seen_curr = last_time_seen(home_list_curr, last_seen_prev, devices)
 
         time_since_connected = time_since_seen(last_seen_curr, devices)
 
