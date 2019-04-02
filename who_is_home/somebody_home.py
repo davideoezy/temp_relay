@@ -45,10 +45,10 @@ def time_since_seen(last_seen, devices):
     return duration
 
 def anybody_home(time_since_connected):
-    somebody_home = False
+    somebody_home = 0
 
     if any(t < 20 for t in time_since_connected):
-        somebody_home = True
+        somebody_home = 1
     
     return somebody_home
 
