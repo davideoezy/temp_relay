@@ -81,6 +81,9 @@ if __name__ == "__main__":
         except:
             con.rollback()
         con.close()
+
+        last_seen_prev = last_seen_curr
+        
         time.sleep(30)
 
     
