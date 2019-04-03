@@ -57,6 +57,7 @@ if __name__ == "__main__":
 
     devices = 4
     last_seen_prev = [(time.time() - 7200)] * devices
+    counter = 0
 
     while True:
         
