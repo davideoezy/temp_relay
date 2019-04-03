@@ -57,7 +57,6 @@ if __name__ == "__main__":
 
     devices = 4
     last_seen_prev = [(time.time() - 7200)] * devices
-    counter = 0
 
     while True:
         
@@ -86,15 +85,7 @@ if __name__ == "__main__":
         except:
             con.rollback()
         con.close()
-
-        # Every 20 iterations run nmap to remove entries not present
-
-        if counter == 20:
-            os.system("nmap -sn 192.168.0.51-54")
-            counter = 0
-
-        counter += 1
-        
+       
         time.sleep(30)
 
     
