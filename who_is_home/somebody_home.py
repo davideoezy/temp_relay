@@ -58,6 +58,7 @@ if __name__ == "__main__":
     last_seen_prev = [(time.time() - 7200)] * devices
 
     while True:
+        
         home_list_curr = whos_home(devices)
 
         last_seen_curr = last_time_seen(home_list_curr, last_seen_prev, devices)
@@ -84,10 +85,14 @@ if __name__ == "__main__":
             con.rollback()
         con.close()
 
-        # print(somebody_home, time_since_connected, last_seen_curr)
+        # Every 20 iterations run nmap to remove entries not present
 
+        if counter == 20:
+            os.system("nmap -sn 192.168.0.51-54")
+            counter = 0
+
+        counter += 1
         
-
         time.sleep(30)
 
     
