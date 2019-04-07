@@ -120,7 +120,7 @@ def insert_results(query, db_host, db_host_port, db_user, db_pass, db):
     con.close()
     return
 
-def aggregate_rules(rule_1, rule_2, rules_3):
+def aggregate_rules(rule_1, rule_2, rule_3):
     rule_list = []
     rule_list.extend([rule_1, rule_2, rule_3])
 
