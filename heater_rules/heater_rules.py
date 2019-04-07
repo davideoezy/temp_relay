@@ -137,41 +137,8 @@ if __name__ == "__main__":
     devices = 4
     last_seen_prev = [(time.time() - 7200)] * devices
 
-
-while True:
-    
-    operating_hours = hours_operation(MorningOn, NightOff)
-
-    query = """
-    SELECT
-    avg(temp)
-    FROM temperature 
-    WHERE ts > DATE_SUB(now(), INTERVAL 90 second)
-    ORDER BY ts ASC
-    """
-
-    temp = get_db_data(query, db_host, db_host_port, db_user, db_pass, db)
-    
-    temp_low = temp_trigger(temp)
-    
-    insert_stmt = """
-    INSERT INTO temp_rule (
-    temp,
-    temp_low,
-    operating_hours)
-    VALUES
-    ({},{},{})""".format(
-        temp,
-        temp_low,
-        operating_hours)
-
-    insert_results(insert_stmt, db_host, db_host_port, db_user, db_pass, db)
-    
-    time.sleep(30)
-
     while True:
-
-
+        start = time.time()
 # check if we're home
 
         home_list_curr = whos_home(devices)
@@ -215,6 +182,8 @@ while True:
 
         insert_results(insert_stmt, db_host, db_host_port, db_user, db_pass, db)
 
+        end = time.time()
+        print(end-start)
 #sleep
         time.sleep(30)
 
