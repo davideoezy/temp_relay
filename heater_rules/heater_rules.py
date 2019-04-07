@@ -211,8 +211,7 @@ while True:
         INSERT INTO heater_rules
         (dev_1, dev_2, dev_3, dev_4, temp, temp_low, operating_hours, anybody_home, heater_on)
         VALUES
-        ({},{},{},{},{},{},{},{},{})""".format(time_since_connected[0], time_since_connected[1], time_since_connected[2],
-        time_since_connected[3], temp, temp_low, operating_hours, somebody_home, turn_heater_on)
+        ({},{},{},{},{},{},{},{},{})""".format(time_since_connected[0], time_since_connected[1], time_since_connected[2], time_since_connected[3], temp, temp_low, operating_hours, somebody_home, turn_heater_on)
 
         insert_results(insert_stmt, db_host, db_host_port, db_user, db_pass, db)
 
