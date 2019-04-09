@@ -47,7 +47,7 @@ if __name__ == "__main__":
         query = """
         SELECT
         heater_on
-        FROM heater_rules; 
+        FROM heater_rules
         WHERE ts > DATE_SUB(now(), INTERVAL 60 second)
         ORDER BY ts ASC
         """
@@ -65,7 +65,7 @@ if __name__ == "__main__":
         VALUES
         ({})""".format(operate)
 
-        #insert_results(insert_stmt, db_host, db_host_port, db_user, db_pass, db)
+        insert_results(insert_stmt, db_host, db_host_port, db_user, db_pass, db)
         
         time.sleep(30)
 
