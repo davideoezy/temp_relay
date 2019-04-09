@@ -100,7 +100,7 @@ def insert_results(query, db_host, db_host_port, db_user, db_pass, db):
                           user=db_user, password=db_pass, database=db)
     cur = con.cursor()
     try:
-        cur.execute(insert_stmt, multi=True)
+        cur.execute(insert_stmt)
         con.commit()
     except:
         con.rollback()
