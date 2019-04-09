@@ -93,25 +93,40 @@ def read_device_address():
     except:
         return("ERROR!-ifconfig")
 
+
+def insert_results(query, db_host, db_host_port, db_user, db_pass, db):
+
+    con = mariadb.connect(host=db_host, port=db_host_port,
+                          user=db_user, password=db_pass, database=db)
+    cur = con.cursor()
+    try:
+        cur.execute(insert_stmt)
+        con.commit()
+    except:
+        con.rollback()
+    con.close()
+    return
+
 #Connect to mariadb
 
 if __name__ == "__main__":
 
     while True:
 
+        temp = read_temp()
+        cpu_temmp = read_cpu_temp()
+        ssid = read_wifi_signal_strength()[1]
+        device_address = read_device_address()
+        wifi_signal_strength = read_wifi_signal_strength()[0]
+        
+        
         insert_stmt = """
         INSERT INTO heater_temp
         (device, temp, cpu_temp, device_ssid, device_address, wifi_signal_strength)
         VALUES
-        ('{}',{},{},'{}','{}',{})""".format(device_label,read_temp(),read_cpu_temp(), 
-        read_wifi_signal_strength()[1], read_device_address(), read_wifi_signal_strength()[0])
+        ('{}',{},{},'{}','{}',{})""".format(device_label, temp, cpu_temp, ssid, device_address, wifi_signal_strength)
 
-        con = mariadb.connect(host = db_host, port = db_host_port, user = db_user, password = db_pass, database = db)
-        cur = con.cursor()
-        try:
-            cur.execute(insert_stmt)
-            con.commit()
-        except:
-            con.rollback()
-        con.close()
+        insert_results(insert_stmt, db_host,
+                       db_host_port, db_user, db_pass, db)
+
         time.sleep(30)
