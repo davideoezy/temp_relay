@@ -65,8 +65,7 @@ if __name__ == "__main__":
         VALUES
         ({})""".format(operate)
 
-        insert_results(insert_stmt, db_host,
-                       db_host_port, db_user, db_pass, db)
+        #insert_results(insert_stmt, db_host, db_host_port, db_user, db_pass, db)
         
         time.sleep(30)
 
