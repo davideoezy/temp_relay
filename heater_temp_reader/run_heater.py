@@ -40,7 +40,7 @@ if __name__ == "__main__":
 
         operate = get_db_data(query, db_host, db_host_port, db_user, db_pass, db)
 
-        if operate = 1:
+        if operate == 1:
             relay.on()
         else:
             relay.off()
