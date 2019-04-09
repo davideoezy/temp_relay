@@ -114,7 +114,7 @@ if __name__ == "__main__":
     while True:
 
         temp = read_temp()
-        cpu_temmp = read_cpu_temp()
+        cpu_temp = read_cpu_temp()
         ssid = read_wifi_signal_strength()[1]
         device_address = read_device_address()
         wifi_signal_strength = read_wifi_signal_strength()[0]
