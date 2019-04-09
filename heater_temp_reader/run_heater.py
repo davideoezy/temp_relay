@@ -27,6 +27,20 @@ def get_db_data(query, host, port, user, passwd, db):
     return output
 
 
+def insert_results(query, db_host, db_host_port, db_user, db_pass, db):
+
+    con = mariadb.connect(host=db_host, port=db_host_port,
+                          user=db_user, password=db_pass, database=db)
+    cur = con.cursor()
+    try:
+        cur.execute(insert_stmt, multi=True)
+        con.commit()
+    except:
+        con.rollback()
+    con.close()
+    return
+
+
 if __name__ == "__main__":
     while True:
 
@@ -44,6 +58,15 @@ if __name__ == "__main__":
             relay.on()
         else:
             relay.off()
+
+        insert_stmt = """
+        INSERT INTO heater_log
+        (heater_on)
+        VALUES
+        ({})""".format(operate)
+
+        insert_results(insert_stmt, db_host,
+                       db_host_port, db_user, db_pass, db)
         
         time.sleep(30)
 
