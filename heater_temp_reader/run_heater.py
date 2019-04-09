@@ -17,7 +17,7 @@ def get_db_data(query, host, port, user, passwd, db):
     con = mariadb.connect(host=host, port=port, user=user,
                           password=passwd, database=db)
     cur = con.cursor()
-    cur.execute(query, multi=True)
+    cur.execute(query)
 
     output = 999
 
@@ -33,7 +33,7 @@ def insert_results(query, db_host, db_host_port, db_user, db_pass, db):
                           user=db_user, password=db_pass, database=db)
     cur = con.cursor()
     try:
-        cur.execute(query, multi=True)
+        cur.execute(query)
         con.commit()
     except:
         con.rollback()
