@@ -17,7 +17,7 @@ def get_db_data(query, host, port, user, passwd, db):
     con = mariadb.connect(host=host, port=port, user=user,
                           password=passwd, database=db)
     cur = con.cursor()
-    cur.execute(query, multi=True)
+    cur.execute(query)
 
     output = 999
 
