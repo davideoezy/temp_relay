@@ -99,8 +99,9 @@ def insert_results(query, db_host, db_host_port, db_user, db_pass, db):
     con = mariadb.connect(host=db_host, port=db_host_port,
                           user=db_user, password=db_pass, database=db)
     cur = con.cursor()
+    
     try:
-        cur.execute(insert_stmt)
+        cur.execute(query, multi=True)
         con.commit()
     except:
         con.rollback()
