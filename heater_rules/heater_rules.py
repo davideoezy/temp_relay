@@ -97,6 +97,20 @@ def get_db_data(query, host, port, user, passwd, db):
     return output
 
 
+def get_db_data_multiple(query, host, port, user, passwd, db):
+    con = mariadb.connect(host=host, port=port, user=user,
+                          password=passwd, database=db)
+    cur = con.cursor()
+    cur.execute(query)
+
+    output = [999,0,0,0]
+
+    for row in cur:
+        output = [row[0], row[1], row[2], row[3], row[4]]
+
+    return output
+
+
 def temp_trigger(temp):
 
     temp_low = 0
@@ -120,11 +134,33 @@ def insert_results(query, db_host, db_host_port, db_user, db_pass, db):
     con.close()
     return
 
-def aggregate_rules(rule_1, rule_2, rule_3):
-    rule_list = []
-    rule_list.extend([rule_1, rule_2, rule_3])
+def aggregate_rules(bedtime, awake, manual_on, manual_off, somebody_home, operating_hours, temp_low):
+    override_off_rules = []
+    override_on_rules = []
+    manual_on_rule_list = []
+    automated_rule_list = []
 
-    if all(i is 1 for i in rule_list):
+    override_off_rules.extend([bedtime, manual_off])
+    override_on_rules.extend([awake, manual_on])
+
+    if any(i is 1 for i in override_off_rules):
+        override_off = 1
+    else:
+        override_off = 0
+
+    if any(i is 1 for i in override_on_rules):
+        override_on = 1
+    else:
+        override_on = 0
+
+    manual_on_rule_list.extend([override_on, somebody_home, temp_low])
+    automated_rule_list.extend([somebody_home, operating_hours, temp_low])
+
+    if all(i is 1 for i in override_off_rules):
+        heater_on = 0
+    elif all(i is 1 for i in manual_on_rule_list):
+        heater_on = 1
+    elif all(i is 1 for i in automated_rule_list):
         heater_on = 1
     else:
         heater_on = 0
@@ -138,7 +174,6 @@ if __name__ == "__main__":
     last_seen_prev = [(time.time() - 7200)] * devices
 
     while True:
-        start = time.time()
 # check if we're home
 
         home_list_curr = whos_home(devices)
@@ -167,10 +202,42 @@ if __name__ == "__main__":
 
         temp = get_db_data(query, db_host, db_host_port, db_user, db_pass, db)
 
-        temp_low = temp_trigger(temp)
+# temp threshold rule
+
+        query_manual_controls = """
+        SELECT
+        temp_setting,
+        bedtime,
+        awake,
+        manual_on,
+        manual_off
+        FROM heater_controls 
+        ORDER BY ts ASC
+        """
+
+        
+        #### in development - remove comments when heater_controls table setup in prod
+        #manual_controls = get_db_data_multiple(query_manual_controls, db_host, db_host_port, db_user, db_pass, db)
+
+        threshold = manual_controls[0]
+
+        temp_low = temp_trigger(temp, threshold)
+
+# bedtime
+        bedtime = manual_controls[1]
+
+# awake
+        awake = manual_controls[2]
+
+# manual overide - turn on
+        manual_on = manual_controls[3]
+
+# manual overide - turn off
+        manual_off = manual_controls[4]
+
 
 # run all rules
-        turn_heater_on = aggregate_rules(somebody_home, operating_hours, temp_low)
+        turn_heater_on = aggregate_rules(bedtime, awake, manual_on, manual_off, somebody_home, operating_hours, temp_low)
 
 
 # update db
@@ -187,3 +254,4 @@ if __name__ == "__main__":
 #sleep
         time.sleep(30)
 
+#### Need to update heater_rules table with additional override logic
