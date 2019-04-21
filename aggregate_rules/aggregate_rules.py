@@ -27,7 +27,7 @@ def get_db_data_multiple(query, host, port, user, passwd, db):
     cur = con.cursor()
     cur.execute(query)
 
-    output = [999,0,0,0]
+    output = [0,0,0,0]
 
     for row in cur:
         output = [row[0], row[1], row[2], row[3], row[4]]

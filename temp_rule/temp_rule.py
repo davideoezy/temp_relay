@@ -13,7 +13,7 @@ def get_db_data(query, host, port, user, passwd, db):
     cur = con.cursor()
     cur.execute(query)
 
-    output = 999
+    output = -999
 
     for row in cur:
         output = row[0]
@@ -59,7 +59,7 @@ if __name__ == "__main__":
         query_manual_temp = """
         SELECT
         temp_setting,
-        FROM manual_temp 
+        FROM heater_controls 
         ORDER BY ts ASC
         """
 
@@ -71,7 +71,7 @@ if __name__ == "__main__":
         INSERT INTO temp_rule
         (temp_low, temp, threshold)
         VALUES
-        ({},{},{})""".format(temp_low, temp, threshold)
+        ({},{},{})""".format(temp_low, temp, manual_temp)
 
         insert_results(insert_stmt, db_host, db_host_port, db_user, db_pass, db)
 

@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>PyStat</title>
+    <link rel="stylesheet" type="text/css"
+          href="{{ url_for('static', filename='semantic.min.css') }}">
+    <link rel="stylesheet" type="text/css"
+          href="{{ url_for('static', filename='style.css') }}">
+    <script src="{{ url_for('static', filename='jquery-2.1.4.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='semantic.min.js') }}"></script>
+
+    <script type="text/javascript">
+        $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+    </script>
+
+    <script type="text/javascript">
+        function manual_on_toggle(currentValue) {
+            var manual_on_button = $("#manual_on_button");
+            if(manual_on_button.hasClass("red")) {
+                manual_on_button.removeClass("red");
+            } else {
+                manual_on_button.addClass("red");
+                $("#manual_off_button").removeClass("blue");
+                $("#awake_button").removeClass("green");
+                $("#bedtime_button").removeClass("blue");
+            }
+        }
+
+        function manual_off_toggle(currentValue) {
+            var manual_off_button = $("#manual_off_button");
+            if(manual_off_button.hasClass("blue")) {
+                manual_off_button.removeClass("blue");
+            } else {
+                manual_off_button.addClass("blue");
+                $("#manual_on_button").removeClass("red");
+                $("#awake_button").removeClass("green");
+                $("#bedtime_button").removeClass("blue");
+            }
+        }
+
+        function awake_toggle(currentValue) {
+            var awake_button = $("#awake_button");
+            if(awake_button.hasClass("green")) {
+                awake_button.removeClass("green");
+            } else {
+                awake_button.addClass("green");
+                $("#manual_on_button").removeClass("red");
+                $("#manual_off_button").removeClass("blue");
+                $("#bedtime_button").removeClass("blue");
+            }
+        }
+
+        function bedtime_toggle(currentValue) {
+            var bedtime_button = $("#bedtime_button");
+            if(bedtime_button.hasClass("blue")) {
+                bedtime_button.removeClass("blue");
+            } else {
+                bedtime_button.addClass("blue");
+                $("#manual_on_button").removeClass("red");
+                $("#manual_off_button").removeClass("blue");
+                $("#awake_button").removeClass("green");
+            }
+        }
+
+
+
+        function ChangeTemperature(amount) {
+            var temperatureInput = $("#temperatureInput");
+            var temperature = parseFloat(temperatureInput.val());
+            temperature += amount;
+            temperatureInput.val(temperature.toFixed(1))
+        }
+
+        function SubmitTargets() {
+            var form = document.createElement("form");
+            form.setAttribute("method", "post");
+            form.setAttribute("action", "");
+
+            var mode = "off";
+            if ($("#manual_on_button").hasClass("red")) {
+                mode = "manual_on";
+            } else if ($("#manual_off_button").hasClass("blue")) {
+                mode = "manual_off";
+            } else if ($("#awake_button").hasClass("green")) {
+                mode = "awake";
+            } else if ($("#bedtime_button").hasClass("blue")) {
+                mode = "bedtime";
+            }
+
+            var temperature = $("#temperatureInput").val();
+
+            var hiddenField = document.createElement("input");
+            hiddenField.setAttribute("type", "hidden");
+            hiddenField.setAttribute("name", "mode");
+            hiddenField.setAttribute("value", mode);
+            form.appendChild(hiddenField);
+
+            hiddenField = document.createElement("input");
+            hiddenField.setAttribute("type", "hidden");
+            hiddenField.setAttribute("name", "temperature");
+            hiddenField.setAttribute("value", temperature);
+            form.appendChild(hiddenField);
+
+            document.body.appendChild(form);
+            form.submit();
+        }
+
+        function UpdateWeather(currentWeatherTemp, currentWeatherSummary, todaySummary,
+                               todayMax, todayMin, todayPrecipProbability) {
+            weatherPanel = $("#weatherPanel")
+            weatherUnavailable = $("#weatherUnavailable")
+
+            if (null === currentWeatherTemp || null === currentWeatherSummary ||
+                null === todaySummary || null === todayMax ||
+                null === todayMin || null === todayPrecipProbability) {
+
+                weatherPanel.removeClass("weatherPanel")
+                weatherPanel.addClass("hidden");
+
+                weatherUnavailable.addClass("weatherPanel")
+                weatherUnavailable.removeClass("hidden");
+            } else {
+                weatherUnavailable.removeClass("weatherPanel")
+                weatherUnavailable.addClass("hidden");
+
+                weatherPanel.addClass("weatherPanel")
+                weatherPanel.removeClass("hidden");
+
+                // update values
+                $("#currentWeatherTemp").text(currentWeatherTemp + '\xB0');
+                $("#currentWeatherSummary").text(currentWeatherSummary);
+                $("#todayWeatherSummary").text(todaySummary);
+                $("#todayWeatherTemp").text(todayMax + '\xB0 / ' + todayMin + '\xB0');
+            }
+        }
+
+        $( document ).ready(function () {
+            width = $("#targetTable").width();
+
+            $("#contentBody").width(width);
+            $("#temperatureTable").width(width);
+            $("#weatherPanel").width(width);
+            $("#weatherUnavailable").width(width);
+
+            $("#wp1").width(width / 2);
+            $("#wp2").width(width / 2);
+
+            currentWeatherTemp = "{{ currentWeatherTemp }}";
+            currentWeatherSummary = "{{ currentWeatherSummary }}";
+            todaySummary = "{{ todaySummary }}";
+            todayMax = "{{ todayMax }}";
+            todayMin = "{{ todayMin }}";
+            todayPrecipProbability = "{{ todayPrecipProbability }}";
+
+            if ("None" === currentWeatherTemp || "None" === currentWeatherSummary ||
+                "None" === todaySummary || "None" === todayMax ||
+                "None" === todayMin || "None" === todayPrecipProbability) {
+
+                currentWeatherTemp = null;
+            }
+            UpdateWeather(currentWeatherTemp, currentWeatherSummary, todaySummary,
+                          todayMax, todayMin, todayPrecipProbability);
+
+            {% if "manual_on" == currentMode %}
+                $("#manual_on_button").addClass("red");
+            {% elif "manual_off" == currentMode %}
+                $("#manual_off_button").addClass("blue");
+            {% elif "awake" == currentMode %}
+                $("#awake_button").addClass("green");
+            {% elif "bedtime" == currentMode %}
+                $("#bedtime_button").addClass("blue");
+            {% endif %}
+
+            {% if heatRunning %}
+                $("#heatIndicator").addClass("red");
+            {% endif %}
+
+
+            window.setInterval(function () {
+                $.ajax({
+                    url: "/update",
+                    context: document.body
+                }).done(function(data) {
+                    heatRunning = data["heatRunning"];
+                    indoorTemperature = data["currentTemperature"];
+                    currentTarget = data["currentTarget"];
+
+                    $("#indoorTemperature").text(indoorTemperature +
+                        String.fromCharCode(176));
+                    $("#targetTemperature").text(currentTarget +
+                        String.fromCharCode(176));
+
+                    if (heatRunning) {
+                        $("#heatIndicator").addClass("red");
+                    } else {
+                        $("#heatIndicator").removeClass("red");
+                    }
+
+
+                    // update weather panel
+                    currentWeatherTemp = data["currentWeatherTemp"];
+                    currentWeatherSummary = data["currentWeatherSummary"];
+                    todaySummary = data["todaySummary"];
+                    todayMax = data["todayMax"];
+                    todayMin = data["todayMin"];
+                    todayPrecipProbability = data["todayPrecipProbability"];
+                    UpdateWeather(currentWeatherTemp, currentWeatherSummary, todaySummary,
+                                  todayMax, todayMin, todayPrecipProbability);
+                });
+            }, 20000);
+        });
+    </script>
+
+</head>
+<body id="contentBody" class="mainContent">
+    <div>
+        <table id="temperatureTable" class="left">
+            <tbody>
+                <tr>
+                    <td>
+                        <h2>Indoor Temperature:</h2>
+                    </td>
+                    <td>
+                        <h1 id="indoorTemperature">{{ currentTemperature }}&deg;</h1>
+                    </td>
+
+                </tr>
+                <tr>
+                    <td>
+                        <h2>Target Temperature:</h2>
+                    </td>
+                    <td>
+                        <h1 id="targetTemperature">{{ currentTarget }}&deg;</h1>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="ui form">
+        <table id="targetTable">
+            <tbody>
+                <tr>
+                    <td>
+                    </td>
+                    <td class="center targetCell">
+                        <button id="heatIndicator" class="huge circular ui icon disabled button">
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="modeCell targetCell">
+                        <button id="manual_on_button" class="massive ui button modeButton" onclick="manual_on_toggle(true)">
+                        On
+                        </button>
+                    </td>
+                    <td class="modeCell targetCell">
+                        <button id="manual_off_button" class="massive ui button modeButton" onclick="manual_off_toggle(true)">
+                        Off
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="modeCell targetCell">
+                        <button id="awake_button" class="massive ui button modeButton" onclick="awake_toggle(true)">
+                        Awake
+                        </button>
+                    </td>
+                    <td class="modeCell targetCell">
+                        <button id="bedtime_button" class="massive ui button modeButton" onclick="bedtime_toggle(true)">
+                        Bedtime
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="center">
+                        <button id="down1" class="large ui left icon button blue" style="margin-top: 24px;" onclick="ChangeTemperature(-1)">
+                            <i class="left caret icon"></i>
+                            -1
+                        </button>
+                    </td>
+                    <td class="targetCell center">
+                        <div class="massive ui input" style="width: 125px">
+                            <input id="temperatureInput" value={{ currentTarget }} type="text" style="text-align: center;">
+                        </div>
+                    </td>
+                    <td class="center">
+                        <button id="up1" class="large ui right icon button red" style="margin-top: 24px;" onclick="ChangeTemperature(1)">
+                            +1
+                            <i class="right caret icon"></i>
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="targetCell center" colspan="3">
+                        <button id="submitButton" class="massive ui button violet" onclick="SubmitTargets()">
+                        Submit Changes
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div id="weatherPanel" class="center">
+        <table class="weatherPanel">
+            <tr>
+                <th id="wp1"></th>
+                <th id="wp2"></th>
+            </tr>
+            <tr>
+                <td>
+                    <h2>Currently:</h2>
+                </td>
+                <td>
+                    <h2>Today:</h2>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <h2 id="currentWeatherTemp"></h2>
+                </td>
+                <td>
+                    <h2 id="todayWeatherTemp"></h2>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <h2 id="currentWeatherSummary"></h2>
+                </td>
+                <td>
+                    <h2 id="todayWeatherSummary"></h2>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div id="weatherUnavailable" class="weatherPanel center hidden"></div>
+</body>
+</html>

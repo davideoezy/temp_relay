@@ -58,3 +58,5 @@ if __name__ == "__main__":
 
 ## Create db table in temp_logger
 # create table operating_hours (operating_hours int, MorningOn varchar(20), NightOff varchar(20), ts timestamp); 
+
+# Will probably need to strftime the MorningOn, NightOff times for sql insert
