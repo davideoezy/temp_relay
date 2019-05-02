@@ -1,4 +1,4 @@
-import mysql.connector as mariadb
+
 import time
 
 
@@ -83,6 +83,8 @@ def aggregate_rules(bedtime, awake, manual_on, manual_off, somebody_home, operat
     return heater_on
 
 
+# Below deprecated
+
 if __name__ == "__main__":
 
     while True:
@@ -159,8 +161,14 @@ if __name__ == "__main__":
         VALUES
         ({},{},{},{},{},{},{},{})""".format(bedtime, awake, manual_on, manual_off, temp_low, operating_hours, somebody_home, turn_heater_on)
 
+<<<<<<< Updated upstream:aggregate_rules/aggregate_rules.py
         insert_results(insert_stmt, db_host, db_host_port, db_user, db_pass, db)
 
+=======
+        db_helper.db_data(
+            query_type="insert", statement=insert_stmt)
+        
+>>>>>>> Stashed changes:aggregate_rules.py
         time.sleep(30)
 
 # create table heater_rules (bedtime int, awake int, manual_on int, manual_off int, temp_low int, operating_hours int, anybody_home int, heater_on int, ts timestamp);
