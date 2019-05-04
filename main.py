@@ -41,8 +41,8 @@ manual_controls = db_helper.db_data(
 # On/off time in DB?
 # Can then create function to update times based on calcs/manual update
 
-MorningOn = datetime.time(6, 30)
-NightOff = datetime.time(22, 56)
+MorningOn = datetime.time(6, 00)
+NightOff = datetime.time(22, 30)
 
 # Target Temperature
 TargetTemperature = manual_controls[0]

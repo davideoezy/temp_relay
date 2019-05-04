@@ -1,5 +1,5 @@
 import datetime
-import mysql.connector as mariadb
+#import mysql.connector as mariadb
 import time
 
 db_host = '192.168.0.10'
@@ -28,35 +28,38 @@ def hours_operation(on_time, off_time):
 
     return operating_hours
 
-def insert_results(query, db_host, db_host_port, db_user, db_pass, db):
+# def insert_results(query, db_host, db_host_port, db_user, db_pass, db):
 
-    con = mariadb.connect(host=db_host, port=db_host_port,
-                          user=db_user, password=db_pass, database=db)
-    cur = con.cursor()
-    try:
-        cur.execute(insert_stmt)
-        con.commit()
-    except:
-        con.rollback()
-    con.close()
-    return
+#     con = mariadb.connect(host=db_host, port=db_host_port,
+#                           user=db_user, password=db_pass, database=db)
+#     cur = con.cursor()
+#     try:
+#         cur.execute(insert_stmt)
+#         con.commit()
+#     except:
+#         con.rollback()
+#     con.close()
+#     return
 
-if __name__ == "__main__":
+# if __name__ == "__main__":
 
-    while True:
+#     while True:
 
-        operating_hours = hours_operation(MorningOn, NightOff)
+        # operating_hours = hours_operation(MorningOn, NightOff)
 
-        insert_stmt = """
-        insert into operating_hours
-        (operating_hours, MorningOn, NightOff) values
-        ({}, '{}', '{}')""".values(operating_hours, MorningOn, NightOff)
+        # insert_stmt = """
+        # insert into operating_hours
+        # (operating_hours, MorningOn, NightOff) values
+        # ({}, '{}', '{}')""".values(operating_hours, MorningOn, NightOff)
 
-        insert_results(insert_stmt, db_host, db_host_port, db_user, db_pass, db)
+        # insert_results(insert_stmt, db_host, db_host_port, db_user, db_pass, db)
 
-        time.sleep(30)
+        # time.sleep(30)
 
 ## Create db table in temp_logger
 # create table operating_hours (operating_hours int, MorningOn varchar(20), NightOff varchar(20), ts timestamp); 
 
 # Will probably need to strftime the MorningOn, NightOff times for sql insert
+
+
+operating_hours = hours_operation(MorningOn, NightOff)
