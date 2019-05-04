@@ -7,7 +7,7 @@ NightOff = datetime.time(22, 56)
 
 class rules():
 
-    def hours_operation(on_time, off_time):
+    def hours_operation(self, on_time, off_time):
 
         CurrentTime = datetime.datetime.now()
 
@@ -24,7 +24,7 @@ class rules():
 
         return operating_hours
     
-    def temp_trigger(temp, threshold):
+    def temp_trigger(self, temp, threshold):
 
         temp_low = 0
 
