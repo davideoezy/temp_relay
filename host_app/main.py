@@ -72,7 +72,7 @@ time_since_connected = anybody_home.time_since_seen(last_seen_curr)
 
 ## Rules
 
-temp_low = rules.temp_trigger(currentTemperature, manual_temp)
+temp_low = rules.temp_trigger(currentTemperature, TargetTemperature)
 
 somebody_home = rules.anybody_home(time_since_connected)
 
