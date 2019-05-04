@@ -7,7 +7,7 @@ class db_helper():
         self.db_host_port = '3306'
         self.db_user = 'rpi'
         self.db_pass = 'warm_me'
-        self.db = 'temp_control'
+        self.db = 'temp_logger'
 
     def db_data(self, query_type, n_variables, statement, default):
 
