@@ -20,7 +20,7 @@ class anybody_home():
 
         return home_list
 
-    def last_time_seen(self, current_reading, prev_log):
+    def last_time_seen(self, current_reading):
 
         last_seen = [0] * self.devices
 
