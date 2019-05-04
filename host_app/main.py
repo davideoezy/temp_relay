@@ -22,7 +22,7 @@ query_temp = """
         """
 
 currentTemperature = db_helper.db_data(
-    query_type="select", n_variables=1, statemment=query_temp, default=99)
+    query_type="select", n_variables=1, statement=query_temp, default=99)
 
 control_settings = """
         SELECT
@@ -36,7 +36,7 @@ control_settings = """
         """
 
 manual_controls = db_helper.db_data(
-    query_type="select", n_variables=5, statemment=control_settings, default=0)
+    query_type="select", n_variables=5, statement=control_settings, default=0)
 
 # On/off time in DB?
 # Can then create function to update times based on calcs/manual update
@@ -101,7 +101,7 @@ insert_manual_controls = """
         VALUES
         ({},{},{},{},{})""".format(TargetTemperature, bedtime, awake, manual_on, manual_off)
 
-db_helper.db_data(query_type="insert", statemment=insert_manual_controls)
+db_helper.db_data(query_type="insert", statement=insert_manual_controls)
 
 insert_rule_info = """
         INSERT INTO rule_info
@@ -115,7 +115,7 @@ insert_rule_info = """
                                                     time_since_connected[2], time_since_connected[3], 
                                                     operating_hours, MorningOn, NightOff)
 
-db_helper.db_data(query_type="insert", statemment=insert_rule_info)
+db_helper.db_data(query_type="insert", statement=insert_rule_info)
 
 insert_heater_rules = """
         INSERT INTO heater_rules
