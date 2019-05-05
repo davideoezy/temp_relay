@@ -46,3 +46,15 @@ class db_helper():
         con.close()
 
         return
+
+    def db_data_2(self, n_variables, default):
+
+
+
+        if n_variables == 1:
+            output = default
+
+        else:
+            output = [default] * n_variables
+
+        return output
