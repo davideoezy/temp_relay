@@ -8,7 +8,7 @@ class rules_aggregator():
         self.manual_on_rule_list = []
         self.automated_rule_list = []
 
-    def aggregate_rules(bedtime, awake, manual_on, manual_off, somebody_home, operating_hours, temp_low):
+    def aggregate_rules(self, bedtime, awake, manual_on, manual_off, somebody_home, operating_hours, temp_low):
 
         self.override_off_rules.extend([bedtime, manual_off])
         self.override_on_rules.extend([awake, manual_on])
