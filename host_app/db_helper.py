@@ -22,15 +22,17 @@ class db_helper():
 
             for row in cur:
                 output = row[0]
+            
+            return output
 
-        else:
+        elif n_variables > 1:
             output = [default] * n_variables
 
             for row in cur:
                 for item in row:
-                    output = [row[int(item)]]
+                    output[item] = [row[item]]
 
-        return output
+            return output
     
     def insert_db_data(self, statement):
 

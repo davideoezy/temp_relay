@@ -36,9 +36,7 @@ while True:
             ORDER BY ts ASC
             """
 
-    manual_controls = db_helper.db_data_2(n_variables=5, 
-                                            #statement=control_settings, 
-                                            default=0)
+    manual_controls = db_helper.db_data(n_variables=5, statement=control_settings, default=0)
 
     # On/off time in DB?
     # Can then create function to update times based on calcs/manual update
