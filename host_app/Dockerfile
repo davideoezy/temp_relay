@@ -6,5 +6,6 @@ ENV TZ=Australia/Melbourne
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 WORKDIR /.
-ADD aggregate_rules.py /
-CMD [ "python", "./aggregate_rules.py" ]
+COPY . /
+
+CMD [ "python", "./main.py" ]
