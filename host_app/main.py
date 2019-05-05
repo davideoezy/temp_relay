@@ -76,11 +76,11 @@ temp_low = rules.temp_trigger(currentTemperature, TargetTemperature)
 
 somebody_home = rules.anybody_home(time_since_connected)
 
-operating_hours = operating_hours.hours_operation(MorningOn, NightOff)
+operating_hours = rules.hours_operation(MorningOn, NightOff)
 
 # run all rules
 
-turn_heater_on = aggregate_rules(
+turn_heater_on = rules_aggregator.aggregate_rules(
     bedtime, awake, manual_on, manual_off, somebody_home, operating_hours, temp_low)
 
 
