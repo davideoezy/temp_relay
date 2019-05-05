@@ -28,7 +28,7 @@ class db_helper():
 
             for row in cur:
                 for item in row:
-                    output = [row[item]]
+                    output = [row[int(item)]]
 
         return output
     
