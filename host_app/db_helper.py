@@ -1,5 +1,10 @@
 import mysql.connector as mariadb
 
+####### TO_DO ########
+
+# change select statement to get most recent record
+# select top 1/limit 1
+# order by DESC
 
 class db_helper():
     def __init__(self):
@@ -49,14 +54,45 @@ class db_helper():
 
         return
 
-    def db_data_2(self, n_variables, default):
+    def get_temp(self):
+        n_variables = 1
+        statement = """
+                        SELECT
+                        avg(temp)
+                        FROM temperature 
+                        WHERE ts > DATE_SUB(now(), INTERVAL 90 second)
+                        ORDER BY ts ASC
+                        """
+        default = 0
 
+        return self.db_data(n_variables = n_variables, statement = statement, default = default)
 
+    def get_control_settings(self):
+        n_variables = 5
+        statement = """
+                    SELECT
+                    temp_setting,
+                    bedtime,
+                    awake,
+                    manual_on,
+                    manual_off
+                    FROM heater_controls 
+                    ORDER BY ts ASC
+                    """
 
-        if n_variables == 1:
-            output = default
+        default = 0
 
-        else:
-            output = [default] * n_variables
+        return self.db_data(n_variables = n_variables, statement = statement, default = default)
 
-        return output
+    def get_heat_indicator(self):
+        n_variables = 1
+        statement = """
+                    SELECT
+                    heater_on
+                    FROM heater_log
+                    ORDER BY tsc ASC
+                    """
+        default = 0
+
+        return self.db_data(n_variables = n_variables, statement = statement, default = default)
+
