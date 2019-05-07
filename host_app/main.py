@@ -16,7 +16,7 @@ anybody_home = anybody_home()
 
 web = ThermostatWeb(db_helper)
 
-web.run()
+web.run(host='0.0.0.0')
 
 while True:
 
