@@ -72,4 +72,4 @@ class ThermostatWeb():
                         bedtime = bedtime)
 
     def run(self):
-        self.app.run()
+        self.app.run(host='0.0.0.0')
