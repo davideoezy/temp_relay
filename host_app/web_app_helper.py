@@ -45,7 +45,7 @@ class ThermostatWeb():
         current = self.db_helper.get_control_settings()
         currentTemperature = self.db_helper.get_temp()
         heatRunning = self.db_helper.get_heat_indicator()
-        CurrentTarget = current[0]
+        currentTarget = current[0]
         manual_on = current[3]
         manual_off = current[4]
         awake = current[2]
