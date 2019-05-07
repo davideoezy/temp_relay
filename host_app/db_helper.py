@@ -98,7 +98,7 @@ class db_helper():
 
         return self.db_data(n_variables = n_variables, statement = statement, default = default)
 
-    def insert_control_settings(self, temperature, manual_on, manual_off, awake, bedtime)
+    def insert_control_settings(self, temperature, manual_on, manual_off, awake, bedtime):
         statement = """
                     INSERT into heater_controls
                     (temp_setting,
