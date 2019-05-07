@@ -27,7 +27,7 @@ class ThermostatWeb():
                 manual_on = request.args.get("manual_on")
                 manual_off = request.args.get("manual_off")
                 awake = request.args.get("awake")
-                bedtime = = request.args.get("bedtime")
+                bedtime = request.args.get("bedtime")
                 temperature = round(float(request.args.get("temperature")), 1)
                 self.db_helper.insert_db_data(insert_statement)
 
