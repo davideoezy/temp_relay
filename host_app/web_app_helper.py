@@ -1,5 +1,4 @@
 
-import threading
 from flask import Flask, request, session, g, redirect, url_for, abort, render_template, \
     flash, jsonify
 
@@ -8,16 +7,6 @@ class ThermostatWeb():
 
         self.db_helper = db_helper
         self.app = Flask(__name__)
-        self.insert_statement = """
-                                INSERT into heater_controls
-                                (temp_setting,
-                                bedtime,
-                                awake,
-                                manual_on,
-                                manual_off)
-                                VALUES
-                                ({},{},{},{},{})""".format(temperature, bedtime, awake, manual_on, manual_off)
-
 
         # prepare method to call when / is navigated to
         @self.app.route("/", methods=['GET', 'POST'])
@@ -29,7 +18,8 @@ class ThermostatWeb():
                 awake = request.args.get("awake")
                 bedtime = request.args.get("bedtime")
                 temperature = round(float(request.args.get("temperature")), 1)
-                self.db_helper.insert_db_data(insert_statement)
+                self.db_helper.insert_control_settings(
+                    temperature=temperature, manual_on=manual_on, manual_off=manual_off, awake=awake, bedtime=bedtime)
 
             if 'POST' == request.method:
                 data = request.form
@@ -39,7 +29,8 @@ class ThermostatWeb():
                 bedtime = data["bedtime"]
                 temperature = round(float(data["temperature"]), 1)
 
-                self.db_helper.insert_db_data(insert_statement)
+                self.db_helper.insert_control_settings(
+                    temperature=temperature, manual_on=manual_on, manual_off=manual_off, awake=awake, bedtime=bedtime)
 
             return self.webpage_helper(render_template, 'request')
 

@@ -98,3 +98,19 @@ class db_helper():
 
         return self.db_data(n_variables = n_variables, statement = statement, default = default)
 
+    def insert_control_settings(self, temperature, manual_on, manual_off, awake, bedtime)
+        statement = """
+                    INSERT into heater_controls
+                    (temp_setting,
+                    bedtime,
+                    awake,
+                    manual_on,
+                    manual_off)
+                    VALUES
+                    ({},{},{},{},{})""".format(temperature, bedtime, awake, manual_on, manual_off)
+        
+        self.insert_db_data(statement):
+
+        return
+
+
