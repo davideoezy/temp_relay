@@ -43,8 +43,8 @@ class ThermostatWeb():
     def webpage_helper(self, function, type):
         # get current settings and house temperature
         current = self.db_helper.get_control_settings()
-        currentTemperature = self.get_temp()
-        heatRunning = self.get_heat_indicator()
+        currentTemperature = self.db_helper.get_temp()
+        heatRunning = self.db_helper.get_heat_indicator()
         CurrentTarget = current[0]
         manual_on = current[3]
         manual_off = current[4]
