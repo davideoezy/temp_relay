@@ -91,7 +91,7 @@ class db_helper():
                     SELECT
                     heater_on
                     FROM heater_log
-                    ORDER BY tsc DESC
+                    ORDER BY ts DESC
                     limit 1
                     """
         default = 0
