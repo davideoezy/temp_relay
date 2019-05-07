@@ -77,7 +77,8 @@ class db_helper():
                     manual_on,
                     manual_off
                     FROM heater_controls 
-                    ORDER BY ts ASC
+                    ORDER BY ts DESC
+                    limit 1
                     """
 
         default = 0
@@ -90,7 +91,8 @@ class db_helper():
                     SELECT
                     heater_on
                     FROM heater_log
-                    ORDER BY tsc ASC
+                    ORDER BY tsc DESC
+                    limit 1
                     """
         default = 0
 

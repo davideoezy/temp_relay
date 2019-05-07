@@ -45,27 +45,22 @@ while True:
 
 
     ## Derive
+   
+    home_list_curr = anybody_home.whos_home()
 
-    #### testing    
-    #home_list_curr = anybody_home.whos_home()
+    last_seen_curr = anybody_home.last_time_seen(home_list_curr)
 
-    #last_seen_curr = anybody_home.last_time_seen(
-        home_list_curr)
-
-    #time_since_connected = anybody_home.time_since_seen(last_seen_curr)
-    time_since_connected = [999,0,0,888]
+    time_since_connected = anybody_home.time_since_seen(last_seen_curr)
 
 
     ## Rules
 
     temp_low = rules.temp_trigger(currentTemperature, TargetTemperature)
 
-    #somebody_home = rules.anybody_home(time_since_connected)
-
-    ##### testing
-    somebody_home = 1
+    somebody_home = rules.anybody_home(time_since_connected)
 
     operating_hours = rules.hours_operation(MorningOn, NightOff)
+
 
     # run all rules
 
