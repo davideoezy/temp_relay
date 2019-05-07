@@ -109,7 +109,7 @@ class db_helper():
                     VALUES
                     ({},{},{},{},{})""".format(temperature, bedtime, awake, manual_on, manual_off)
         
-        self.insert_db_data(statement):
+        self.insert_db_data(statement)
 
         return
 
