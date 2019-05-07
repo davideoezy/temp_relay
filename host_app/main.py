@@ -2,6 +2,7 @@ from db_helper import db_helper
 from rules import rules
 from rules_aggregator import rules_aggregator
 from somebody_home import anybody_home
+from web_app_helper import ThermostatWeb
 import datetime
 import time
 
@@ -9,6 +10,7 @@ db_helper = db_helper()
 rules_aggregator = rules_aggregator()
 rules = rules()
 anybody_home = anybody_home()
+
 
 ## Get data
 
