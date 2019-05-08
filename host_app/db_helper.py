@@ -34,8 +34,7 @@ class db_helper():
             output = [default] * n_variables
 
             for row in cur:
-                for item in row:
-                    output[int(item)] = row[int(item)]
+                output = row
 
             return output
     
