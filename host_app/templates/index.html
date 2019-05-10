@@ -224,8 +224,7 @@
                     currentTarget = data["currentTarget"];
                     manual_on = data["manual_on"];
                     manual_off = data["manual_off"];
-                    awake = data["awake"];
-                    bedtime = data["bedtime"];
+
 
                     $("#indoorTemperature").text(indoorTemperature +
                         String.fromCharCode(176));
@@ -249,16 +248,6 @@
                         document.getElementById("manual_off").checked = false;
                     }
 
-
-                    // update weather panel
-                    currentWeatherTemp = data["currentWeatherTemp"];
-                    currentWeatherSummary = data["currentWeatherSummary"];
-                    todaySummary = data["todaySummary"];
-                    todayMax = data["todayMax"];
-                    todayMin = data["todayMin"];
-                    todayPrecipProbability = data["todayPrecipProbability"];
-                    UpdateWeather(currentWeatherTemp, currentWeatherSummary, todaySummary,
-                                  todayMax, todayMin, todayPrecipProbability);
                 });
             }, 20000);
         });
