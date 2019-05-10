@@ -99,8 +99,8 @@
                 if (document.getElementById("manual_off").checked == true) {
                 manual_off = 1;  
                 }
-
-            var temperature = $("#temperatureInput").val();
+            var temperature = document.getElementsByClassName("knob");
+            //var temperature = $("#temperatureInput").val();
 
             var hiddenField = document.createElement("input");
             hiddenField.setAttribute("type", "hidden");
