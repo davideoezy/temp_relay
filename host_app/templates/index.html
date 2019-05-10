@@ -113,13 +113,6 @@
     <script type="text/javascript">
 
 
-        function ChangeTemperature(amount) {
-            var temperatureInput = $("#temperatureInput");
-            var temperature = parseFloat(temperatureInput.val());
-            temperature += amount;
-            temperatureInput.val(temperature.toFixed(1))
-        }
-
         function SubmitTargets() {
             var form = document.createElement("form");
             form.setAttribute("method", "post");
@@ -148,18 +141,6 @@
             hiddenField.setAttribute("type", "hidden");
             hiddenField.setAttribute("name", "manual_off");
             hiddenField.setAttribute("value", manual_off);
-            form.appendChild(hiddenField);
-
-            var hiddenField = document.createElement("input");
-            hiddenField.setAttribute("type", "hidden");
-            hiddenField.setAttribute("name", "awake");
-            hiddenField.setAttribute("value", awake);
-            form.appendChild(hiddenField);
-
-            var hiddenField = document.createElement("input");
-            hiddenField.setAttribute("type", "hidden");
-            hiddenField.setAttribute("name", "bedtime");
-            hiddenField.setAttribute("value", bedtime);
             form.appendChild(hiddenField);
 
             hiddenField = document.createElement("input");
@@ -310,10 +291,10 @@
             <h3>Power</h3>
             <div class="switch-toggle alert alert-dark font-weight-bold">
                 <input id="manual_on" name="toggle" type="radio">
-                <label for="manual_on" onclick="">On</label>
+                <label for="manual_on" onclick="SubmitTargets()">On</label>
 
                 <input id="manual_off" name="toggle" type="radio">
-                <label for="manual_off" onclick="">Off</label>
+                <label for="manual_off" onclick="SubmitTargets()">Off</label>
 
                 <a class="btn btn-info"></a>
             </div>
@@ -349,125 +330,5 @@
     </div>
 </div>
 
-    <div>
-        <table id="temperatureTable" class="left">
-            <tbody>
-                <tr>
-                    <td>
-                        <h2>Indoor Temperature:</h2>
-                    </td>
-                    <td>
-                        <h1 id="indoorTemperature">{{ currentTemperature }}&deg;</h1>
-                    </td>
-
-                </tr>
-                <tr>
-                    <td>
-                        <h2>Target Temperature:</h2>
-                    </td>
-                    <td>
-                        <h1 id="targetTemperature">{{ currentTarget }}&deg;</h1>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    <div class="ui form">
-        <table id="targetTable">
-            <tbody>
-                <tr>
-                    <td>
-                    </td>
-                    <td class="center targetCell">
-                        <button id="heatIndicator" class="huge circular ui icon disabled button">
-                        </button>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="modeCell targetCell">
-                        <button id="manual_on_button" class="massive ui button modeButton" onclick="manual_on_toggle(true)">
-                        On
-                        </button>
-                    </td>
-                    <td class="modeCell targetCell">
-                        <button id="manual_off_button" class="massive ui button modeButton" onclick="manual_off_toggle(true)">
-                        Off
-                        </button>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="modeCell targetCell">
-                        <button id="awake_button" class="massive ui button modeButton" onclick="awake_toggle(true)">
-                        Awake
-                        </button>
-                    </td>
-                    <td class="modeCell targetCell">
-                        <button id="bedtime_button" class="massive ui button modeButton" onclick="bedtime_toggle(true)">
-                        Bedtime
-                        </button>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="center">
-                        <button id="down1" class="large ui left icon button blue" style="margin-top: 24px;" onclick="ChangeTemperature(-1)">
-                            <i class="left caret icon"></i>
-                            -1
-                        </button>
-                    </td>
-                    <td class="targetCell center">
-                        <div class="massive ui input" style="width: 125px">
-                            <input id="temperatureInput" value={{ currentTarget }} type="text" style="text-align: center;">
-                        </div>
-                    </td>
-                    <td class="center">
-                        <button id="up1" class="large ui right icon button red" style="margin-top: 24px;" onclick="ChangeTemperature(1)">
-                            +1
-                            <i class="right caret icon"></i>
-                        </button>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="targetCell center" colspan="3">
-                        <button id="submitButton" class="massive ui button violet" onclick="SubmitTargets()">
-                        Submit Changes
-                        </button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    <div id="weatherPanel" class="center">
-        <table class="weatherPanel">
-            <tr>
-                <th id="wp1"></th>
-                <th id="wp2"></th>
-            </tr>
-            <tr>
-                <td>
-                    <h2>Currently:</h2>
-                </td>
-                <td>
-                    <h2>Today:</h2>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <h2 id="currentWeatherTemp"></h2>
-                </td>
-                <td>
-                    <h2 id="todayWeatherTemp"></h2>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <h2 id="currentWeatherSummary"></h2>
-                </td>
-                <td>
-                    <h2 id="todayWeatherSummary"></h2>
-                </td>
-            </tr>
-        </table>
-    </div>
-    <div id="weatherUnavailable" class="weatherPanel center hidden"></div>
 </body>
 </html>
