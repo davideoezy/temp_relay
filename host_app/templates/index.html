@@ -251,10 +251,21 @@
                     $("#targetTemperature").text(currentTarget +
                         String.fromCharCode(176));
 
-                    if (heatRunning) {
+                    if (heatRunning == 1) {
                         $("#heatIndicator").addClass("red");
                     } else {
                         $("#heatIndicator").removeClass("red");
+                    }
+                    if (manual_on == 1){
+                        document.getElementById("manual_on").checked = true;
+                    } else {
+                        document.getElementById("manual_on").checked = false;
+                    }
+
+                    if (manual_off == 1) {
+                        document.getElementById("manual_off").checked = true;
+                    } else {
+                        document.getElementById("manual_off").checked = false;
                     }
 
 
