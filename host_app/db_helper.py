@@ -71,8 +71,6 @@ class db_helper():
         statement = """
                     SELECT
                     temp_setting,
-                    bedtime,
-                    awake,
                     manual_on,
                     manual_off
                     FROM heater_controls 
@@ -101,12 +99,10 @@ class db_helper():
         statement = """
                     INSERT into heater_controls
                     (temp_setting,
-                    bedtime,
-                    awake,
                     manual_on,
                     manual_off)
                     VALUES
-                    ({},{},{},{},{})""".format(temperature, bedtime, awake, manual_on, manual_off)
+                    ({},{},{},{},{})""".format(temperature, manual_on, manual_off)
         
         self.insert_db_data(statement)
 
