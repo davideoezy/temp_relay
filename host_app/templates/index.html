@@ -111,54 +111,6 @@
     </script>
 
     <script type="text/javascript">
-        function manual_on_toggle(currentValue) {
-            var manual_on_button = $("#manual_on_button");
-            if(manual_on_button.hasClass("red")) {
-                manual_on_button.removeClass("red");
-            } else {
-                manual_on_button.addClass("red");
-                $("#manual_off_button").removeClass("blue");
-                $("#awake_button").removeClass("green");
-                $("#bedtime_button").removeClass("blue");
-            }
-        }
-
-        function manual_off_toggle(currentValue) {
-            var manual_off_button = $("#manual_off_button");
-            if(manual_off_button.hasClass("blue")) {
-                manual_off_button.removeClass("blue");
-            } else {
-                manual_off_button.addClass("blue");
-                $("#manual_on_button").removeClass("red");
-                $("#awake_button").removeClass("green");
-                $("#bedtime_button").removeClass("blue");
-            }
-        }
-
-        function awake_toggle(currentValue) {
-            var awake_button = $("#awake_button");
-            if(awake_button.hasClass("green")) {
-                awake_button.removeClass("green");
-            } else {
-                awake_button.addClass("green");
-                $("#manual_on_button").removeClass("red");
-                $("#manual_off_button").removeClass("blue");
-                $("#bedtime_button").removeClass("blue");
-            }
-        }
-
-        function bedtime_toggle(currentValue) {
-            var bedtime_button = $("#bedtime_button");
-            if(bedtime_button.hasClass("blue")) {
-                bedtime_button.removeClass("blue");
-            } else {
-                bedtime_button.addClass("blue");
-                $("#manual_on_button").removeClass("red");
-                $("#manual_off_button").removeClass("blue");
-                $("#awake_button").removeClass("green");
-            }
-        }
-
 
 
         function ChangeTemperature(amount) {
@@ -175,23 +127,14 @@
 
 
             var manual_on = 0;
-            if ($("#manual_on_button").hasClass("red")) {
+            if (document.getElementById("manual_on").checked == true) {
                 manual_on = 1;
                 }
 
              var manual_off = 0;
-                if ($("#manual_off_button").hasClass("blue")) {
+                if (document.getElementById("manual_off").checked == true) {
                 manual_off = 1;  
                 }
-            var awake = 0;
-                if ($("#awake_button").hasClass("green")) {
-                awake = 1; 
-                }             
-
-            var bedtime = 0;
-                if ($("#bedtime_button").hasClass("yellow")) {
-                bedtime = 1; 
-                }                
 
             var temperature = $("#temperatureInput").val();
 
@@ -285,22 +228,6 @@
             UpdateWeather(currentWeatherTemp, currentWeatherSummary, todaySummary,
                           todayMax, todayMin, todayPrecipProbability);
 
-            {% if 1 == manual_on %}
-                $("#manual_on_button").addClass("red");
-            {% endif %}        
-            
-            {% if 1 == manual_off %}
-                $("#manual_off_button").addClass("blue");
-            {% endif %}
-
-            {% if 1 == awake %}
-                $("#awake_button").addClass("green");
-            {% endif %}
-
-            {% if 1 == bedtime %}
-                $("#bedtime_button").addClass("yelloe");
-            {% endif %}
-
             {% if heatRunning %}
                 $("#heatIndicator").addClass("red");
             {% endif %}
@@ -343,6 +270,16 @@
                 });
             }, 20000);
         });
+
+        function set_radio() {
+            {% if 1 == manual_on %}
+                document.getElementById("manual_on").checked = true;
+            {% endif %}
+
+            {% if 1 == manual_off %}
+            document.getElementById("manual_off").checked = true;
+            {% endif %}
+            }
     </script>
 
     <style>
