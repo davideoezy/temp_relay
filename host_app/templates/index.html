@@ -153,65 +153,49 @@
             form.submit();
         }
 
-        function UpdateWeather(currentWeatherTemp, currentWeatherSummary, todaySummary,
-                               todayMax, todayMin, todayPrecipProbability) {
-            weatherPanel = $("#weatherPanel")
-            weatherUnavailable = $("#weatherUnavailable")
-
-            if (null === currentWeatherTemp || null === currentWeatherSummary ||
-                null === todaySummary || null === todayMax ||
-                null === todayMin || null === todayPrecipProbability) {
-
-                weatherPanel.removeClass("weatherPanel")
-                weatherPanel.addClass("hidden");
-
-                weatherUnavailable.addClass("weatherPanel")
-                weatherUnavailable.removeClass("hidden");
-            } else {
-                weatherUnavailable.removeClass("weatherPanel")
-                weatherUnavailable.addClass("hidden");
-
-                weatherPanel.addClass("weatherPanel")
-                weatherPanel.removeClass("hidden");
-
-                // update values
-                $("#currentWeatherTemp").text(currentWeatherTemp + '\xB0');
-                $("#currentWeatherSummary").text(currentWeatherSummary);
-                $("#todayWeatherSummary").text(todaySummary);
-                $("#todayWeatherTemp").text(todayMax + '\xB0 / ' + todayMin + '\xB0');
-            }
-        }
 
         $( document ).ready(function () {
             width = $("#targetTable").width();
 
-            $("#contentBody").width(width);
-            $("#temperatureTable").width(width);
-            $("#weatherPanel").width(width);
-            $("#weatherUnavailable").width(width);
-
-            $("#wp1").width(width / 2);
-            $("#wp2").width(width / 2);
-
-            currentWeatherTemp = "{{ currentWeatherTemp }}";
-            currentWeatherSummary = "{{ currentWeatherSummary }}";
-            todaySummary = "{{ todaySummary }}";
-            todayMax = "{{ todayMax }}";
-            todayMin = "{{ todayMin }}";
-            todayPrecipProbability = "{{ todayPrecipProbability }}";
-
-            if ("None" === currentWeatherTemp || "None" === currentWeatherSummary ||
-                "None" === todaySummary || "None" === todayMax ||
-                "None" === todayMin || "None" === todayPrecipProbability) {
-
-                currentWeatherTemp = null;
-            }
-            UpdateWeather(currentWeatherTemp, currentWeatherSummary, todaySummary,
-                          todayMax, todayMin, todayPrecipProbability);
-
-            {% if heatRunning %}
+            if (heatRunning == 1) {
                 $("#heatIndicator").addClass("red");
-            {% endif %}
+            } else {
+                $("#heatIndicator").removeClass("red");
+            }
+            if (manual_on == 1) {
+                document.getElementById("manual_on").checked = true;
+            } else {
+                document.getElementById("manual_on").checked = false;
+            }
+
+            if (manual_off == 1) {
+                document.getElementById("manual_off").checked = true;
+            } else {
+                document.getElementById("manual_off").checked = false;
+            }
+
+
+            // {% if heatRunning == 1%}
+            //     $("#heatIndicator").addClass("red");
+            // {% endif %}
+
+            // {% if (heatRunning == 1%}
+            //     $("#heatIndicator").addClass("red");
+            // {% else %}
+            //     $("#heatIndicator").removeClass("red");
+            // {% endif %}
+
+            // {% if manual_on == 1 %}
+            //     document.getElementById("manual_on").checked = true;
+            // {% else %}
+            //     document.getElementById("manual_on").checked = false;
+            // {% endif %}
+
+            // {% if manual_off == 1 %}
+            // document.getElementById("manual_off").checked = true;
+            // {% else %}
+            // document.getElementById("manual_off").checked = false;
+            // {% endif %}
 
 
             window.setInterval(function () {
