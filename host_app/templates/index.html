@@ -299,10 +299,10 @@
             <h3>Power</h3>
             <div class="switch-toggle alert alert-dark font-weight-bold">
                 <input id="manual_on" name="toggle" type="radio">
-                <label for="manual_on" onclick="set_radio(true)">On</label>
+                <label for="manual_on" onclick="">On</label>
 
                 <input id="manual_off" name="toggle" type="radio">
-                <label for="manual_off" onclick="set_radio(true)">Off</label>
+                <label for="manual_off" onclick="">Off</label>
 
                 <a class="btn btn-info"></a>
             </div>
@@ -320,7 +320,7 @@
                             <h6>Inside:</h6>
                         </td>
                         <td>
-                            <h6 id="indoorTemperature">&deg;</h6>
+                            <h6 id="indoorTemperature">{{ currentTemperature }}&deg;</h6>
                         </td>
                     </tr>
                     <tr>
@@ -328,7 +328,7 @@
                             <h6>Target:</h6>
                         </td>
                         <td>
-                            <h6 id="targetTemperature"></h6>
+                            <h6 id="targetTemperature">{{ currentTarget }}</h6>
                         </td>
                     </tr>
                 </tbody>
