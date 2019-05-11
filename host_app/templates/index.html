@@ -95,14 +95,6 @@
         }
 
         $( document ).ready(function () {
-            width = $("#targetTable").width();
-
-            $("#contentBody").width(width);
-            $("#temperatureTable").width(width);
-
-            $("#wp1").width(width / 2);
-            $("#wp2").width(width / 2);
-
             {% if 1 == manual_on %}
                 $("#manual_on_button").addClass("red");
             {% endif %}        
