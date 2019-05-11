@@ -102,8 +102,7 @@
                 manual_off = 1;  
                 }
             
-            dial = document.getElementsByClassName("knob");
-            temperature = dial.value();
+            var temperature = document.getElementsByClassName("knob").value;
             //var temperature = $("#temperatureInput").val();
 
             var hiddenField = document.createElement("input");
