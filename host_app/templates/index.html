@@ -42,7 +42,7 @@
             var temperatureInput = $("#temperatureInput");
             var temperature = parseFloat(temperatureInput.val());
             temperature += amount;
-            temperatureInput.val(temperature.toFixed(1))
+            temperatureInput.val(temperature.toFixed(0))
         }
 
         function SubmitTargets() {
@@ -193,7 +193,7 @@
                     </td>
                     <td class="targetCell center">
                         <div class="massive ui input" style="width: 125px">
-                            <input id="temperatureInput" value={{ currentTarget }} type="text" style="text-align: center;">
+                            <input id="temperatureInput" value= {{ currentTarget }} type="text" style="text-align: center;">
                         </div>
                     </td>
                     <td class="center">
