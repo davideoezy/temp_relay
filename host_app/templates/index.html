@@ -141,26 +141,32 @@
     <div class="container">
         <div class="p-3 mb-2 bg-dark text-white">
             <fieldset class="col-sm-4">
-        <table id="targetTable">
-                <tr>
-                    <td class="center targetCell">
-                        <button id="heatIndicator" class="btn btn-outline-danger">
-                        </button>
-                    </td>
-                </tr>
-                <tr>
-                    <button id="manual_on_button" class="btn btn-success" onclick="manual_on_toggle(true)">
+                <div class="row">
+                    <div class="col">
+                    </div>
+                    <div class="col"></div>
+                    <button id="heatIndicator" class="btn btn-outline-danger">
+                    </button>
+                </div>
+                <div class="col">
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <button id="manual_on_button" class="btn btn-success" onclick="manual_on_toggle(true)">
                             On
                         </button>
+                    </div>
+                    <div class="col">
                         <button id="manual_off_button" class="btn btn-danger" onclick="manual_off_toggle(true)">
                             Off
                         </button>
-                </tr>
-            </table>
+                    </div>
+    
             </fieldset>
         </div>
-        </div>
-    <div class = "container">
+    </div>
+
+<div class = "container">
     <div class="jumbotron">
         <h1 class="display-4" id="indoorTemperature">Current: {{ currentTemperature }}&deg;</h1>
     </div>
