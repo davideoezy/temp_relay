@@ -102,7 +102,7 @@ class db_helper():
                     manual_on,
                     manual_off)
                     VALUES
-                    ({},{},{},{},{})""".format(temperature, manual_on, manual_off)
+                    ({},{},{})""".format(temperature, manual_on, manual_off)
         
         self.insert_db_data(statement)
 
