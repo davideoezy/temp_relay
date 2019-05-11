@@ -146,6 +146,30 @@
 
 </head>
 <body id="contentBody" class="mainContent">
+    <div class="container">
+        <table id="targetTable">
+                <tr>
+                    <td class="center targetCell">
+                        <button id="heatIndicator" class="huge circular ui icon disabled button">
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="modeCell targetCell">
+                        <button id="manual_on_button" class="massive ui button modeButton" onclick="manual_on_toggle(true)">
+                            On
+                        </button>
+                    </td>
+                    <td class="modeCell targetCell">
+                        <button id="manual_off_button" class="massive ui button modeButton" onclick="manual_off_toggle(true)">
+                            Off
+                        </button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    
+
     <div>
         <table id="temperatureTable" class="left">
             <tbody>
