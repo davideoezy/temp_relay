@@ -25,64 +25,6 @@
         $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
     </script>
 
-    <script>
-        $(function ($) {
-
-            $(".knob").knob({
-                change: function (value) {
-                    
-                    //console.log("change : " + value);
-                },
-                release: function (value) {
-                    //console.log(this.$.attr('value'));
-                    console.log("release : " + value);
-                    return value;
-                },
-                cancel: function () {
-                    console.log("cancel : ", this);
-                },
-                /*format : function (value) {
-                    return value + '%';
-                    },*/
-                draw: function () {
-
-                    // "tron" case
-                    if (this.$.data('skin') == 'tron') {
-
-                        this.cursorExt = 0.3;
-
-                        var a = this.arc(this.cv)  // Arc
-                            , pa                   // Previous arc
-                            , r = 1;
-
-                        this.g.lineWidth = this.lineWidth;
-
-                        if (this.o.displayPrevious) {
-                            pa = this.arc(this.v);
-                            this.g.beginPath();
-                            this.g.strokeStyle = this.pColor;
-                            this.g.arc(this.xy, this.xy, this.radius - this.lineWidth, pa.s, pa.e, pa.d);
-                            this.g.stroke();
-                        }
-
-                        this.g.beginPath();
-                        this.g.strokeStyle = r ? this.o.fgColor : this.fgColor;
-                        this.g.arc(this.xy, this.xy, this.radius - this.lineWidth, a.s, a.e, a.d);
-                        this.g.stroke();
-
-                        this.g.lineWidth = 2;
-                        this.g.beginPath();
-                        this.g.strokeStyle = this.o.fgColor;
-                        this.g.arc(this.xy, this.xy, this.radius - this.lineWidth + 1 + this.lineWidth * 2 / 3, 0, 2 * Math.PI, false);
-                        this.g.stroke();
-
-                        return false;
-                    }
-                }
-            });
-
-    </script>
-
     <script type="text/javascript">
 
 
@@ -102,7 +44,7 @@
                 manual_off = 1;  
                 }
             
-            var temperature = document.getElementsByClassName("knob").value;
+            var temperature = document.getElementsByClassName("kno$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$b").value;
             //var temperature = $("#temperatureInput").val();
 
             var hiddenField = document.createElement("input");
@@ -149,28 +91,6 @@
                 document.getElementById("manual_off").checked = false;
             }
 
-            // {% if heatRunning == 1%}
-            //     $("#heatIndicator").addClass("red");
-            // {% endif %}
-
-            // {% if (heatRunning == 1%}
-            //     $("#heatIndicator").addClass("red");
-            // {% else %}
-            //     $("#heatIndicator").removeClass("red");
-            // {% endif %}
-
-            // {% if manual_on == 1 %}
-            //     document.getElementById("manual_on").checked = true;
-            // {% else %}
-            //     document.getElementById("manual_on").checked = false;
-            // {% endif %}
-
-            // {% if manual_off == 1 %}
-            // document.getElementById("manual_off").checked = true;
-            // {% else %}
-            // document.getElementById("manual_off").checked = false;
-            // {% endif %}
-
 
             window.setInterval(function () {
                 $.ajax({
@@ -210,15 +130,16 @@
             }, 20000);
         });
 
-        function set_radio() {
-            {% if 1 == manual_on %}
-                document.getElementById("manual_on").checked = true;
-            {% endif %}
+    </script>
 
-            {% if 1 == manual_off %}
-            document.getElementById("manual_off").checked = true;
-            {% endif %}
-            }
+    <script>
+        var slider = document.getElementById("tempRange");
+        var output = document.getElementById("demo");
+        output.innerHTML = slider.value;
+
+        slider.oninput = function () {
+            output.innerHTML = this.value;
+        }
     </script>
 
     <style>
@@ -263,10 +184,11 @@
     <div class="p-3 mb-2 bg-dark text-white">
         <fieldset class="col-sm-4">
             <h3>Target Temperature</h3>
-            <div class="center">
-                <input class="knob" id="temperatureInput" data-min="15" data-max="30" data-width="80%" value= "{{ currentTarget }}">
+            <div class="slidecontainer">
+                <input type="range" min="10" max="30" value="{{ currentTarget }}" class="slider" id="tempRange">
+                <p>Value: <span id="demo"></span></p>
             </div>
-        </fieldset>
+        </fieldset> 
     </div>
 </div>
 <div class="container">
