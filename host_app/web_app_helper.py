@@ -15,7 +15,8 @@ class ThermostatWeb():
                     and request.args.get("temperature"):
                 manual_on = request.args.get("manual_on")
                 manual_off = request.args.get("manual_off")
-                temperature = round(float(request.args.get("temperature")), 1)
+                #temperature = round(float(request.args.get("temperature")), 1)
+                temperature = request.args.get("temperature")
                 self.db_helper.insert_control_settings(
                     temperature=temperature, manual_on=manual_on, manual_off=manual_off)
 
@@ -23,7 +24,8 @@ class ThermostatWeb():
                 data = request.form
                 manual_on = data["manual_on"]
                 manual_off = data["manual_off"]
-                temperature = round(float(data["temperature"]), 1)
+                #temperature = round(float(data["temperature"]), 1)
+                temperature = data["temperature"]
 
                 self.db_helper.insert_control_settings(
                     temperature=temperature, manual_on=manual_on, manual_off=manual_off)
