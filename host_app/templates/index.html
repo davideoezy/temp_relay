@@ -163,12 +163,16 @@
         </div>
     </div>
 
-
-<div class = "container">
+<div class="container">
     <div class="jumbotron">
-        <h1 class="display-4" id="indoorTemperature">Current: {{ currentTemperature }}&deg;</h1>
+        <div class="col text-right">
+            <h3 class="display-4" id="indoorTemperature">Current: </h3>
+        </div>
+        <div class="col">
+            <h1 class="display-4" id="indoorTemperature">{{ currentTemperature }}&deg;</h1>
+        </div>
     </div>
-    </div>
+</div>
 
     <div>
         <table id="temperatureTable" class="left">
