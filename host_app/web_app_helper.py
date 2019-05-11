@@ -73,7 +73,7 @@ class ThermostatWeb():
                             manual_on = manual_on,
                             manual_off = manual_off)
 
-        return function('index.html',
+        return function('index_parked.html',
                         heatRunning = heatRunning,
                         currentTemperature=currentTemperature,
                         currentTarget = currentTarget,
