@@ -20,19 +20,15 @@ class ThermostatWeb():
                     temperature=temperature, manual_on=manual_on, manual_off=manual_off)
 
             if 'POST' == request.method:
-                return print(request.form)
+                data = request.form
+                manual_on = data["manual_on"]
+                manual_off = data["manual_off"]
+                temperature = round(float(data["temperature"]), 1)
 
+                self.db_helper.insert_control_settings(
+                    temperature=temperature, manual_on=manual_on, manual_off=manual_off)
 
-
-            #     data = request.form
-            #     manual_on = data["manual_on"]
-            #     manual_off = data["manual_off"]
-            #     temperature = round(float(data["temperature"]), 1)
-
-            #     self.db_helper.insert_control_settings(
-            #         temperature=temperature, manual_on=manual_on, manual_off=manual_off)
-
-            # return self.webpage_helper(render_template, 'request')
+            return self.webpage_helper(render_template, 'request')
 
         @self.app.route("/update")
         def update():
