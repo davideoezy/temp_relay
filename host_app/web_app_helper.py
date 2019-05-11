@@ -34,6 +34,24 @@ class ThermostatWeb():
         def update():
             return self.webpage_helper(jsonify, 'update')
 
+        @self.app.route("/slider")
+        def slider():
+            if request.args.get("mode") is not None \
+                    and request.args.get("temperature"):
+                manual_on = request.args.get("manual_on")
+                manual_off = request.args.get("manual_off")
+                temperature = request.args.get("temperature")
+                
+
+            if 'POST' == request.method:
+                data = request.form
+                manual_on = data["manual_on"]
+                manual_off = data["manual_off"]
+                temperature = data["temperature"]
+
+            return self.webpage_helper(jsonify, 'update')
+
+
     # take a function and gather necessary data for the web ui, then call the function
     # with the gathered data an an input and return the result
     def webpage_helper(self, function, type):

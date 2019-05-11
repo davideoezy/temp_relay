@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>PyStat</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css"
+        href="https://cdn.jsdelivr.net/npm/css-toggle-switch@latest/dist/toggle-switch.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-bootstrap/0.5pre/assets/css/docs.css">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jQuery-Knob/1.2.13/jquery.knob.min.js"></script>
+
+    <script type="text/javascript">
+        $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+    </script>
+
+    <script type="text/javascript">
+
+
+        function SubmitTargets() {
+            var form = document.createElement("form");
+            form.setAttribute("method", "post");
+            form.setAttribute("action", "");
+
+
+            var manual_on = 0;
+            if (document.getElementById("manual_on").checked == true) {
+                manual_on = 1;
+                }
+
+            var manual_off = 0;
+            if (document.getElementById("manual_off").checked == true) {
+                manual_off = 1;  
+                }
+            
+            var temperature = document.getElementsById("demo").value;
+            //var temperature = $("#temperatureInput").val();
+
+            var hiddenField = document.createElement("input");
+            hiddenField.setAttribute("type", "hidden");
+            hiddenField.setAttribute("name", "manual_on");
+            hiddenField.setAttribute("value", manual_on);
+            form.appendChild(hiddenField);
+
+            var hiddenField = document.createElement("input");
+            hiddenField.setAttribute("type", "hidden");
+            hiddenField.setAttribute("name", "manual_off");
+            hiddenField.setAttribute("value", manual_off);
+            form.appendChild(hiddenField);
+
+            hiddenField = document.createElement("input");
+            hiddenField.setAttribute("type", "hidden");
+            hiddenField.setAttribute("name", "temperature");
+            hiddenField.setAttribute("value", temperature);
+            form.appendChild(hiddenField);
+
+            document.body.appendChild(form);
+            form.submit();
+        }
+
+
+        $( document ).ready(function () {
+            width = $("#targetTable").width();
+
+            if (heatRunning == 1) {
+                $("#heatIndicator").addClass("red");
+            } else {
+                $("#heatIndicator").removeClass("red");
+            }
+
+            if (manual_on == 1) {
+                document.getElementById("manual_on").checked = true;
+            } else {
+                document.getElementById("manual_on").checked = false;
+            }
+
+            if (manual_off == 1) {
+                document.getElementById("manual_off").checked = true;
+            } else {
+                document.getElementById("manual_off").checked = false;
+            }
+
+
+            window.setInterval(function () {
+                $.ajax({
+                    url: "/update",
+                    context: document.body
+                }).done(function(data) {
+                    heatRunning = data["heatRunning"];
+                    indoorTemperature = data["currentTemperature"];
+                    currentTarget = data["currentTarget"];
+                    manual_on = data["manual_on"];
+                    manual_off = data["manual_off"];
+
+
+                    $("#indoorTemperature").text(indoorTemperature +
+                        String.fromCharCode(176));
+                    $("#targetTemperature").text(currentTarget +
+                        String.fromCharCode(176));
+
+                    if (heatRunning == 1) {
+                        $("#heatIndicator").addClass("red");
+                    } else {
+                        $("#heatIndicator").removeClass("red");
+                    }
+                    if (manual_on == 1){
+                        document.getElementById("manual_on").checked = true;
+                    } else {
+                        document.getElementById("manual_on").checked = false;
+                    }
+
+                    if (manual_off == 1) {
+                        document.getElementById("manual_off").checked = true;
+                    } else {
+                        document.getElementById("manual_off").checked = false;
+                    }
+
+                });
+            }, 20000);
+        });
+
+    </script>
+
+    <script>
+        var slider = document.getElementById("tempRange");
+        var output = document.getElementById("demo");
+        output.innerHTML = slider.value;
+
+        slider.oninput = function () {
+            output.innerHTML = this.value;
+        }
+    </script>
+
+    <style>
+        .center {
+            margin: auto;
+            width: 60%;
+            padding: 10px;
+        }
+    </style>
+
+</head>
+<body id="contentBody" class="mainContent">
+
+<div class="container">
+    <div class="p-3 mb-2 bg-dark text-white">
+        <fieldset class="col-sm-4">
+            <h3>Power</h3>
+            <div class="switch-toggle alert alert-dark font-weight-bold">
+                <input id="manual_on" name="toggle" type="radio">
+                <label for="manual_on" onclick="SubmitTargets()">On</label>
+
+                <input id="manual_off" name="toggle" type="radio">
+                <label for="manual_off" onclick="SubmitTargets()">Off</label>
+
+                <a class="btn btn-info"></a>
+            </div>
+        </fieldset>
+    </div>
+</div>
+<div class="container">
+    <div class="p-3 mb-2 bg-dark text-white">
+        <fieldset class="col-sm-4">
+            <h3>Inside Temperature</h3>
+            <div class="center">
+                <h1 id="indoorTemperature">{{ currentTemperature }}&deg;</h1>
+            </div>
+        </fieldset>
+    </div>
+</div>
+
+<div class="container">
+    <div class="p-3 mb-2 bg-dark text-white">
+        <fieldset class="col-sm-4">
+            <h3>Target Temperature</h3>
+            <div class="slidecontainer">
+                <input type="range" min="10" max="30" value="{{ currentTarget }}" class="slider" id="tempRange">
+                <p>Value: <span id="demo"></span></p>
+            </div>
+        </fieldset> 
+    </div>
+</div>
+<div class="container">
+    <div class="p-3 mb-2 bg-dark text-white">
+        <fieldset class="col-sm-4">
+            <button id="heatIndicator" class="huge circular ui icon disabled button"></button>
+        </fieldset>
+    </div>
+</div>
+
+</body>
+</html>
