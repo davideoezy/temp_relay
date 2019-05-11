@@ -139,10 +139,12 @@
 </head>
 <body id="contentBody" class="mainContent">
     <div class="container">
+        <div class="p-3 mb-2 bg-dark text-white">
+            <fieldset class="col-sm-4">
         <table id="targetTable">
                 <tr>
                     <td class="center targetCell">
-                        <button id="heatIndicator" class="huge circular ui icon disabled button">
+                        <button id="heatIndicator" class="btn btn-outline-danger">
                         </button>
                     </td>
                 </tr>
@@ -155,8 +157,11 @@
                         </button>
                 </tr>
             </table>
+            </fieldset>
         </div>
-    
+        </div>
+    <div class="jumbotron">
+        <h1 class="display-4" id="indoorTemperature">{{ currentTemperature }}&deg;</h1>
 
     <div>
         <table id="temperatureTable" class="left">
