@@ -23,8 +23,6 @@
             } else {
                 manual_on_button.addClass("red");
                 $("#manual_off_button").removeClass("blue");
-                $("#awake_button").removeClass("green");
-                $("#bedtime_button").removeClass("blue");
             }
         }
 
@@ -35,32 +33,6 @@
             } else {
                 manual_off_button.addClass("blue");
                 $("#manual_on_button").removeClass("red");
-                $("#awake_button").removeClass("green");
-                $("#bedtime_button").removeClass("blue");
-            }
-        }
-
-        function awake_toggle(currentValue) {
-            var awake_button = $("#awake_button");
-            if(awake_button.hasClass("green")) {
-                awake_button.removeClass("green");
-            } else {
-                awake_button.addClass("green");
-                $("#manual_on_button").removeClass("red");
-                $("#manual_off_button").removeClass("blue");
-                $("#bedtime_button").removeClass("blue");
-            }
-        }
-
-        function bedtime_toggle(currentValue) {
-            var bedtime_button = $("#bedtime_button");
-            if(bedtime_button.hasClass("blue")) {
-                bedtime_button.removeClass("blue");
-            } else {
-                bedtime_button.addClass("blue");
-                $("#manual_on_button").removeClass("red");
-                $("#manual_off_button").removeClass("blue");
-                $("#awake_button").removeClass("green");
             }
         }
 
@@ -87,16 +59,7 @@
              var manual_off = 0;
                 if ($("#manual_off_button").hasClass("blue")) {
                 manual_off = 1;  
-                }
-            var awake = 0;
-                if ($("#awake_button").hasClass("green")) {
-                awake = 1; 
-                }             
-
-            var bedtime = 0;
-                if ($("#bedtime_button").hasClass("yellow")) {
-                bedtime = 1; 
-                }                
+                }   
 
             var temperature = $("#temperatureInput").val();
 
@@ -112,18 +75,6 @@
             hiddenField.setAttribute("value", manual_off);
             form.appendChild(hiddenField);
 
-            var hiddenField = document.createElement("input");
-            hiddenField.setAttribute("type", "hidden");
-            hiddenField.setAttribute("name", "awake");
-            hiddenField.setAttribute("value", awake);
-            form.appendChild(hiddenField);
-
-            var hiddenField = document.createElement("input");
-            hiddenField.setAttribute("type", "hidden");
-            hiddenField.setAttribute("name", "bedtime");
-            hiddenField.setAttribute("value", bedtime);
-            form.appendChild(hiddenField);
-
             hiddenField = document.createElement("input");
             hiddenField.setAttribute("type", "hidden");
             hiddenField.setAttribute("name", "temperature");
@@ -134,61 +85,14 @@
             form.submit();
         }
 
-        function UpdateWeather(currentWeatherTemp, currentWeatherSummary, todaySummary,
-                               todayMax, todayMin, todayPrecipProbability) {
-            weatherPanel = $("#weatherPanel")
-            weatherUnavailable = $("#weatherUnavailable")
-
-            if (null === currentWeatherTemp || null === currentWeatherSummary ||
-                null === todaySummary || null === todayMax ||
-                null === todayMin || null === todayPrecipProbability) {
-
-                weatherPanel.removeClass("weatherPanel")
-                weatherPanel.addClass("hidden");
-
-                weatherUnavailable.addClass("weatherPanel")
-                weatherUnavailable.removeClass("hidden");
-            } else {
-                weatherUnavailable.removeClass("weatherPanel")
-                weatherUnavailable.addClass("hidden");
-
-                weatherPanel.addClass("weatherPanel")
-                weatherPanel.removeClass("hidden");
-
-                // update values
-                $("#currentWeatherTemp").text(currentWeatherTemp + '\xB0');
-                $("#currentWeatherSummary").text(currentWeatherSummary);
-                $("#todayWeatherSummary").text(todaySummary);
-                $("#todayWeatherTemp").text(todayMax + '\xB0 / ' + todayMin + '\xB0');
-            }
-        }
-
         $( document ).ready(function () {
             width = $("#targetTable").width();
 
             $("#contentBody").width(width);
             $("#temperatureTable").width(width);
-            $("#weatherPanel").width(width);
-            $("#weatherUnavailable").width(width);
 
             $("#wp1").width(width / 2);
             $("#wp2").width(width / 2);
-
-            currentWeatherTemp = "{{ currentWeatherTemp }}";
-            currentWeatherSummary = "{{ currentWeatherSummary }}";
-            todaySummary = "{{ todaySummary }}";
-            todayMax = "{{ todayMax }}";
-            todayMin = "{{ todayMin }}";
-            todayPrecipProbability = "{{ todayPrecipProbability }}";
-
-            if ("None" === currentWeatherTemp || "None" === currentWeatherSummary ||
-                "None" === todaySummary || "None" === todayMax ||
-                "None" === todayMin || "None" === todayPrecipProbability) {
-
-                currentWeatherTemp = null;
-            }
-            UpdateWeather(currentWeatherTemp, currentWeatherSummary, todaySummary,
-                          todayMax, todayMin, todayPrecipProbability);
 
             {% if 1 == manual_on %}
                 $("#manual_on_button").addClass("red");
@@ -196,14 +100,6 @@
             
             {% if 1 == manual_off %}
                 $("#manual_off_button").addClass("blue");
-            {% endif %}
-
-            {% if 1 == awake %}
-                $("#awake_button").addClass("green");
-            {% endif %}
-
-            {% if 1 == bedtime %}
-                $("#bedtime_button").addClass("yelloe");
             {% endif %}
 
             {% if heatRunning %}
@@ -221,8 +117,7 @@
                     currentTarget = data["currentTarget"];
                     manual_on = data["manual_on"];
                     manual_off = data["manual_off"];
-                    awake = data["awake"];
-                    bedtime = data["bedtime"];
+
 
                     $("#indoorTemperature").text(indoorTemperature +
                         String.fromCharCode(176));
@@ -235,16 +130,6 @@
                         $("#heatIndicator").removeClass("red");
                     }
 
-
-                    // update weather panel
-                    currentWeatherTemp = data["currentWeatherTemp"];
-                    currentWeatherSummary = data["currentWeatherSummary"];
-                    todaySummary = data["todaySummary"];
-                    todayMax = data["todayMax"];
-                    todayMin = data["todayMin"];
-                    todayPrecipProbability = data["todayPrecipProbability"];
-                    UpdateWeather(currentWeatherTemp, currentWeatherSummary, todaySummary,
-                                  todayMax, todayMin, todayPrecipProbability);
                 });
             }, 20000);
         });
@@ -298,18 +183,7 @@
                         </button>
                     </td>
                 </tr>
-                <tr>
-                    <td class="modeCell targetCell">
-                        <button id="awake_button" class="massive ui button modeButton" onclick="awake_toggle(true)">
-                        Awake
-                        </button>
-                    </td>
-                    <td class="modeCell targetCell">
-                        <button id="bedtime_button" class="massive ui button modeButton" onclick="bedtime_toggle(true)">
-                        Bedtime
-                        </button>
-                    </td>
-                </tr>
+
                 <tr>
                     <td class="center">
                         <button id="down1" class="large ui left icon button blue" style="margin-top: 24px;" onclick="ChangeTemperature(-1)">
@@ -339,38 +213,6 @@
             </tbody>
         </table>
     </div>
-    <div id="weatherPanel" class="center">
-        <table class="weatherPanel">
-            <tr>
-                <th id="wp1"></th>
-                <th id="wp2"></th>
-            </tr>
-            <tr>
-                <td>
-                    <h2>Currently:</h2>
-                </td>
-                <td>
-                    <h2>Today:</h2>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <h2 id="currentWeatherTemp"></h2>
-                </td>
-                <td>
-                    <h2 id="todayWeatherTemp"></h2>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <h2 id="currentWeatherSummary"></h2>
-                </td>
-                <td>
-                    <h2 id="todayWeatherSummary"></h2>
-                </td>
-            </tr>
-        </table>
-    </div>
-    <div id="weatherUnavailable" class="weatherPanel center hidden"></div>
+
 </body>
 </html>

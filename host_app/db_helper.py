@@ -67,12 +67,10 @@ class db_helper():
         return self.db_data(n_variables = n_variables, statement = statement, default = default)
 
     def get_control_settings(self):
-        n_variables = 5
+        n_variables = 3
         statement = """
                     SELECT
                     temp_setting,
-                    bedtime,
-                    awake,
                     manual_on,
                     manual_off
                     FROM heater_controls 
@@ -97,16 +95,14 @@ class db_helper():
 
         return self.db_data(n_variables = n_variables, statement = statement, default = default)
 
-    def insert_control_settings(self, temperature, manual_on, manual_off, awake, bedtime):
+    def insert_control_settings(self, temperature, manual_on, manual_off):
         statement = """
                     INSERT into heater_controls
                     (temp_setting,
-                    bedtime,
-                    awake,
                     manual_on,
                     manual_off)
                     VALUES
-                    ({},{},{},{},{})""".format(temperature, bedtime, awake, manual_on, manual_off)
+                    ({},{},{})""".format(temperature, manual_on, manual_off)
         
         self.insert_db_data(statement)
 
