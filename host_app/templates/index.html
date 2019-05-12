@@ -51,8 +51,8 @@
             var temperatureInput = $("#temperatureInput");
             var temperature = parseFloat(temperatureInput.val());
             temperature += amount;
-            //temperatureInput.val(temperature.toFixed())
-            temperatureInput.text(temperature.toFixed() + String.fromCharCode(176))
+            temperatureInput.val(temperature.toFixed())
+
         }
 
         function SubmitTargets() {
@@ -284,7 +284,8 @@
         border: 0;
         box-shadow: none;
         text-align: center;
-        width: 30%;/* You may want to include this as bootstrap applies these styles too */
+        width: 30%;
+        height: 65%;/* You may want to include this as bootstrap applies these styles too */
     }
 
 </style>
