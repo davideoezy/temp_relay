@@ -175,20 +175,18 @@
             <h3>Target Temperature</h3>
             <div class="row">
                 <div class="col text-center">
-                    <button id="down1" class="btn btn-primary btn-lg" style="margin-top: 24px;"
-                        onclick="ChangeTemperature(-1)">
+                    <button id="down1" class="btn btn-primary btn-lg" onclick="ChangeTemperature(-1)">
                         -1
                     </button>
                 </div>
                 <div class="col text-center">
-                    <div class="form-control-plaintext" > <!-- style="width: 125px"-->
+                    <div class="form-control input-lg bg-dark text-white no-border" >
                         <input id="temperatureInput" value={{ currentTarget }} type="text" style="text-align: center;">
                     </div>
 
                 </div>
                 <div class="col text-center">
-                    <button id="up1" class="btn btn-danger btn-lg" style="margin-top: 24px;"
-                        onclick="ChangeTemperature(1)">
+                    <button id="up1" class="btn btn-danger btn-lg" onclick="ChangeTemperature(1)">
                         +1
                     </button>
 
@@ -276,4 +274,12 @@
     </div>
 
 </body>
+
+<script>
+.no - border {
+        border: 0;
+        box - shadow: none; /* You may want to include this as bootstrap applies these styles too */
+    }
+
+</script>
 </html>
