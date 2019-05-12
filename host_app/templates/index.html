@@ -48,15 +48,10 @@
 
 
         function ChangeTemperature(amount) {
-            //var temperatureInput = $("#temperatureInput");
-            //var temperature = parseFloat(temperatureInput.val());
-            //temperature += amount;
-            //temperatureInput.val(temperature.toFixed(0))
-
-            var targetTemperature = $("targetTemperature");
-            var temperature = parseFloat(targetTemperature.val());
+            var temperatureInput = $("#temperatureInput");
+            var temperature = parseFloat(temperatureInput.val());
             temperature += amount;
-            targetTemperature.val(temperature.toFixed(0))
+            temperatureInput.val(temperature.toFixed(0))
         }
 
         function SubmitTargets() {
@@ -194,6 +189,7 @@
     </div>
     <div class="container">
         <div class="p-3 mb-2 bg-dark text-white">
+            <h3>Target Temperature</h3>
             <div class="row">
                 <div class="col text-center">
                     <button id="down1" class="btn btn-primary btn-lg" style="margin-top: 24px;"
@@ -203,7 +199,7 @@
                     </button>
                 </div>
                 <div class="col text-center">
-                    <div class="massive ui input" style="width: 125px">
+                    <div class="form-control-plaintext" style="width: 125px">
                         <input id="temperatureInput" value={{ currentTarget }} type="text" style="text-align: center;">
                     </div>
 
