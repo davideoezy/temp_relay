@@ -140,6 +140,7 @@
 <body id="contentBody" class="mainContent">
     <div class="container">
         <div class="p-3 mb-2 bg-dark text-white">
+            <h3>Power</h3>
             <div class="row">
                 <div class="col text-center">
                     <button id="manual_on_button" class="btn btn-success btn-lg" onclick="manual_on_toggle(true)">
@@ -160,29 +161,15 @@
     </div>
     <div class="container">
         <div class="p-3 mb-2 bg-dark text-white">
+            <h3>Current Temperature</h3>
             <div class="row">
-                <div class="col text-right">
-                    <h3 class="display-4">Current: </h3>
-                </div>
-                <div class="col text-left">
+                <div class="col text-center">
                     <h1 class="display-4" id="indoorTemperature">{{ currentTemperature }}&deg;</h1>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="container">
-        <div class="p-3 mb-2 bg-dark text-white">
-            <div class="row">
-                <div class="col text-right">
-                    <h3 class="display-4">Target: </h3>
-                </div>
-                <div class="col text-left">
-                    <h1 class="display-4" id="targetTemperature">{{ currentTarget }}&deg;</h1>
-                </div>
-            </div>
-        </div>
-    </div>
     <div class="container">
         <div class="p-3 mb-2 bg-dark text-white">
             <h3>Target Temperature</h3>
