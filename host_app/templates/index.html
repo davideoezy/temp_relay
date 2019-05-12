@@ -49,10 +49,14 @@
 
         function ChangeTemperature(amount) {
             //var temperatureInput = $("#temperatureInput");
-            var temperatureInput = $("targetTemperature");
-            var temperature = parseFloat(temperatureInput.val());
+            //var temperature = parseFloat(temperatureInput.val());
+            //temperature += amount;
+            //temperatureInput.val(temperature.toFixed(0))
+
+            var targetTemperature = $("targetTemperature");
+            var temperature = parseFloat(targetTemperature.val());
             temperature += amount;
-            temperatureInput.val(temperature.toFixed(0))
+            targetTemperature.val(temperature.toFixed(0))
         }
 
         function SubmitTargets() {
