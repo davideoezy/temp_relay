@@ -190,12 +190,11 @@
                 <div class="col text-center">
                     <button id="down1" class="btn btn-primary btn-lg" style="margin-top: 24px;"
                         onclick="ChangeTemperature(-1)">
-                        <i class="left caret icon"></i>
                         -1
                     </button>
                 </div>
                 <div class="col text-center">
-                    <div class="form-control-plaintext" style="width: 125px">
+                    <div class="form-control-plaintext" > <!-- style="width: 125px"-->
                         <input id="temperatureInput" value={{ currentTarget }} type="text" style="text-align: center;">
                     </div>
 
@@ -204,7 +203,6 @@
                     <button id="up1" class="btn btn-danger btn-lg" style="margin-top: 24px;"
                         onclick="ChangeTemperature(1)">
                         +1
-                        <i class="right caret icon"></i>
                     </button>
 
                 </div>
