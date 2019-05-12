@@ -139,7 +139,7 @@
 </head>
 <body id="contentBody" class="mainContent">
     <div class="container">
-        <div class="p-3 mb-2 bg-dark text-white">
+        <div class="p-3 mb-2 bg-secondary text-white">
             <h3>Power</h3>
             <div class="row">
                 <div class="col text-center">
@@ -160,7 +160,7 @@
         </div>
     </div>
     <div class="container">
-        <div class="p-3 mb-2 bg-dark text-white">
+        <div class="p-3 mb-2 bg-secondary text-white">
             <h3>Current</h3>
             <div class="row">
                 <div class="col text-center">
@@ -171,7 +171,7 @@
     </div>
 
     <div class="container">
-        <div class="p-3 mb-2 bg-dark text-white">
+        <div class="p-3 mb-2 bg-secondary text-white">
             <h3>Target</h3>
             <div class="row">
                 <div class="col text-center">
@@ -180,7 +180,7 @@
                     </button>
                 </div>
                 <div class="col text-center">
-                    <div class="input-lg bg-dark text-white no-border" >
+                    <div class="form-control-temp" >
                         <input id="temperatureInput" value={{ currentTarget }} type="text" style="text-align: center;">
                     </div>
 
@@ -276,7 +276,10 @@
 </body>
 
 <style>
-.no-border {
+.form-control-temp {
+        input-lg
+        bg-dark
+        text-white
         border: 0;
         box - shadow: none; /* You may want to include this as bootstrap applies these styles too */
     }
