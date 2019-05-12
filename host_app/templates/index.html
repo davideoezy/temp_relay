@@ -150,44 +150,70 @@
             </div>
             <div class="row">
                 <div class="col text-center">
-                    <button id="manual_on_button" class="btn btn-success" onclick="manual_on_toggle(true)">
+                    <button id="manual_on_button" class="btn btn-success btn-lg" onclick="manual_on_toggle(true)">
                         On
                     </button>
                 </div>
                 <div class="col text-center">
-                    <button id="manual_off_button" class="btn btn-danger" onclick="manual_off_toggle(true)">
+                    <button id="manual_off_button" class="btn btn-danger btn-lg" onclick="manual_off_toggle(true)">
                         Off
                     </button>
                 </div>
             </div>
         </div>
     </div>
-<div class="container">
-    <div class="p-3 mb-2 bg-dark text-white">
-        <div class="row">
-            <div class="col text-right">
-                <h3 class="display-4">Current: </h3>
-            </div>
-            <div class="col text-left">
-                <h1 class="display-4" id="indoorTemperature">{{ currentTemperature }}&deg;</h1>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="container">
-    <div class="p-3 mb-2 bg-dark text-white">
-        <div class="row">
-            <div class="col text-right">
-                <h3 class="display-4">Target: </h3>
-            </div>
-            <div class="col text-left">
-                <h1 class="display-4" id="targetTemperature">{{ currentTarget }}&deg;</h1>
+    <div class="container">
+        <div class="p-3 mb-2 bg-dark text-white">
+            <div class="row">
+                <div class="col text-right">
+                    <h3 class="display-4">Current: </h3>
+                </div>
+                <div class="col text-left">
+                    <h1 class="display-4" id="indoorTemperature">{{ currentTemperature }}&deg;</h1>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
+    <div class="container">
+        <div class="p-3 mb-2 bg-dark text-white">
+            <div class="row">
+                <div class="col text-right">
+                    <h3 class="display-4">Target: </h3>
+                </div>
+                <div class="col text-left">
+                    <h1 class="display-4" id="targetTemperature">{{ currentTarget }}&deg;</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="p-3 mb-2 bg-dark text-white">
+            <div class="row">
+                <div class="col text-right">
+                    <button id="down1" class="large ui left icon button blue" style="margin-top: 24px;"
+                        onclick="ChangeTemperature(-1)">
+                        <i class="left caret icon"></i>
+                        -1
+                    </button>
+                </div>
+                <div class="col text-right">
+                    <div class="massive ui input" style="width: 125px">
+                        <input id="temperatureInput" value={{ currentTarget }} type="text" style="text-align: center;">
+                    </div>
+
+                </div>
+                <div class="col text-right">
+                    <button id="up1" class="large ui right icon button red" style="margin-top: 24px;"
+                        onclick="ChangeTemperature(1)">
+                        +1
+                        <i class="right caret icon"></i>
+                    </button>
+
+                </div>
+            </div>
+        </div>
+    </div>
 
 
     <div>
