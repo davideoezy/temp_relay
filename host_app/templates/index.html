@@ -51,7 +51,8 @@
             var temperatureInput = $("#temperatureInput");
             var temperature = parseFloat(temperatureInput.val());
             temperature += amount;
-            temperatureInput.val(temperature.toFixed(0))
+            //temperatureInput.val(temperature.toFixed())
+            temperatureInput.text(temperature.toFixed() + String.fromCharCode(176))
         }
 
         function SubmitTargets() {
@@ -180,9 +181,9 @@
                     </button>
                 </div>
                 <div class="col text-center">
-                    <div class="form-control-temp" >
-                        <input id="temperatureInput" value={{ currentTarget }} type="text" style="text-align: center;">
-                    </div>
+
+                        <input class = "form-control-temp" id="temperatureInput" value={{ currentTarget }} type="text">
+
 
                 </div>
                 <div class="col text-center">
@@ -278,10 +279,12 @@
 <style>
 .form-control-temp {
         font-size: 300%;
-        background-color: red;
+        background-color: #343a40;
         color: white;
         border: 0;
-        box-shadow: none; /* You may want to include this as bootstrap applies these styles too */
+        box-shadow: none;
+        text-align: center;
+        width: 30%;/* You may want to include this as bootstrap applies these styles too */
     }
 
 </style>
