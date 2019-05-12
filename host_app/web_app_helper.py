@@ -43,7 +43,7 @@ class ThermostatWeb():
         current = self.db_helper.get_control_settings()
         currentTemperature = round(float(self.db_helper.get_temp()),1)
         heatRunning = self.db_helper.get_heat_indicator()
-        currentTarget = current[0]
+        currentTarget = round(float(current[0]),0)
         manual_on = current[1]
         manual_off = current[2]
 

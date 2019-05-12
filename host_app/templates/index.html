@@ -144,7 +144,7 @@
             <h3>Power</h3>
             <div class="row">
                 <div class="col text-center">
-                    <button id="manual_on_button" class="btn btn-success btn-lg" onclick="manual_on_toggle(true)">
+                    <button id="manual_on_button" class="btn btn-success btn-lg modeButton" onclick="manual_on_toggle(true)">
                         On
                     </button>
                 </div>
@@ -153,7 +153,7 @@
                     </button>
                 </div>
                 <div class="col text-center">
-                    <button id="manual_off_button" class="btn btn-danger btn-lg" onclick="manual_off_toggle(true)">
+                    <button id="manual_off_button" class="btn btn-danger btn-lg modeButton" onclick="manual_off_toggle(true)">
                         Off
                     </button>
                 </div>
@@ -176,7 +176,7 @@
             <h3>Target</h3>
             <div class="row">
                 <div class="col text-center">
-                    <button id="down1" class="btn btn-primary btn-lg" onclick="ChangeTemperature(-1)">
+                    <button id="down1" class="btn btn-primary btn-lg modeButton" onclick="ChangeTemperature(-1)">
                         -1
                     </button>
                 </div>
@@ -187,7 +187,7 @@
 
                 </div>
                 <div class="col text-center">
-                    <button id="up1" class="btn btn-danger btn-lg" onclick="ChangeTemperature(1)">
+                    <button id="up1" class="btn btn-danger btn-lg modeButton" onclick="ChangeTemperature(1)">
                         +1
                     </button>
 
@@ -287,6 +287,9 @@
         width: 30%;
         height: 65%;/* You may want to include this as bootstrap applies these styles too */
     }
+.modeButton {
+    width: 145px;
+}
 
 </style>
 </html>
