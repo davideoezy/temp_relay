@@ -93,7 +93,7 @@
                     heatRunning = data["heatRunning"];
                     indoorTemperature = data["currentTemperature"];
                     currentTarget = data["currentTarget"];
-                    power = data["power"];
+                    powerMode = data["powerMode"];
 
                     $("#indoorTemperature").text(indoorTemperature +
                         String.fromCharCode(176));
@@ -105,7 +105,7 @@
                     } else {
                         $("#heatIndicator").removeClass("red");
                     }
-                    if (power == 1) {
+                    if (powerMode == 1) {
                         $("#power_switch").bootstrapToggle('on');
                     } else {
                         $("#power_switch").bootstrapToggle('off');
