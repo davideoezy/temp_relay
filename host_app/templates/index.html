@@ -24,10 +24,10 @@
     <script type="text/javascript">
         function power_toggle() {
             var power_button = $("#power_button");
-            if(power_button.attr(status) == "active") {
-                power_button.attr(status, "inactive");
+            if(power_button.hasClass("active")) {
+                power_button.removeClass("active");
             } else {
-                power_button.attr(status,"active");
+                power_button.addClass("active");
             }
             SubmitTargets();
         }
@@ -48,7 +48,7 @@
             form.setAttribute("action", "");
 
             var power = 0;
-            if ($("#power_button").attr(status) == "active") {
+            if ($("#power_button").hasClass("active")) {
                 power = 1;
             }
             var temperature = $("#temperatureInput").val();
@@ -72,9 +72,9 @@
         $( document ).ready(function () {
 
             {% if 1 == currentPower %}
-            $("#power_button").attr(status,"active");
+            $("#power_button").addClass("active");
             {% elif 0 == currentPower %}
-            $("#power_button").attr(status,"inactive");
+            $("#power_button").removeClass("active");
             {% endif %}
            
             if (heatRunning == 1) {
@@ -99,9 +99,9 @@
                         String.fromCharCode(176));
 
                     if (1 == power) {
-                        $("#power_button").attr(status,"active");
+                        $("#power_button").addClass("active");
                     } else {
-                        $("#power_button").attr(status,"inactive");
+                        $("#power_button").removeClass("active");
                     }   
 
                     if (heatRunning) {
