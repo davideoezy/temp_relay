@@ -72,9 +72,9 @@
 
         $(document).ready(function () {
             {% if 1 == powerMode %}
-            $("#power_switch").prop("checked","checked");
+            $("#power_switch").prop("checked",true);
             {% else  %}
-            $("#power_switch").prop("checked","");
+            $("#power_switch").prop("checked",false);
             {% endif %}
 
             {% if heatRunning == 1 %}
@@ -102,9 +102,9 @@
                         $("#heatIndicator").removeClass("red");
                     }
                     if (powerMode == 1) {
-                        $("#power_switch").prop("checked", "checked");
+                        $("#power_switch").prop("checked", true);
                     } else {
-                        $("#power_switch").prop("checked", "");
+                        $("#power_switch").prop("checked", false);
                     }
 
                 });
