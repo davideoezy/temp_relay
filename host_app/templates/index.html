@@ -133,7 +133,7 @@
             <h3>Current</h3>
             <div class="row">
                 <div class="col text-center">
-                    <h1 class="display-4" id="indoorTemperature">{{ currentTemperature }}&deg;</h1>
+                    <p class="currentTemp" id="indoorTemperature">{{ currentTemperature }}&deg;</h1>
                 </div>
             </div>
         </div>
@@ -174,9 +174,18 @@
         border: 0;
         box-shadow: none;
         text-align: center;
-        width: 30%;
+        width: 35%;
         height: 65%;/* You may want to include this as bootstrap applies these styles too */
     }
+
+.currentTemp {
+        font-size: 300%;
+        background-color: #343a40;
+        color: white;
+        border: 0;
+        box-shadow: none;
+        text-align: center;
+}
 .modeButton {
     width: 145px;
 }
