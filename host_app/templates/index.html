@@ -25,17 +25,6 @@
 
 
     <script type="text/javascript">
-        // function power_toggle() {
-        //     var power_button = $("#power_button");
-        //     if(power_button.hasClass("active")) {
-        //         power_button.removeClass("active");
-        //     } else {
-        //         power_button.addClass("active");
-        //     }
-            // SubmitTargets();
-        // }
-
-        //When switching power
 
         $(function () {
             $('#power_switch').change(function () {
@@ -46,6 +35,7 @@
                 }
             })
         })
+
     
         function ChangeTemperature(amount) {
             var temperatureInput = $("#temperatureInput");
@@ -61,7 +51,10 @@
             form.setAttribute("method", "post");
             form.setAttribute("action", "");
 
-            var power = $("#console-event").val();
+            var power = 0;
+            if ($('#power_switch').prop('checked')) {
+                power = 1;
+            } 
 
             var temperature = $("#temperatureInput").val();
 
@@ -81,53 +74,41 @@
             form.submit();
         }
 
-        $( document ).ready(function () {
+        $(document).ready(function () {
+            {% if 1 == powerMode %}
+            $("#power_switch").bootstrapToggle('on');
+            {% else  %}
+            $("#power_switch").bootstrapToggle('off');
+            {% endif %}
 
-            $("#console-event").val(currentPower);
-
-            // {% if 1 == currentPower %}
-            // // $("#power_switch").bootstrapToggle('on');
-            // $("#console-event").val(1);
-            // {% elif 0 == currentPower %}
-            // $("#power_switch").bootstrapToggle('off');
-            // $("#console-event").val(0);
-            // {% endif %}
-           
-            if (heatRunning == 1) {
-                $("#heatIndicator").addClass("red");
-            }
-
+            {% if heatRunning == 1 %}
+            $("#heatIndicator").addClass("red");
+            {% endif %}
 
             window.setInterval(function () {
                 $.ajax({
                     url: "/update",
                     context: document.body
-                }).done(function(data) {
+                }).done(function (data) {
                     heatRunning = data["heatRunning"];
                     indoorTemperature = data["currentTemperature"];
                     currentTarget = data["currentTarget"];
                     power = data["power"];
-
 
                     $("#indoorTemperature").text(indoorTemperature +
                         String.fromCharCode(176));
                     $("#targetTemperature").text(currentTarget +
                         String.fromCharCode(176));
 
-
-                    $("#console-event").val(power)    
-                    // if (1 == power) {
-                    //     $("#power_switch").bootstrapToggle('on');
-                    //     $("#console-event").html(1);
-                    // } else {
-                    //     $("#power_switch").bootstrapToggle('off');
-                    //     $("#console-event").html(0);
-                    // }   
-
-                    if (heatRunning) {
+                    if (heatRunning == 1) {
                         $("#heatIndicator").addClass("red");
                     } else {
                         $("#heatIndicator").removeClass("red");
+                    }
+                    if (power == 1) {
+                        $("#power_switch").bootstrapToggle('on');
+                    } else {
+                        $("#power_switch").bootstrapToggle('off');
                     }
 
                 });
@@ -154,6 +135,7 @@
             <div class = "row">
                 <input type="checkbox" id = "power_switch" data-toggle="toggle">
                 <div id="console-event" type="hidden"></div>
+                <div id="console-event-2" type="hidden"></div>
                 </div>
 
         </div>
