@@ -25,17 +25,22 @@
 
 
     <script type="text/javascript">
-        function power_toggle() {
-            var power_button = $("#power_button");
-            if(power_button.hasClass("active")) {
-                power_button.removeClass("active");
-            } else {
-                power_button.addClass("active");
-            }
-            SubmitTargets();
-        }
+        // function power_toggle() {
+        //     var power_button = $("#power_button");
+        //     if(power_button.hasClass("active")) {
+        //         power_button.removeClass("active");
+        //     } else {
+        //         power_button.addClass("active");
+        //     }
+            // SubmitTargets();
+        // }
 
-
+        $(function () {
+            $('#power_switch').change(function () {
+                $('#console-event').html('Toggle: ' + $(this).prop('checked'))
+            })
+        })
+    
         function ChangeTemperature(amount) {
             var temperatureInput = $("#temperatureInput");
             var temperature = parseFloat(temperatureInput.val());
@@ -51,7 +56,7 @@
             form.setAttribute("action", "");
 
             var power = 0;
-            if ($("#power_button").hasClass("active")) {
+            if ($("#power_switch").bootstrapToggle('on')) {
                 power = 1;
             }
             var temperature = $("#temperatureInput").val();
@@ -75,9 +80,9 @@
         $( document ).ready(function () {
 
             {% if 1 == currentPower %}
-            $("#power_button").addClass("active");
+            $("#power_switch").bootstrapToggle('on');
             {% elif 0 == currentPower %}
-            $("#power_button").removeClass("active");
+            $("#power_switch").bootstrapToggle('off');
             {% endif %}
            
             if (heatRunning == 1) {
@@ -102,9 +107,9 @@
                         String.fromCharCode(176));
 
                     if (1 == power) {
-                        $("#power_button").addClass("active");
+                        $("#power_switch").bootstrapToggle('on');
                     } else {
-                        $("#power_button").removeClass("active");
+                        $("#power_switch").bootstrapToggle('off');
                     }   
 
                     if (heatRunning) {
@@ -135,7 +140,7 @@
                 </div>
             </div>
             <div class = "row">
-                <input type="checkbox" id = "pwer_switch" data-toggle="toggle">
+                <input type="checkbox" id = "power_switch" data-toggle="toggle">
                 </div>
 
         </div>
