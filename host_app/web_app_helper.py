@@ -13,22 +13,20 @@ class ThermostatWeb():
         def index():
             if request.args.get("mode") is not None \
                     and request.args.get("temperature"):
-                manual_on = request.args.get("manual_on")
-                manual_off = request.args.get("manual_off")
+                power = request.args.get("power")
                 temperature = round(float(request.args.get("temperature")),0)
                 #temperature = request.args.get("temperature")
                 self.db_helper.insert_control_settings(
-                    temperature=temperature, manual_on=manual_on, manual_off=manual_off)
+                    temperature=temperature, power=power)
 
             if 'POST' == request.method:
                 data = request.form
-                manual_on = data["manual_on"]
-                manual_off = data["manual_off"]
+                power = data["[power]"]
                 temperature = round(float(data["temperature"]),0)
                 #temperature = data["temperature"]
 
                 self.db_helper.insert_control_settings(
-                    temperature=temperature, manual_on=manual_on, manual_off=manual_off)
+                    temperature=temperature, power = power)
 
             return self.webpage_helper(render_template, 'request')
 
@@ -44,8 +42,7 @@ class ThermostatWeb():
         currentTemperature = round(float(self.db_helper.get_temp()),1)
         heatRunning = self.db_helper.get_heat_indicator()
         currentTarget = round(float(current[0]),0)
-        manual_on = current[1]
-        manual_off = current[2]
+        power = current[1]
 
 
 
@@ -54,15 +51,13 @@ class ThermostatWeb():
             return function(heatRunning = heatRunning,
                             currentTemperature=currentTemperature,
                             currentTarget = currentTarget,
-                            manual_on = manual_on,
-                            manual_off = manual_off)
+                            power = power,
 
         return function('index.html',
                         heatRunning = heatRunning,
                         currentTemperature=currentTemperature,
                         currentTarget = currentTarget,
-                        manual_on = manual_on,
-                        manual_off = manual_off)
+                        power = power,
 
     def run(self):
         self.app.run(host='0.0.0.0')

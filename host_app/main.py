@@ -33,17 +33,8 @@ while True:
     # Target Temperature
     TargetTemperature = manual_controls[0]
 
-    # Bedtime switch
-    bedtime = manual_controls[1]
-
-    # awake switch
-    awake = manual_controls[2]
-
-    # manual overide - turn on
-    manual_on = manual_controls[3]
-
-    # manual overide - turn off
-    manual_off = manual_controls[4]
+    # power switch
+    power = manual_controls[1]
 
 
     ## Derive
@@ -67,7 +58,7 @@ while True:
     # run all rules
 
     turn_heater_on = rules_aggregator.aggregate_rules(
-        manual_on, manual_off, somebody_home, operating_hours, temp_low)
+        power, somebody_home, operating_hours, temp_low)
 
 
     ## Reset variables
@@ -76,16 +67,6 @@ while True:
 
 
     ## Insert logs
-
-    insert_manual_controls = """
-            INSERT into heater_controls
-            (temp_setting,
-            manual_on,
-            manual_off)
-            VALUES
-            ({},{},{})""".format(TargetTemperature, manual_on, manual_off)
-
-    db_helper.insert_db_data(statement=insert_manual_controls)
 
     insert_rule_info = """
             INSERT INTO rule_info
@@ -103,9 +84,9 @@ while True:
 
     insert_heater_rules = """
             INSERT INTO heater_rules
-            (manual_on, manual_off, temp_low, operating_hours, anybody_home, heater_on)
+            (power, temp_low, operating_hours, anybody_home, heater_on)
             VALUES
-            ({},{},{},{},{},{})""".format(manual_on, manual_off, temp_low, operating_hours, somebody_home, turn_heater_on)
+            ({},{},{},{},{})""".format(power, temp_low, operating_hours, somebody_home, turn_heater_on)
 
     db_helper.insert_db_data(statement=insert_heater_rules)
 

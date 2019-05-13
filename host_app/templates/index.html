@@ -25,28 +25,15 @@
     </script>
 
     <script type="text/javascript">
-        function manual_on_toggle(currentValue) {
-            var manual_on_button = $("#manual_on_button");
-            if(manual_on_button.hasClass("red")) {
-                manual_on_button.removeClass("red");
+        function power_toggle(currentValue) {
+            var power_button = $("#power_button");
+            if(power_button.value = "ON") {
+                power_button.value = "OFF";
             } else {
-                manual_on_button.addClass("red");
-                $("#manual_off_button").removeClass("blue");
+                power_button.value = "ON";
             }
             SubmitTargets();
         }
-
-        function manual_off_toggle(currentValue) {
-            var manual_off_button = $("#manual_off_button");
-            if(manual_off_button.hasClass("blue")) {
-                manual_off_button.removeClass("blue");
-            } else {
-                manual_off_button.addClass("blue");
-                $("#manual_on_button").removeClass("red");
-            }
-            SubmitTargets();
-        }
-
 
 
         function ChangeTemperature(amount) {
@@ -64,28 +51,17 @@
             form.setAttribute("action", "");
 
 
-            var manual_on = 0;
-            if ($("#manual_on_button").hasClass("red")) {
-                manual_on = 1;
+            var power = 0;
+            if ($("#power_button").value == "ON") {
+                power = 1;
                 }
-
-             var manual_off = 0;
-                if ($("#manual_off_button").hasClass("blue")) {
-                manual_off = 1;  
-                }   
 
             var temperature = $("#temperatureInput").val();
 
             var hiddenField = document.createElement("input");
             hiddenField.setAttribute("type", "hidden");
-            hiddenField.setAttribute("name", "manual_on");
-            hiddenField.setAttribute("value", manual_on);
-            form.appendChild(hiddenField);
-
-            var hiddenField = document.createElement("input");
-            hiddenField.setAttribute("type", "hidden");
-            hiddenField.setAttribute("name", "manual_off");
-            hiddenField.setAttribute("value", manual_off);
+            hiddenField.setAttribute("name", "power");
+            hiddenField.setAttribute("value", power);
             form.appendChild(hiddenField);
 
             hiddenField = document.createElement("input");
@@ -99,14 +75,10 @@
         }
 
         $( document ).ready(function () {
-            {% if 1 == manual_on %}
-                $("#manual_on_button").addClass("red");
+            {% if 1 == power %}
+                $("#power_button").value = "ON";
             {% endif %}        
             
-            {% if 1 == manual_off %}
-                $("#manual_off_button").addClass("blue");
-            {% endif %}
-
             {% if heatRunning %}
                 $("#heatIndicator").addClass("red");
             {% endif %}
@@ -120,8 +92,7 @@
                     heatRunning = data["heatRunning"];
                     indoorTemperature = data["currentTemperature"];
                     currentTarget = data["currentTarget"];
-                    manual_on = data["manual_on"];
-                    manual_off = data["manual_off"];
+                    power = data["power"];
 
 
                     $("#indoorTemperature").text(indoorTemperature +
@@ -147,17 +118,12 @@
             <h3>Power</h3>
             <div class="row">
                 <div class="col text-center">
-                    <button id="manual_on_button" class="btn btn-success btn-lg modeButton" onclick="manual_on_toggle(true)">
-                        On
+                    <button id="power_button" class="btn btn-success btn-lg modeButton" onclick="power_toggle(true)">
+                        Power
                     </button>
                 </div>
                 <div class="col text-center">
                     <button id="heatIndicator" class="btn btn-outline-danger">
-                    </button>
-                </div>
-                <div class="col text-center">
-                    <button id="manual_off_button" class="btn btn-danger btn-lg modeButton" onclick="manual_off_toggle(true)">
-                        Off
                     </button>
                 </div>
             </div>
@@ -197,84 +163,6 @@
                 </div>
             </div>
         </div>
-    </div>
-
-
-    <div>
-        <table id="temperatureTable" class="left">
-            <tbody>
-                <tr>
-                    <td>
-                        <h2>Indoor Temperature:</h2>
-                    </td>
-                    <td>
-                        <h1 id="indoorTemperature">{{ currentTemperature }}&deg;</h1>
-                    </td>
-
-                </tr>
-                <tr>
-                    <td>
-                        <h2>Target Temperature:</h2>
-                    </td>
-                    <td>
-                        <h1 id="targetTemperature">{{ currentTarget }}&deg;</h1>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    <div class="ui form">
-        <table id="targetTable">
-            <tbody>
-                <tr>
-                    <td>
-                    </td>
-                    <td class="center targetCell">
-                        <button id="heatIndicator" class="huge circular ui icon disabled button">
-                        </button>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="modeCell targetCell">
-                        <button id="manual_on_button" class="massive ui button modeButton" onclick="manual_on_toggle(true)">
-                        On
-                        </button>
-                    </td>
-                    <td class="modeCell targetCell">
-                        <button id="manual_off_button" class="massive ui button modeButton" onclick="manual_off_toggle(true)">
-                        Off
-                        </button>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td class="center">
-                        <button id="down1" class="large ui left icon button blue" style="margin-top: 24px;" onclick="ChangeTemperature(-1)">
-                            <i class="left caret icon"></i>
-                            -1
-                        </button>
-                    </td>
-                    <td class="targetCell center">
-                        <div class="massive ui input" style="width: 125px">
-                            <input id="temperatureInput" value= {{ currentTarget }} type="text" style="text-align: center;">
-                        </div>
-                    </td>
-                    <td class="center">
-                        <button id="up1" class="large ui right icon button red" style="margin-top: 24px;" onclick="ChangeTemperature(1)">
-                            +1
-                            <i class="right caret icon"></i>
-                        </button>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="targetCell center" colspan="3">
-                        <button id="submitButton" class="massive ui button violet" onclick="SubmitTargets()">
-                        Submit Changes
-                        </button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
     </div>
 
 </body>
