@@ -21,7 +21,7 @@ class ThermostatWeb():
 
             if 'POST' == request.method:
                 data = request.form
-                power = data["[power]"]
+                power = data["power"]
                 temperature = round(float(data["temperature"]),0)
                 #temperature = data["temperature"]
 
