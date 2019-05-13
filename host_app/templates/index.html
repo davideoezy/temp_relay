@@ -47,10 +47,8 @@
             form.setAttribute("method", "post");
             form.setAttribute("action", "");
 
-
-            var power_button = $("#power_button");
             var power = 0;
-            if (power_button.attr(status) == "active") {
+            if ($("#power_button").attr(status) == "active") {
                 power = 1;
                 }
 
@@ -73,12 +71,11 @@
         }
 
         $( document ).ready(function () {
-            var power_button = $("#power_button");
             if (power == 1) {
-                power_button.attr(status, "active")
+                $("#power_button").attr(status, "active");
             }
             else {
-                power_button.attr(status, "inactive")
+                $("#power_button").attr(status, "inactive");
             }
             
             if (heatRunning == 1) {
@@ -103,9 +100,9 @@
                         String.fromCharCode(176));
 
                     if (1 == power) {
-                        $("#power_button").value = "ON";
+                        $("#power_button").attr(status, "active");
                     } else {
-                        $("#power_button").value = "OFF";
+                        $("#power_button").attr(status, "inactive");
                     }   
 
                     if (heatRunning) {
