@@ -99,6 +99,12 @@
                     $("#targetTemperature").text(currentTarget +
                         String.fromCharCode(176));
 
+                    if (1 == power) {
+                        $("#power_button").value = "ON";
+                    } else {
+                        $("#power_button").value = "OFF";
+                    }   
+
                     if (heatRunning) {
                         $("#heatIndicator").addClass("red");
                     } else {
