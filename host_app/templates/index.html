@@ -72,9 +72,9 @@
 
         $(document).ready(function () {
             {% if 1 == powerMode %}
-            $("#power_switch").prop(checked,"true");
+            $("#power_switch").prop("checked",true);
             {% else  %}
-            $("#power_switch").prop(checked,"false");
+            $("#power_switch").prop("checked",false);
             {% endif %}
 
             {% if heatRunning == 1 %}
@@ -102,9 +102,9 @@
                         $("#heatIndicator").removeClass("red");
                     }
                     if (powerMode == 1) {
-                        $("#power_switch").prop(checked,"true");
+                        $("#power_switch").prop("checked", true);
                     } else {
-                        $("#power_switch").prop(checked,"false");
+                        $("#power_switch").prop("checked", false);
                     }
 
                 });
@@ -168,23 +168,23 @@
 
 <style>
 .form-control-temp {
-        font-size: 300%;
-        background-color: #343a40;
-        color: white;
-        border: 0;
-        box-shadow: none;
-        text-align: center;
-        width: 35%;
-        height: 65%;/* You may want to include this as bootstrap applies these styles too */
-    }
+    font-size: 300%;
+    background-color: #343a40;
+    color: white;
+    border: 0;
+    box-shadow: none;
+    text-align: center;
+    width: 35%;
+    height: 65%;/* You may want to include this as bootstrap applies these styles too */
+}
 
 .currentTemp {
-        font-size: 300%;
-        background-color: #343a40;
-        color: white;
-        border: 0;
-        box-shadow: none;
-        text-align: center;
+    font-size: 300%;
+    background-color: #343a40;
+    color: white;
+    border: 0;
+    box-shadow: none;
+    text-align: center;
 }
 .modeButton {
     width: 80px;
