@@ -22,12 +22,12 @@
 
 
     <script type="text/javascript">
-        function power_toggle(currentValue) {
+        function power_toggle() {
             var power_button = $("#power_button");
-            if(power_button.attr(status) == "active") {
-                power_button.attr(status, "inactive");
+            if(power_button.hasClass("active")) {
+                power_button.removeClass("active");
             } else {
-                power_button.attr(status,"active");
+                power_button.addClass("active");
             }
             SubmitTargets();
         }
@@ -48,7 +48,7 @@
             form.setAttribute("action", "");
 
             var power = 0;
-            if ($("#power_button").attr(status) == "active") {
+            if ($("#power_button").hasClass() == "active") {
                 power = 1;
                 }
 
@@ -72,10 +72,10 @@
 
         $( document ).ready(function () {
             if (power == 1) {
-                $("#power_button").attr(status, "active");
+                $("#power_button").addClass("active");
             }
             else {
-                $("#power_button").attr(status, "inactive");
+                $("#power_button").removeClass("active");
             }
             
             if (heatRunning == 1) {
@@ -100,9 +100,9 @@
                         String.fromCharCode(176));
 
                     if (1 == power) {
-                        $("#power_button").attr(status, "active");
+                        $("#power_button").addClass("active");
                     } else {
-                        $("#power_button").attr(status, "inactive");
+                        $("#power_button").removeClass("active");
                     }   
 
                     if (heatRunning) {
@@ -123,7 +123,7 @@
             <h3>Power</h3>
             <div class="row">
                 <div class="col text-center">
-                    <button id="power_button" class="btn btn-success btn-lg modeButton" onclick="power_toggle(true)">
+                    <button id="power_button" class="btn btn-success btn-lg modeButton" onclick="power_toggle()">
                         Power
                     </button>
                 </div>
