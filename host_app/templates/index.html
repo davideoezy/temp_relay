@@ -33,6 +33,7 @@
                 manual_on_button.addClass("red");
                 $("#manual_off_button").removeClass("blue");
             }
+            SubmitTargets();
         }
 
         function manual_off_toggle(currentValue) {
@@ -43,6 +44,7 @@
                 manual_off_button.addClass("blue");
                 $("#manual_on_button").removeClass("red");
             }
+            SubmitTargets();
         }
 
 
@@ -51,7 +53,8 @@
             var temperatureInput = $("#temperatureInput");
             var temperature = parseFloat(temperatureInput.val());
             temperature += amount;
-            temperatureInput.val(temperature.toFixed())
+            temperatureInput.val(temperature.toFixed());
+            SubmitTargets();
 
         }
 
