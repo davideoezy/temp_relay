@@ -28,11 +28,7 @@
 
         $(function () {
             $('#power_switch').change(function () {
-                if ($('#power_switch').prop('checked')) {
-                    $('#console-event').html(1);
-                } else {
-                    $('#console-event').html(0); 
-                }
+                SubmitTargets()
             })
         })
 
@@ -123,21 +119,13 @@
             <h3>Power</h3>
             <div class="row">
                 <div class="col text-center">
-                    <button id="power_button" class="btn btn-success btn-lg modeButton" onclick="power_toggle()">
-                        Power
-                    </button>
+                    <input type="checkbox" id="power_switch" data-toggle="toggle" data-on="Heater On" data-off="Off" data-onstyle="danger" data-offstyle="primary">
                 </div>
                 <div class="col text-center">
                     <button id="heatIndicator" class="btn btn-outline-danger">
                     </button>
                 </div>
             </div>
-            <div class = "row">
-                <input type="checkbox" id = "power_switch" data-toggle="toggle">
-                <div id="console-event" type="hidden"></div>
-                <div id="console-event-2" type="hidden"></div>
-                </div>
-
         </div>
     </div>
     <div class="container">
