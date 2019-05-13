@@ -37,7 +37,11 @@
 
         $(function () {
             $('#power_switch').change(function () {
-                $('#console-event').html($(this).prop('checked'))
+                if ($('#power_switch').prop('checked')) {
+                    $('#console-event').html(1);
+                } else {
+                    $('#console-event').html(1); 
+                }
             })
         })
     
