@@ -35,6 +35,8 @@
             // SubmitTargets();
         // }
 
+        //When switching power
+
         $(function () {
             $('#power_switch').change(function () {
                 if ($('#power_switch').prop('checked')) {
@@ -59,10 +61,8 @@
             form.setAttribute("method", "post");
             form.setAttribute("action", "");
 
-            var power = 0;
-            if ($("#power_switch").bootstrapToggle('on')) {
-                power = 1;
-            }
+            var power = $("#console-event").val();
+
             var temperature = $("#temperatureInput").val();
 
             var hiddenField = document.createElement("input");
@@ -83,10 +83,13 @@
 
         $( document ).ready(function () {
 
+
             {% if 1 == currentPower %}
             $("#power_switch").bootstrapToggle('on');
+            $("#console-event").html(1);
             {% elif 0 == currentPower %}
             $("#power_switch").bootstrapToggle('off');
+            $("#console-event").html(0);
             {% endif %}
            
             if (heatRunning == 1) {
@@ -110,11 +113,15 @@
                     $("#targetTemperature").text(currentTarget +
                         String.fromCharCode(176));
 
-                    if (1 == power) {
-                        $("#power_switch").bootstrapToggle('on');
-                    } else {
-                        $("#power_switch").bootstrapToggle('off');
-                    }   
+
+                    $("#console-event").val(power)    
+                    // if (1 == power) {
+                    //     $("#power_switch").bootstrapToggle('on');
+                    //     $("#console-event").html(1);
+                    // } else {
+                    //     $("#power_switch").bootstrapToggle('off');
+                    //     $("#console-event").html(0);
+                    // }   
 
                     if (heatRunning) {
                         $("#heatIndicator").addClass("red");
