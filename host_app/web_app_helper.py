@@ -51,13 +51,13 @@ class ThermostatWeb():
             return function(heatRunning = heatRunning,
                             currentTemperature=currentTemperature,
                             currentTarget = currentTarget,
-                            power = power,
+                            power = power)
 
         return function('index.html',
                         heatRunning = heatRunning,
                         currentTemperature=currentTemperature,
                         currentTarget = currentTarget,
-                        power = power,
+                        power = power)
 
     def run(self):
         self.app.run(host='0.0.0.0')
