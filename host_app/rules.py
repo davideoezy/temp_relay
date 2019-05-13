@@ -40,28 +40,3 @@ class rules():
             somebody_home = 1
 
         return somebody_home
-
-# Below deprecated
-
-if __name__ == "__main__":
-
-    operating_hours = operating_hours()
-    db_helper = db_helper()
-
-    while True:
-
-        operating_hours = operating_hours.hours_operation(MorningOn, NightOff)
-
-        insert_stmt = """
-        insert into operating_hours
-        (operating_hours, MorningOn, NightOff) values
-        ({}, '{}', '{}')""".values(operating_hours, MorningOn, NightOff)
-
-        db_helper.db_data(query_type="insert", statement=insert_stmt)
-
-        time.sleep(30)
-
-## Create db table in temp_logger
-# create table operating_hours (operating_hours int, MorningOn varchar(20), NightOff varchar(20), ts timestamp); 
-
-# Will probably need to strftime the MorningOn, NightOff times for sql insert

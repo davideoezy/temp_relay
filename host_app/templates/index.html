@@ -20,9 +20,6 @@
         crossorigin="anonymous"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
 
-    <script type="text/javascript">
-        $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
-    </script>
 
     <script type="text/javascript">
         function power_toggle(currentValue) {
@@ -75,13 +72,15 @@
         }
 
         $( document ).ready(function () {
-            {% if 1 == power %}
+            if (1 == power) {
                 $("#power_button").value = "ON";
-            {% endif %}        
+            } else {
+                $("#power_button").value = "OFF";
+            }      
             
-            {% if heatRunning %}
+            if (heatRunning == 1) {
                 $("#heatIndicator").addClass("red");
-            {% endif %}
+            }
 
 
             window.setInterval(function () {
