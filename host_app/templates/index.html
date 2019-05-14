@@ -98,12 +98,12 @@
         <div class="p-3 mb-2 bg-dark text-white">
             <h3>Power</h3>
             <div class="row">
-                <div class="col-xs-6 text-center">
+                <div class="col-sm-6 text-center">
                     <input type="checkbox" id="power_switch" data-toggle="toggle" data-on="Heater On" data-off="Off"
                         data-onstyle="danger" data-offstyle="primary" data-style="fast" {% if powerMode == 1 %} checked
                         {% else %} {% endif %}>
                 </div>
-                <div class="col-xs-6 text-center">
+                <div class="col-sm-6 text-center">
                     <span id="heatIndicator" class="badge badge-pill badge-danger">Heating</span>
                 </div>
             </div>
@@ -113,7 +113,7 @@
         <div class="p-3 mb-2 bg-dark text-white">
             <h3>Current</h3>
             <div class="row">
-                <div class="col-xs-12 text-center">
+                <div class="col-sm-12 text-center">
                     <p class="currentTemp" id="indoorTemperature">{{ currentTemperature }}&deg;</h1>
                 </div>
             </div>
@@ -124,18 +124,18 @@
         <div class="p-3 mb-2 bg-dark text-white">
             <h3>Target</h3>
             <div class="row">
-                <div class="col-xs-4 text-center">
+                <div class="col-sm-4 text-center">
                     <button id="down1" class="btn btn-primary btn-lg modeButton" onclick="ChangeTemperature(-1)">
                         -1
                     </button>
                 </div>
-                <div class="col-xs-4 text-center">
+                <div class="col-sm-4 text-center">
 
                     <input class="form-control-temp" id="temperatureInput" value={{ currentTarget }} type="text">
 
 
                 </div>
-                <div class="col-xs-4 text-center">
+                <div class="col-sm-4 text-center">
                     <button id="up1" class="btn btn-danger btn-lg modeButton" onclick="ChangeTemperature(1)">
                         +1
                     </button>
