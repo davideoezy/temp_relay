@@ -97,9 +97,9 @@
                         String.fromCharCode(176));
 
                     if (heatRunning == 1) {
-                        $("#heatIndicator").addClass("red");
+                        $("#heatIndicator").style.display = "inline";
                     } else {
-                        $("#heatIndicator").removeClass("red");
+                        $("#heatIndicator").style.display = "none";
                     }
                     // if (powerMode == 1) {
                     //     $("#power_switch").prop("checked", true);
@@ -124,8 +124,11 @@
                         {% else %} {% endif %}>
                 </div>
                 <div class="col text-center">
-                    <button id="heatIndicator" class="btn btn-outline-danger">
-                    </button>
+                    <span id = "heatIndicator" class="badge badge-pill badge-danger">Danger</span>
+                </div>
+            </div>
+        </div>
+    </div>
                 </div>
             </div>
         </div>
