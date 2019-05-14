@@ -11,7 +11,7 @@ class ThermostatWeb():
         # prepare method to call when / is navigated to
         @self.app.route("/", methods=['GET', 'POST'])
         def index():
-            if request.args.get("mode") is not None \
+            if request.args.get("power") is not None \
                     and request.args.get("temperature"):
                 power = request.args.get("power")
                 temperature = round(float(request.args.get("temperature")),0)
