@@ -94,7 +94,7 @@
 
 </head>
 <body id="contentBody" class="mainContent">
-    <div class="container">
+    <div class="container-fluid">
         <div class="p-3 mb-2 bg-dark text-white">
             <h3>Power</h3>
             <div class="row">
@@ -104,16 +104,12 @@
                         {% else %} {% endif %}>
                 </div>
                 <div class="col-xs-6 text-center">
-                    <span id = "heatIndicator" class="badge badge-pill badge-danger">Heating</span>
+                    <span id="heatIndicator" class="badge badge-pill badge-danger">Heating</span>
                 </div>
             </div>
         </div>
     </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="container">
+    <div class="container-fluid">
         <div class="p-3 mb-2 bg-dark text-white">
             <h3>Current</h3>
             <div class="row">
@@ -124,7 +120,7 @@
         </div>
     </div>
 
-    <div class="container">
+    <div class="container-fluid">
         <div class="p-3 mb-2 bg-dark text-white">
             <h3>Target</h3>
             <div class="row">
@@ -135,7 +131,7 @@
                 </div>
                 <div class="col-xs-4 text-center">
 
-                        <input class = "form-control-temp" id="temperatureInput" value={{ currentTarget }} type="text">
+                    <input class="form-control-temp" id="temperatureInput" value={{ currentTarget }} type="text">
 
 
                 </div>
