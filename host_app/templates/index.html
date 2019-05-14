@@ -71,11 +71,11 @@
         }
 
         $(document).ready(function () {
-            {% if 1 == powerMode %}
-            $("#power_switch").prop("checked",true);
-            {% else  %}
-            $("#power_switch").prop("checked",false);
-            {% endif %}
+            // {% if 1 == powerMode %}
+            // $("#power_switch").prop("checked",true);
+            // {% else  %}
+            // $("#power_switch").prop("checked",false);
+            // {% endif %}
 
             {% if heatRunning == 1 %}
             $("#heatIndicator").addClass("red");
@@ -101,11 +101,11 @@
                     } else {
                         $("#heatIndicator").removeClass("red");
                     }
-                    if (powerMode == 1) {
-                        $("#power_switch").prop("checked", true);
-                    } else {
-                        $("#power_switch").prop("checked", false);
-                    }
+                    // if (powerMode == 1) {
+                    //     $("#power_switch").prop("checked", true);
+                    // } else {
+                    //     $("#power_switch").prop("checked", false);
+                    // }
 
                 });
             }, 20000);
@@ -119,7 +119,9 @@
             <h3>Power</h3>
             <div class="row">
                 <div class="col text-center">
-                    <input type="checkbox" id="power_switch" data-toggle="toggle" data-on="Heater On" data-off="Off" data-onstyle="danger" data-offstyle="primary" data-style = "fast">
+                    <input type="checkbox" id="power_switch" data-toggle="toggle" data-on="Heater On" data-off="Off"
+                        data-onstyle="danger" data-offstyle="primary" data-style="fast" {% if powerMode == 1 %} checked
+                        {% else %} {% endif %}>
                 </div>
                 <div class="col text-center">
                     <button id="heatIndicator" class="btn btn-outline-danger">
