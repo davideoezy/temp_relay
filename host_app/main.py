@@ -14,9 +14,9 @@ anybody_home = anybody_home()
 
 ## Get data
 
-web = ThermostatWeb(db_helper)
+#web = ThermostatWeb(db_helper)
 
-web.run()
+#web.run()
 
 while True:
 
