@@ -27,7 +27,7 @@ while True:
 
     # power switch
     power = manual_controls[1]
-    print(manual_controls)
+
 
 
     ## Derive
@@ -37,7 +37,7 @@ while True:
     last_seen_curr = anybody_home.last_time_seen(home_list_curr)
 
     time_since_connected = anybody_home.time_since_seen(last_seen_curr)
-    print(time_since_connected)
+
 
 
     ## Rules
@@ -47,7 +47,7 @@ while True:
     somebody_home = rules.anybody_home(time_since_connected)
 
     operating_hours = rules.hours_operation(MorningOn, NightOff)
-    print(operating_hours)
+
 
 
     # run all rules
@@ -55,7 +55,7 @@ while True:
     turn_heater_on = rules_aggregator.aggregate_rules(
         power, somebody_home, operating_hours, temp_low)
 
-    print(turn_heater_on)
+
     ## Reset variables
 
     anybody_home.last_seen_prev = last_seen_curr[:]
@@ -85,6 +85,6 @@ while True:
 
     db_helper.insert_db_data(statement=insert_heater_rules)
 
-    print("loop complete")
+
     time.sleep(30)
 
