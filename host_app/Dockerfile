@@ -8,4 +8,4 @@ RUN pip install -r requirements.txt
 WORKDIR /.
 COPY . /
 
-CMD [ "python", "./main.py" ]
+CMD [ "python", "./main_frontend.py" ]

@@ -1,5 +1,10 @@
 import mysql.connector as mariadb
 
+####### TO_DO ########
+
+# change select statement to get most recent record
+# select top 1/limit 1
+# order by DESC
 
 class db_helper():
     def __init__(self):
@@ -29,8 +34,7 @@ class db_helper():
             output = [default] * n_variables
 
             for row in cur:
-                for item in row:
-                    output[int(item)] = row[int(item)]
+                output = row
 
             return output
     
@@ -49,14 +53,57 @@ class db_helper():
 
         return
 
-    def db_data_2(self, n_variables, default):
+    def get_temp(self):
+        n_variables = 1
+        statement = """
+                        SELECT
+                        avg(temp)
+                        FROM temperature 
+                        WHERE ts > DATE_SUB(now(), INTERVAL 90 second)
+                        ORDER BY ts ASC
+                        """
+        default = 99
+
+        return self.db_data(n_variables = n_variables, statement = statement, default = default)
+
+    def get_control_settings(self):
+        n_variables = 2
+        statement = """
+                    SELECT
+                    temp_setting,
+                    power
+                    FROM heater_controls 
+                    ORDER BY ts DESC
+                    limit 1
+                    """
+
+        default = 0
+
+        return self.db_data(n_variables = n_variables, statement = statement, default = default)
+
+    def get_heat_indicator(self):
+        n_variables = 1
+        statement = """
+                    SELECT
+                    heater_on
+                    FROM heater_log
+                    ORDER BY ts DESC
+                    limit 1
+                    """
+        default = 0
+
+        return self.db_data(n_variables = n_variables, statement = statement, default = default)
+
+    def insert_control_settings(self, temperature, power):
+        statement = """
+                    INSERT into heater_controls
+                    (temp_setting,
+                    power)
+                    VALUES
+                    ({},{})""".format(temperature, power)
+        
+        self.insert_db_data(statement)
+
+        return
 
 
-
-        if n_variables == 1:
-            output = default
-
-        else:
-            output = [default] * n_variables
-
-        return output
