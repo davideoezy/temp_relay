@@ -97,3 +97,5 @@ def main():
 
         print("loop complete")
         time.sleep(30)
+
+main()
