@@ -62,7 +62,7 @@ class db_helper():
                         WHERE ts > DATE_SUB(now(), INTERVAL 90 second)
                         ORDER BY ts ASC
                         """
-        default = 0
+        default = 99
 
         return self.db_data(n_variables = n_variables, statement = statement, default = default)
 
