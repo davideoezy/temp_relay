@@ -1,6 +1,5 @@
 from db_helper import db_helper
 from rules import rules
-from rules_aggregator import rules_aggregator
 from somebody_home import anybody_home
 import datetime
 import time
@@ -52,7 +51,7 @@ while True:
 
     # run all rules
 
-    turn_heater_on = rules_aggregator.aggregate_rules(
+    turn_heater_on = rules.aggregate_rules(
         power, somebody_home, operating_hours, temp_low)
 
 
