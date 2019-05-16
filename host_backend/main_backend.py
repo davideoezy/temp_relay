@@ -5,7 +5,6 @@ import datetime
 import time
 
 db_helper = db_helper()
-rules_aggregator = rules_aggregator()
 rules = rules()
 anybody_home = anybody_home()
 
