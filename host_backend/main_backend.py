@@ -45,7 +45,8 @@ while True:
     somebody_home = rules.anybody_home(time_since_connected)
 
     operating_hours = rules.hours_operation(MorningOn, NightOff)
-
+    
+    print(temp_low, somebody_home, operating_hours)
 
 
     # run all rules
@@ -53,6 +54,7 @@ while True:
     turn_heater_on = rules.aggregate_rules(
         power, somebody_home, operating_hours, temp_low)
 
+    print(turn_heater_on)
 
     ## Reset variables
 
