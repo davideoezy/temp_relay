@@ -7,9 +7,6 @@ NightOff = datetime.time(22, 56)
 
 class rules():
 
-    def __init__(self):
-        self.on_rule_list = []
-
     def hours_operation(self, on_time, off_time):
 
         CurrentTime = datetime.datetime.now()
@@ -46,12 +43,14 @@ class rules():
 
     def aggregate_rules(self, power, somebody_home, operating_hours, temp_low):
 
-        self.on_rule_list.extend(
+        on_rule_list = []
+
+        on_rule_list.extend(
             [power, somebody_home, operating_hours, temp_low])
 
         heater_on = 0
 
-        if all(i is 1 for i in self.on_rule_list):
+        if all(i is 1 for i in on_rule_list):
             heater_on = 1
 
         return heater_on
