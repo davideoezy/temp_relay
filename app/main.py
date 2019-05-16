@@ -5,4 +5,3 @@ db_helper = db_helper()
 
 app = ThermostatWeb(db_helper)
 
-app.run()
