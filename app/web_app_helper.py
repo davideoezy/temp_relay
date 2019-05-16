@@ -60,4 +60,4 @@ class ThermostatWeb():
                         powerMode = power)
 
     def run(self):
-        self.app.run(host='0.0.0.0', port = 8600)
+        self.app.run()
