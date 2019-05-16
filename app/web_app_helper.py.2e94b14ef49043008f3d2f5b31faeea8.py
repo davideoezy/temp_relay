@@ -1,6 +1,8 @@
 
 from flask import Flask, request, session, g, redirect, url_for, abort, render_template, \
     flash, jsonify
+from db_helper import db_helper
+
 
 class ThermostatWeb():
     def __init__(self, db_helper):
