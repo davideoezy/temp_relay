@@ -1,4 +1,4 @@
-tiangolo/meinheld-gunicorn-flask:python3.7
+FROM tiangolo/meinheld-gunicorn-flask:python3.7
 COPY requirements.txt /tmp 
 WORKDIR /tmp 
 RUN apk add --update tzdata
