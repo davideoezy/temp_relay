@@ -81,11 +81,11 @@
                     $("#targetTemperature").text(round(float(currentTarget),0) +
                         String.fromCharCode(176));
 
-                    if (heatRunning == 1) {
-                        document.getElementById("heatIndicator").style.display = "inline";
-                    } else {
-                        document.getElementById("heatIndicator").style.display = "none";
-                    }
+                    {% if heatRunning == 1 %}
+                    document.getElementById("heatIndicator").style.display = "inline";
+                    {% else %}
+                    document.getElementById("heatIndicator").style.display = "none";
+                    {% endif %}
 
 
                 });
