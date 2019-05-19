@@ -28,6 +28,17 @@ def index():
 def update():
     return webpage_helper(jsonify, 'update')
 
+@app.route("/inside")
+def inside_data():
+    inside = db_helper.get_inside_temps()
+    return jsonify(inside)
+
+@app.route("/outside")
+def outside_data():
+    outside = db_helper.get_outside_temps()
+    return jsonify(outside)
+
+
 # take a function and gather necessary data for the web ui, then call the function
 # with the gathered data an an input and return the result
 def webpage_helper(function, type):
@@ -50,6 +61,9 @@ def webpage_helper(function, type):
                     currentTemperature=currentTemperature,
                     currentTarget = currentTarget,
                     powerMode = power)
+
+def data_helper
+
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0")

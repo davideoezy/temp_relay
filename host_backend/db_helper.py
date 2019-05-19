@@ -106,4 +106,59 @@ class db_helper():
 
         return
 
+    def get_inside_temps(self):
+        statement = """
+                    SELECT
+                    UNIX_TIMESTAMP(ts) as time,
+                    temp as value,
+                    device as metric
+                    FROM temperature
+                    where ts > DATE_SUB(now(), INTERVAL 12 hour)
+                    and device = 'RPi_1'
+                    ORDER BY ts asc
+                    """
+        
+        con = mariadb.connect(host=self.db_host, port=self.db_host_port, user=self.db_user,
+                              password=self.db_pass, database=self.db)
+        cur = con.cursor()
+
+        cur.execute(statement)
+
+        inside = []
+
+        for row in cur:
+            ins = {
+                'ts': row[0],
+                'temp': row[1],
+                'device': row[2]}
+            inside.append(ins)
+
+        return inside
+
+        def get_outside_temps(self):
+        statement = """
+                    SELECT
+                    UNIX_TIMESTAMP(ts) as time,
+                    air_temp,
+                    apparent_t as feels_like
+                    FROM outside_conditions
+                    where ts > DATE_SUB(now(), INTERVAL 12 hour)
+                    ORDER BY ts ASC
+                    """
+
+        con = mariadb.connect(host=self.db_host, port=self.db_host_port, user=self.db_user,
+                              password=self.db_pass, database=self.db)
+        cur = con.cursor()
+
+        cur.execute(statement)
+
+        outside = []
+        for row in cur:
+            outs = {
+                'ts': row[0],
+                'air_temp': row[1],
+                'feels_like': row[2]}
+            outside.append(outs)
+
+        return outside
 
