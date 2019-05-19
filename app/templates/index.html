@@ -19,12 +19,16 @@
         //     })
         // })
 
-        $('#power_switch').click(function () {
+        // $('#power_switch').click(function () {
+        //     $(this).bootstrapToggle('toggle');
+        //     SubmitTargets();
+        // });
+
+        var power = $('#power_switch');
+        power.click(function () {
             $(this).bootstrapToggle('toggle');
             SubmitTargets();
-        });
-
-
+        })
         // function toggle() {
         //     $('#power_switch').bootstrapToggle('toggle');
         //     SubmitTargets();
@@ -97,7 +101,7 @@
                     document.getElementById("heatIndicator").style.display = "none";
                     {% endif %}
 
-                    {% if PowerMode == 1%}
+                    {% if PowerMode == 1 %}
                     document.getElementById('power_switch').bootstrapToggle('on');
                     {% else %}
                     document.getElementById('power_switch').bootstrapToggle('off');
