@@ -26,9 +26,13 @@
 
         var power = $('#power_switch');
         power.click(function () {
-            $(this).bootstrapToggle('toggle');
+            {% if powerMode == 1 %}
+                $(this).checked = true;
+            {% else %}
+                $(this).checked = false;
+            {% endif %}
             SubmitTargets();
-        })
+        });
         // function toggle() {
         //     $('#power_switch').bootstrapToggle('toggle');
         //     SubmitTargets();
@@ -102,9 +106,9 @@
                     {% endif %}
 
                     {% if PowerMode == 1 %}
-                    document.getElementById('power_switch').bootstrapToggle('on');
+                    document.getElementById('power_switch').checked = true;
                     {% else %}
-                    document.getElementById('power_switch').bootstrapToggle('off');
+                    document.getElementById('power_switch').checked = false;
                     {% endif %}
 
                 });
