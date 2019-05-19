@@ -19,6 +19,12 @@
         //     })
         // })
 
+        $('power_switch').click(function () {
+            $(this).bootstrapToggle('toggle');
+            SubmitTargets();
+        });
+
+
         function toggle() {
             $('power_switch').bootstrapToggle('toggle');
             SubmitTargets();
@@ -105,7 +111,7 @@
             <div class="row block align-items-center justify-content-center">
                 <div class="col-2"></div>
                 <div class="col-8 text-center">
-                    <input type="checkbox" onclick="toggle()" id="power_switch" data-toggle="toggle" data-on="Heater On" data-off="Off"
+                    <input type="checkbox" id="power_switch" data-toggle="toggle" data-on="Heater On" data-off="Off"
                         data-onstyle="danger" data-offstyle="primary" data-style="fast" data-height="120" data-width="150"
                         {% if powerMode == 1 %} checked {% else %} {% endif %}>
     
@@ -160,7 +166,7 @@
 
 <style>
 .form-control-temp {
-    font-size: 400%;
+    font-size: 350%;
     background-color: #343a40;
     color: white;
     border: 0;
@@ -171,7 +177,7 @@
 }
 
 .currentTemp {
-    font-size: 400%;
+    font-size: 350%;
     background-color: #343a40;
     color: white;
     border: 0;
