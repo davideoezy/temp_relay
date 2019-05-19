@@ -88,7 +88,7 @@
 
                     $("#indoorTemperature").text(indoorTemperature +
                         String.fromCharCode(176));
-                    $("#targetTemperature").text(round(float(currentTarget),0) +
+                    $("#targetTemperature").text(Math.round(float(currentTarget)) +
                         String.fromCharCode(176));
 
                     {% if heatRunning == 1 %}
