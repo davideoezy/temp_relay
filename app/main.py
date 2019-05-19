@@ -62,8 +62,6 @@ def webpage_helper(function, type):
                     currentTarget = currentTarget,
                     powerMode = power)
 
-def data_helper
-
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0")
