@@ -6,7 +6,6 @@
     <title>Thermostat</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.min.css') }}">
     <script src="{{ url_for('static', filename='jquery-3.4.1.min.js') }}"></script>
-    <!-- <script src="{{ url_for('static', filename='popper.min.js') }}"></script> -->
     <script src="{{ url_for('static', filename='bootstrap.bundle.min.js') }}"></script>
     <script src="{{ url_for('static', filename='bootstrap4-toggle.min.js') }}"></script>
     <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap4-toggle.min.css') }}">
@@ -14,11 +13,17 @@
 
     <script type="text/javascript">
 
-        $(function () {
-            $('#power_switch').change(function () {
-                SubmitTargets()
-            })
-        })
+        // $(function () {
+        //     $('#power_switch').change(function () {
+        //         SubmitTargets()
+        //     })
+        // })
+
+        function toggle() {
+            var toggle = document.getElementById('power_switch');
+            toggle.bootstrapToggle('toggle');
+            SubmitTargets();
+            }
 
     
         function ChangeTemperature(amount) {
@@ -101,7 +106,7 @@
             <div class="row block align-items-center justify-content-center">
                 <div class="col-2"></div>
                 <div class="col-8 text-center">
-                    <input type="checkbox" id="power_switch" data-toggle="toggle" data-on="Heater On" data-off="Off"
+                    <input type="checkbox" onclick="toggle()" id="power_switch" data-toggle="toggle" data-on="Heater On" data-off="Off"
                         data-onstyle="danger" data-offstyle="primary" data-style="fast" data-height="120" data-width="150"
                         {% if powerMode == 1 %} checked {% else %} {% endif %}>
     
