@@ -13,26 +13,26 @@
 
     <script type="text/javascript">
 
-        // $(function () {
-        //     $('#power_switch').change(function () {
-        //         SubmitTargets()
-        //     })
-        // })
+        $(function () {
+            $('#power_switch').click(function () {
+                SubmitTargets()
+            })
+        })
 
         // $('#power_switch').click(function () {
         //     $(this).bootstrapToggle('toggle');
         //     SubmitTargets();
         // });
 
-        var power = $('#power_switch');
-        power.click(function () {
-            {% if powerMode == 1 %}
-                $(this).checked = true;
-            {% else %}
-                $(this).checked = false;
-            {% endif %}
-            SubmitTargets();
-        });
+        // var power = $('#power_switch');
+        // power.click(function () {
+        //     {% if powerMode == 1 %}
+        //         $(this).checked = true;
+        //     {% else %}
+        //         $(this).checked = false;
+        //     {% endif %}
+        //     SubmitTargets();
+        // });
         // function toggle() {
         //     $('#power_switch').bootstrapToggle('toggle');
         //     SubmitTargets();
@@ -112,7 +112,7 @@
                     {% endif %}
 
                 });
-            }, 20000);
+            }, 10000);
         });
     </script>
 
