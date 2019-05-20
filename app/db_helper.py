@@ -2,11 +2,6 @@ import mysql.connector as mariadb
 import datetime
 import tzlocal
 
-####### TO_DO ########
-
-# change select statement to get most recent record
-# select top 1/limit 1
-# order by DESC
 
 class db_helper():
     def __init__(self):
