@@ -40,7 +40,7 @@ def inside_data():
     data_table_inside = gviz_api.DataTable(ins_desc)
     data_table_inside.LoadData(inside)
 
-    return data_table_inside.ToJSonResponse(columns_order=("ts", "temp"),
+    return data_table_inside.ToJSon(columns_order=("ts", "temp"),
                                                 order_by="ts")
 
 
@@ -56,7 +56,7 @@ def outside_data():
     data_table_outside = gviz_api.DataTable(outs_desc)
     data_table_outside.LoadData(outside)
 
-    return data_table_outside.ToJSonResponse(columns_order=("ts", "air_temp", "feels_like"),
+    return data_table_outside.ToJSon(columns_order=("ts", "air_temp", "feels_like"),
                                                     order_by="ts")
 
 
