@@ -4,14 +4,37 @@
 <head>
     <meta charset="UTF-8">
     <title>Thermostat</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.min.css') }}">
     <script src="{{ url_for('static', filename='jquery-3.4.1.min.js') }}"></script>
-    <!-- <script src="{{ url_for('static', filename='popper.min.js') }}"></script> -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.min.css') }}">
     <script src="{{ url_for('static', filename='bootstrap.bundle.min.js') }}"></script>
     <script src="{{ url_for('static', filename='bootstrap4-toggle.min.js') }}"></script>
     <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap4-toggle.min.css') }}">
 
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+        google.charts.load('current', { 'packages': ['corechart'] });
+        google.charts.setOnLoadCallback(drawChart);
 
+        function drawChart() {
+                var jsonData = $.ajax({
+                    url: "/inside",
+                    dataType: "json",
+                    async: false
+                }).responseText;
+
+                // Create our data table out of JSON data loaded from server.
+                var data = new google.visualization.DataTable(jsonData);
+
+                // Instantiate and draw our chart, passing in some options.
+                var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+                chart.draw(data, { width: 400, height: 240 });
+            }
+
+        </script>
+
+
+    </script>
+    
     <script type="text/javascript">
 
         $(function () {
@@ -19,6 +42,25 @@
                 SubmitTargets()
             })
         })
+
+        // $('#power_switch').click(function () {
+        //     $(this).bootstrapToggle('toggle');
+        //     SubmitTargets();
+        // });
+
+        // var power = $('#power_switch');
+        // power.click(function () {
+        //     {% if powerMode == 1 %}
+        //         $(this).checked = true;
+        //     {% else %}
+        //         $(this).checked = false;
+        //     {% endif %}
+        //     SubmitTargets();
+        // });
+        // function toggle() {
+        //     $('#power_switch').bootstrapToggle('toggle');
+        //     SubmitTargets();
+        //     };
 
     
         function ChangeTemperature(amount) {
@@ -78,7 +120,7 @@
 
                     $("#indoorTemperature").text(indoorTemperature +
                         String.fromCharCode(176));
-                    $("#targetTemperature").text(round(float(currentTarget),0) +
+                    $("#targetTemperature").text(Math.round(currentTarget) +
                         String.fromCharCode(176));
 
                     {% if heatRunning == 1 %}
@@ -87,9 +129,14 @@
                     document.getElementById("heatIndicator").style.display = "none";
                     {% endif %}
 
+                    {% if PowerMode == 1 %}
+                    document.getElementById('power_switch').checked = true;
+                    {% else %}
+                    document.getElementById('power_switch').checked = false;
+                    {% endif %}
 
                 });
-            }, 20000);
+            }, 10000);
         });
     </script>
 
@@ -150,13 +197,15 @@
         </div>
     </div>
 
-
+    <div class="container">
+        <div id="chart_div"></div>
+    </div>
 
 </body>
 
 <style>
 .form-control-temp {
-    font-size: 400%;
+    font-size: 350%;
     background-color: #343a40;
     color: white;
     border: 0;
@@ -167,7 +216,7 @@
 }
 
 .currentTemp {
-    font-size: 400%;
+    font-size: 350%;
     background-color: #343a40;
     color: white;
     border: 0;
