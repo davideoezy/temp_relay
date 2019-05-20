@@ -1,4 +1,6 @@
 import mysql.connector as mariadb
+import datetime
+import tzlocal
 
 ####### TO_DO ########
 
@@ -13,6 +15,7 @@ class db_helper():
         self.db_user = 'rpi'
         self.db_pass = 'warm_me'
         self.db = 'temp_logger'
+        self.local_timezone = tzlocal.get_localzone()
 
     def db_data(self, n_variables, statement, default):
 
@@ -127,12 +130,14 @@ class db_helper():
         inside = []
 
         for row in cur:
-            ins = {
-                'ts': row[0],
-                'temp': row[1],
-                'device': row[2]}
-            inside.append(ins)
+            unix_timestamp = row[0]
+            local_time = datetime.datetime.fromtimestamp(
+                unix_timestamp, self.local_timezone)
 
+            ins = {
+                'ts': local_time,
+                'temp': row[1]}
+            inside.append(ins)
         return inside
 
     def get_outside_temps(self):
@@ -154,11 +159,14 @@ class db_helper():
 
         outside = []
         for row in cur:
+            unix_timestamp = row[0]
+            local_time = datetime.datetime.fromtimestamp(
+                unix_timestamp, self.local_timezone)
+
             outs = {
-                'ts': row[0],
+                'ts': local_time,
                 'air_temp': row[1],
                 'feels_like': row[2]}
             outside.append(outs)
-
         return outside
 

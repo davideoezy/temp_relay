@@ -2,6 +2,7 @@
 from flask import Flask, request, session, g, redirect, url_for, abort, render_template, \
     flash, jsonify
 from db_helper import db_helper
+import gviz_api
 
 db_helper = db_helper()
 
@@ -31,12 +32,33 @@ def update():
 @app.route("/inside")
 def inside_data():
     inside = db_helper.get_inside_temps()
-    return jsonify(inside)
+    
+    ins_desc = {"ts": ("datetime", "Timestamp"),
+                "temp": ("number", "Inside Temperature")}
+
+
+    data_table_inside = gviz_api.DataTable(ins_desc)
+    data_table_inside.LoadData(inside)
+
+    return data_table_inside.ToJSonResponse(columns_order=("ts", "temp"),
+                                                order_by="ts")
+
 
 @app.route("/outside")
 def outside_data():
     outside = db_helper.get_outside_temps()
-    return jsonify(outside)
+
+    outs_desc = {"ts": ("datetime", "Timestamp"),
+                 "air_temp": ("number", "Outside Temperature"),
+                 "feels_like": ("number", "Feels Like")}
+
+
+    data_table_outside = gviz_api.DataTable(outs_desc)
+    data_table_outside.LoadData(outside)
+
+    return data_table_outside.ToJSonResponse(columns_order=("ts", "air_temp", "feels_like"),
+                                                    order_by="ts")
+
 
 
 # take a function and gather necessary data for the web ui, then call the function
