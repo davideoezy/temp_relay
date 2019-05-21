@@ -42,7 +42,7 @@ def temp_data():
     data_table_temp = gviz_api.DataTable(temps_desc)
     data_table_temp.LoadData(temps)
 
-    return data_table_temp.ToJSonResponse(columns_order=("ts", "temp", "air_temp", "feels_like"),
+    return data_table_temp.ToJSon(columns_order=("ts", "temp", "air_temp", "feels_like"),
                                            order_by="ts")
 
 
