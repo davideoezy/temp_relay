@@ -31,7 +31,7 @@ def update():
 
 @app.route("/temps")
 def temp_data():
-    inside = db_helper.get_temps()
+    temps = db_helper.get_temps()
     
 
     temps_desc = {"ts": ("datetime", "Timestamp"),
