@@ -47,24 +47,6 @@ def temp_data():
 
 
 
-
-@app.route("/outside")
-def outside_data():
-    outside = db_helper.get_outside_temps()
-
-    outs_desc = {"ts": ("datetime", "Timestamp"),
-                 "air_temp": ("number", "Outside Temperature"),
-                 "feels_like": ("number", "Feels Like")}
-
-
-    data_table_outside = gviz_api.DataTable(outs_desc)
-    data_table_outside.LoadData(outside)
-
-    return data_table_outside.ToJSon(columns_order=("ts", "air_temp", "feels_like"),
-                                                    order_by="ts")
-
-
-
 # take a function and gather necessary data for the web ui, then call the function
 # with the gathered data an an input and return the result
 def webpage_helper(function, type):
