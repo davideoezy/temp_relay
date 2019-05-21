@@ -29,19 +29,23 @@ def index():
 def update():
     return webpage_helper(jsonify, 'update')
 
-@app.route("/inside")
-def inside_data():
-    inside = db_helper.get_inside_temps()
+@app.route("/temps")
+def temp_data():
+    inside = db_helper.get_temps()
     
-    ins_desc = {"ts": ("datetime", "Timestamp"),
-                "temp": ("number", "Inside Temperature")}
+
+    temps_desc = {"ts": ("datetime", "Timestamp"),
+                "temp": ("number", "Inside Temperature"),
+                "air_temp": ("number", "Outside Temperature"),
+                "feels_like": ("number", "Feels Like")}
+
+    data_table_temp = gviz_api.DataTable(temps_desc)
+    data_table_temp.LoadData(temps)
+
+    return data_table_temp.ToJSonResponse(columns_order=("ts", "temp", "air_temp", "feels_like"),
+                                           order_by="ts")
 
 
-    data_table_inside = gviz_api.DataTable(ins_desc)
-    data_table_inside.LoadData(inside)
-
-    return data_table_inside.ToJSon(columns_order=("ts", "temp"),
-                                                order_by="ts")
 
 
 @app.route("/outside")
