@@ -122,14 +122,14 @@ class db_helper():
                     """
     
         statement2 = """
-                SELECT
-                UNIX_TIMESTAMP(ts) as time,
-                air_temp,
-                apparent_t as feels_like
-                FROM outside_conditions
-                where ts > DATE_SUB(now(), INTERVAL 12 hour)
-                ORDER BY ts ASC
-                """
+                    SELECT
+                    UNIX_TIMESTAMP(ts) as time,
+                    air_temp,
+                    apparent_t as feels_like
+                    FROM outside_conditions
+                    where ts > DATE_SUB(now(), INTERVAL 12 hour)
+                    ORDER BY ts ASC
+                    """
         
         con = mariadb.connect(host=self.db_host, port=self.db_host_port, user=self.db_user,
                               password=self.db_pass, database=self.db)
