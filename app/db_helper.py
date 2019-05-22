@@ -116,7 +116,7 @@ class db_helper():
                     temp as value,
                     device as metric
                     FROM temperature
-                    where ts > DATE_SUB(now(), INTERVAL 6 hour)
+                    where ts > DATE_SUB(now(), INTERVAL 4 hour)
                     and device = 'RPi_1'
                     ORDER BY ts asc
                     """
@@ -127,7 +127,7 @@ class db_helper():
                     air_temp,
                     apparent_t as feels_like
                     FROM outside_conditions
-                    where ts > DATE_SUB(now(), INTERVAL 6 hour)
+                    where ts > DATE_SUB(now(), INTERVAL 4 hour)
                     ORDER BY ts ASC
                     """
         
