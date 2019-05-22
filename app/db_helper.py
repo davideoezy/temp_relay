@@ -149,7 +149,7 @@ class db_helper():
                 'temp': row[1],
                 'air_temp': None,
                 'feels_like': None}
-            temps.append(ins)
+            #temps.append(ins)
         
         cur = con.cursor()
 
