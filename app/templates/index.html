@@ -12,7 +12,7 @@
 
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
-        google.charts.load('current', { 'packages': ['corechart', 'line'] });
+        google.charts.load('current', { 'packages': ['corechart'] });
         //google.charts.load('current', { 'packages': ['line'] });
         google.charts.setOnLoadCallback(drawChart);
 
@@ -29,12 +29,21 @@
                 var options = {
                 title: 'Temperature',
                 curveType: 'function',
-                width: 800, 
-                height: 450,
+                width: 1100, 
+                height: 500,
                 fontsize: 10,
                 pointsize: 10,
                 theme: 'material',
                 interpolateNulls: true,
+                hAxis:
+                    {
+                        gridlines: {
+                            color: 'transparent'
+                        },
+                        textStyle: {
+                            color: "#596770"
+                        }
+                    },
 
                 legend: {position: 'labeled'},
                 backgroundColor: '#343a40' ,
@@ -49,10 +58,10 @@
 
                 // Instantiate and draw our chart, passing in some options.
 
-                var chart = new google.charts.Line(document.getElementById('chart_div'));
-                chart.draw(data, google.charts.Line.convertOptions(options));
+                //var chart = new google.charts.Line(document.getElementById('chart_div'));
+                //chart.draw(data, google.charts.Line.convertOptions(options));
 
-                var chart = new google.visualization.LineChart(document.getElementById('chart_div_2'));
+                var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
                 chart.draw(data, options);
             
                  }
@@ -223,15 +232,10 @@
         </div>
     </div>
 
-    <div class="container-fluid">
-                <div class="p-3 mb-2 bg-dark text-white">
-        <div id="chart_div"></div>
-        </div>
-    
     </div>
         <div class="container-fluid">
             <div class="p-3 mb-2 bg-dark text-white">
-                <div id="chart_div_2"></div>
+                <div id="chart_div"></div>
             </div>
         
         </div>
