@@ -46,11 +46,12 @@
             
 
                 // Instantiate and draw our chart, passing in some options.
-                //var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
-                
-                //chart.draw(data, options);
+
                 var chart = new google.charts.Line(document.getElementById('chart_div'));
                 chart.draw(data, google.charts.Line.convertOptions(options));
+
+                var chart = new google.visualization.LineChart(document.getElementById('chart_div_2'));
+                chart.draw(data, options);
             
                  }
         </script>
@@ -226,6 +227,12 @@
         </div>
     
     </div>
+        <div class="container-fluid">
+            <div class="p-3 mb-2 bg-dark text-white">
+                <div id="chart_div_2"></div>
+            </div>
+        
+        </div>
 
 </body>
 
