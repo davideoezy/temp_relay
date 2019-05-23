@@ -76,8 +76,8 @@ class db_helper():
                         air_temp as outside_temp,
                         apparent_t as feels_like
                         FROM outside_conditions
-                        WHERE ts > DATE_SUB(now(), INTERVAL 90 second)
-                        ORDER BY ts ASC
+                        ORDER BY ts desc
+                        limit 1
                         """
         default = 99
 
