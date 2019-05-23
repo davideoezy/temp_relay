@@ -252,18 +252,18 @@
     <div class="p-3 mb-2 bg-dark block text-white">
         <div class="row block ">
             <div class="col-2 col-md-2">
-                <h5>Inside</h5>
+                <p class = "h4 temp-headings">Inside</p>
 <br>
-                <h3 class="temps" id="indoorTemperature">{{ currentTemperature }}&deg;</h3>
+                <h2 class="temps" id="indoorTemperature">{{ currentTemperature }}&deg;</h2>
                 <br>
                 <hr class="divider">
 
-                <h5>Outside</h5>
-                <h3 class="temps" id="outsideTemperature">{{ outside_temp }}&deg;</h3>
+                <p class="h4 temp-headings">Outside</p>
+                <h2 class="temps" id="outsideTemperature">{{ outside_temp }}&deg;</h2>
                 
                 <br>
-                <h5>Feels Like</h5>
-                <h3 class="temps" id="feelsLike">{{ feels_like }}&deg;</h3>
+                <p class="h4 temp-headings">Feels Like</p>
+                <h2 class="temps" id="feelsLike">{{ feels_like }}&deg;</h2>
             </div>
             <div class="col-10 col-md-10">
 
@@ -372,6 +372,10 @@
 } */
 
 .temps {
+    text-align: center;
+}
+
+.temp-headings {
     text-align: center;
 }
 .modeButton {
