@@ -70,7 +70,7 @@ class db_helper():
         return self.db_data(n_variables = n_variables, statement = statement, default = default)
 
     def get_outside_temp(self):
-        n_variables = 1
+        n_variables = 2
         statement = """
                         SELECT
                         air_temp as outside_temp,
