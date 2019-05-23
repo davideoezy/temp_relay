@@ -52,23 +52,31 @@ def temp_data():
 def webpage_helper(function, type):
 # get current settings and house temperature
     current = db_helper.get_control_settings()
-    currentTemperature = round(float(db_helper.get_temp()),1)
+    currentTemperature = round(float(db_helper.get_inside_temp()),1)
     heatRunning = db_helper.get_heat_indicator()
-    currentTarget = round(float(current[0]),0)
+    currentTarget = int(current[0])
     power = current[1]
+    outside = db_helper.get_outside_temp()
+    outside_temp = int(outside[0])
+    feels_like = int(outside[1])
+
 
 # check if we should include 'index.html' in the function call
     if 'update' == type:
         return function(heatRunning = heatRunning,
                         currentTemperature=currentTemperature,
                         currentTarget = currentTarget,
-                        powerMode = power)
+                        powerMode = power,
+                        outside_temp = outside_temp,
+                        feels_like = feels_like)
 
     return function('index.html',
                     heatRunning = heatRunning,
                     currentTemperature=currentTemperature,
                     currentTarget = currentTarget,
-                    powerMode = power)
+                    powerMode=power,
+                    outside_temp=outside_temp,
+                    feels_like=feels_like)
 
 
 if __name__ == "__main__":

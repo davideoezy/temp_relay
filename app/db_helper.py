@@ -56,7 +56,7 @@ class db_helper():
 
         return
 
-    def get_temp(self):
+    def get_inside_temp(self):
         n_variables = 1
         statement = """
                         SELECT
@@ -68,6 +68,22 @@ class db_helper():
         default = 99
 
         return self.db_data(n_variables = n_variables, statement = statement, default = default)
+
+    def get_outside_temp(self):
+        n_variables = 1
+        statement = """
+                        SELECT
+                        air_temp as outside_temp,
+                        apparent_t as feels_like
+                        FROM outside_conditions
+                        WHERE ts > DATE_SUB(now(), INTERVAL 90 second)
+                        ORDER BY ts ASC
+                        """
+        default = 99
+
+        return self.db_data(n_variables=n_variables, statement=statement, default=default)
+
+
 
     def get_control_settings(self):
         n_variables = 2
