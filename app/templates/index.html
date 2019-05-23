@@ -237,10 +237,11 @@
                 </div>
             </div>
         </div>
-    </div>    
+    </div>
+
 <div class="container-fluid">
-    <div class="p-3 mb-2 bg-dark text-white">
-        <div class="row ">
+    <div class="p-3 mb-2 bg-dark block text-white">
+        <div class="row block ">
             <div class="col-3 col-md-3">
                 <h4>Inside</h4>
                 <h5 class="currentTemp" id="indoorTemperature">{{ currentTemperature }}&deg;</h5>
@@ -251,6 +252,11 @@
                 <h4>Feels Like</h4>
                 <h5 class="feelsLike" id="feelsLike">{{ feels_like }}&deg;</h5>
             </div>
+            <div class="col-9 col-md-9">
+
+                <div id="chart_div"></div>
+            </div>
+
         </div>
     </div>
 </div>
