@@ -248,17 +248,20 @@
 <div class="container-fluid">
     <div class="p-3 mb-2 bg-dark block text-white">
         <div class="row block ">
-            <div class="col-3 col-md-3">
-                <h4>Inside</h4>
-                <h5 class="currentTemp" id="indoorTemperature">{{ currentTemperature }}&deg;</h5>
+            <div class="col-2 col-md-2">
+                <h5>Inside</h5>
+<br>
+                <h3 class="currentTemp" id="indoorTemperature">{{ currentTemperature }}&deg;</h3>
                 <hr class="divider">
 
-                <h4>Outside</h4>
-                <h5 class="outsideTemp" id="outsideTemperature">{{ outside_temp }}&deg;</h5>
-                <h4>Feels Like</h4>
-                <h5 class="feelsLike" id="feelsLike">{{ feels_like }}&deg;</h5>
+                <h5>Outside</h5>
+                <h3 class="outsideTemp" id="outsideTemperature">{{ outside_temp }}&deg;</h3>
+                <br>
+                <br>
+                <h5>Feels Like</h5>
+                <h3 class="feelsLike" id="feelsLike">{{ feels_like }}&deg;</h3>
             </div>
-            <div class="col-9 col-md-9">
+            <div class="col-10 col-md-10">
 
                 <div id="chart_div"></div>
             </div>
@@ -355,14 +358,14 @@
     height: 65%;/* You may want to include this as bootstrap applies these styles too */
 }
 
-.currentTemp {
+/* .currentTemp {
     font-size: 100%;
     background-color: #343a40;
     color: white;
     border: 0;
     box-shadow: none;
     text-align: center;
-}
+} */
 .modeButton {
     width: 50px;
     height: 50px;
