@@ -194,13 +194,13 @@
     <div class="collapse" id="collapseExample">
         <div class="container">
             <div class="p-3 mb-2 bg-dark text-white">
-                <h2>Power</h2>
-                <div class="row block align-items-center justify-content-center">
+                <h4>Power</h4>
+                <div class="row align-items-center justify-content-center">
                     <div class="col-2 col-md-2"></div>
                     <div class="col-8 col-md-8 text-center">
                         <input type="checkbox" id="power_switch" data-toggle="toggle" data-on="Heater On" data-off="Off"
-                            data-onstyle="danger" data-offstyle="primary" data-style="fast" data-height="120"
-                            data-width="150" {% if powerMode == 1 %} checked {% else %} {% endif %}>
+                            data-onstyle="danger" data-offstyle="primary" data-style="fast" data-height="70"
+                            data-width="80" {% if powerMode == 1 %} checked {% else %} {% endif %}>
     
                     </div>
                     <div class="col-2 col-md-2 justify-content-top">
@@ -210,8 +210,8 @@
     
                 </div>
                 <hr class="divider">
-                <h2>Target</h2>
-                <div class="row block align-items-center justify-content-center">
+                <h4>Target</h4>
+                <div class="row align-items-center justify-content-center">
     
                     <div class="col-5 col-md-5 text-center">
                         <button id="down1" class="btn btn-primary modeButton" onclick="ChangeTemperature(-1)">
@@ -236,16 +236,16 @@
     </div>    
 <div class="container">
     <div class="p-3 mb-2 bg-dark text-white">
-        <div class="row block">
+        <div class="row ">
             <div class="col-3 col-md-3">
-                <h2>Inside</h2>
-                <h3 class="currentTemp" id="indoorTemperature">{{ currentTemperature }}&deg;</h3>
+                <h4>Inside</h4>
+                <h5 class="currentTemp" id="indoorTemperature">{{ currentTemperature }}&deg;</h5>
                 <hr class="divider">
 
-                <h2>Outside</h2>
-                <h3 class="outsideTemp" id="outsideTemperature">{{ outside_temp }}&deg;</h3>
-                <h2>Feels Like</h2>
-                <h3 class="feelsLike" id="feelsLike">{{ feels_like }}&deg;</h3>
+                <h4>Outside</h4>
+                <h5 class="outsideTemp" id="outsideTemperature">{{ outside_temp }}&deg;</h5>
+                <h4>Feels Like</h4>
+                <h5 class="feelsLike" id="feelsLike">{{ feels_like }}&deg;</h5>
             </div>
         </div>
     </div>
@@ -348,8 +348,8 @@
     text-align: center;
 }
 .modeButton {
-    width: 100px;
-    height: 100px;
+    width: 50px;
+    height: 50px;
 }
 
 .fast  .toggle-group { transition: left 0.1s; -webkit-transition: left 0.1s; }
