@@ -27,7 +27,7 @@
                 var data = new google.visualization.DataTable(jsonData);
         
                 var options = {
-                title: false,
+                title: "",
                 curveType: 'function',
                 width: 650, 
                 height: 350,
@@ -42,12 +42,15 @@
                             color: 'transparent'
                         },
                         textStyle: {
-                            color: "#596770"
+                            color: "white"
                         }
                     },
                 vAxis: {
                         gridlines: {
                             color: 'transparent'
+                        },
+                        textStyle: {
+                            color: "white"
                         }
                     },
 
@@ -365,7 +368,7 @@
 .fast  .toggle-group { transition: left 0.1s; -webkit-transition: left 0.1s; }
 
 .block {
-    height: 300px;
+    height: 400px;
     margin-bottom: 30px;
 }
 
