@@ -42,7 +42,7 @@
                             color: 'transparent'
                         },
                         textStyle: {
-                            color: "white"
+                            color: "grey"
                         }
                     },
                 vAxis: {
@@ -56,7 +56,7 @@
                             color: 'transparent'
                         },
                         textStyle: {
-                            color: "grey"
+                            color: "white" 
                         }
                     },
                 chartArea: { left: 20, top: 20, width: "85%", height: "80%" },
@@ -212,35 +212,35 @@
                         <input type="checkbox" id="power_switch" data-toggle="toggle" data-on="Heater On" data-off="Off"
                             data-onstyle="danger" data-offstyle="primary" data-style="fast" data-height="40"
                             data-width="120" {% if powerMode == 1 %} checked {% else %} {% endif %}>
-    
+
                     </div>
                     <div class="col-2 col-md-2 justify-content-top">
                         <span id="heatIndicator" class="badge badge-pill badge-danger">Heating</span>
-    
+
                     </div>
-    
+
                 </div>
                 <br>
                 <hr class="divider">
                 <h4>Target</h4>
                 <div class="row align-items-center justify-content-center">
-    
+
                     <div class="col-5 col-md-5 text-center">
                         <button id="down1" class="btn btn-primary modeButton" onclick="ChangeTemperature(-1)">
                             -
                         </button>
                     </div>
                     <div class="col-2 col-md-2 text-center">
-    
+
                         <input class="form-control-temp" id="temperatureInput" value={{ currentTarget }} type="text">
-    
-    
+
+
                     </div>
                     <div class="col-5 col-md-5 text-center">
                         <button id="up1" class="btn btn-danger modeButton" onclick="ChangeTemperature(1)">
                             +
                         </button>
-    
+
                     </div>
                     <br>
                 </div>
@@ -248,105 +248,32 @@
         </div>
     </div>
 
-<div class="container-fluid">
-    <div class="p-3 mb-2 bg-dark block text-white">
-        <div class="row block ">
-            <div class="col-2 col-md-2">
-                <p class = "h5 temp-headings inside">Inside</p>
-<br>
-                <h2 class="temps inside" id="indoorTemperature">{{ currentTemperature }}&deg;</h1>
-                <br>
-                <hr class="divider">
-
-                <p class="h5 temp-headings outside">Outside</p>
-                <h2 class="temps outside" id="outsideTemperature">{{ outside_temp }}&deg;</h1>
-                
-                <br>
-                <p class="h6 temp-headings">Feels Like</p>
-                <h3 class="temps" id="feelsLike">{{ feels_like }}&deg;</h3>
-            </div>
-            <div class="col-10 col-md-10">
-
-                <div id="chart_div"></div>
-            </div>
-
-        </div>
-    </div>
-</div>
-  
-    
-
-
-
-
-
-
-
-
-
     <div class="container-fluid">
-        <div class="p-3 mb-2 bg-dark text-white">
-            <div class="display-4">Power</div>
-            <div class="row block align-items-center justify-content-center">
-                <div class="col-2"></div>
-                <div class="col-8 text-center">
-                    <input type="checkbox" id="power_switch" data-toggle="toggle" data-on="Heater On" data-off="Off"
-                        data-onstyle="danger" data-offstyle="primary" data-style="fast" data-height="120" data-width="150"
-                        {% if powerMode == 1 %} checked {% else %} {% endif %}>
-    
+        <div class="p-3 mb-2 bg-dark block text-white">
+            <div class="row block ">
+                <div class="col-2 col-md-2">
+                    <p class="h5 temp-headings inside">Inside</p>
+                    <br>
+                    <h2 class="temps inside" id="indoorTemperature">{{ currentTemperature }}&deg;</h1>
+                        <br>
+                        <hr class="divider">
+
+                        <p class="h5 temp-headings outside">Outside</p>
+                        <h2 class="temps outside" id="outsideTemperature">{{ outside_temp }}&deg;</h1>
+
+                            <br>
+                            <p class="h6 temp-headings">Feels Like</p>
+                            <h3 class="temps" id="feelsLike">{{ feels_like }}&deg;</h3>
                 </div>
-                <div class="col-2 justify-content-top">
-                    <span id="heatIndicator" class="badge badge-pill badge-danger">Heating</span>
-    
+                <div class="col-10 col-md-10">
+
+                    <div id="chart_div"></div>
                 </div>
-    
-            </div>
-    
-        </div>
-    </div>
-    <div class="container-fluid">
-        <div class="p-3 mb-2 bg-dark text-white">
-            <div class="display-4">Target</div>
-            <div class="row block align-items-center justify-content-center">
-                <div class="col-5 text-center">
-                    <button id="down1" class="btn btn-primary modeButton" onclick="ChangeTemperature(-1)">
-                        -
-                    </button>
-                </div>
-                <div class="col-2 text-center">
-    
-                    <input class="form-control-temp" id="temperatureInput" value={{ currentTarget }} type="text">
-    
-    
-                </div>
-                <div class="col-5 text-center">
-                    <button id="up1" class="btn btn-danger modeButton" onclick="ChangeTemperature(1)">
-                        +
-                    </button>
-    
-                </div>
+
             </div>
         </div>
-    </div>
-    <div class="container-fluid">
-        <div class="p-3 mb-2 bg-dark text-white">
-            <div class="display-4">Current</div>
-            <div class="row tempBlock align-items-center justify-content-center">
-                <div class="col text-center">
-                    <p class="currentTemp" id="indoorTemperature">{{ currentTemperature }}&deg;</h1>
-                </div>
-            </div>
-        </div>
-    </div>
     </div>
 
-    </div>
-        <div class="container-fluid">
-            <div class="p-3 mb-2 bg-dark text-white">
-                <div id="chart_div"></div>
-            </div>
-        
-        </div>
 
 </body>
 
