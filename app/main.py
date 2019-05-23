@@ -54,7 +54,7 @@ def webpage_helper(function, type):
     current = db_helper.get_control_settings()
     currentTemperature = round(float(db_helper.get_inside_temp()),1)
     heatRunning = db_helper.get_heat_indicator()
-    currentTarget = round(float(current[0]),0)
+    currentTarget = int(current[0])
     power = current[1]
     outside = db_helper.get_outside_temp()
     outside_temp = int(outside[0])
