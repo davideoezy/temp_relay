@@ -54,11 +54,11 @@ def webpage_helper(function, type):
     current = db_helper.get_control_settings()
     currentTemperature = round(float(db_helper.get_inside_temp()),1)
     heatRunning = db_helper.get_heat_indicator()
-    currentTarget = int(current[0])
+    currentTarget = round(float(current[0]),0)
     power = current[1]
     outside = db_helper.get_outside_temp()
-    outside_temp = int(outside[0])
-    feels_like = int(outside[1])
+    outside_temp = round(float(outside[0]),0)
+    feels_like = round(float(outside[1]),0)
 
 
 # check if we should include 'index.html' in the function call
