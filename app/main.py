@@ -57,8 +57,8 @@ def webpage_helper(function, type):
     currentTarget = round(float(current[0]),0)
     power = current[1]
     outside = db_helper.get_outside_temp()
-    outside_temp = round(float(outside[0]),0)
-    feels_like = round(float(outside[1]),0)
+    outside_temp = int(outside[0])
+    feels_like = int(outside[1])
 
 
 # check if we should include 'index.html' in the function call
