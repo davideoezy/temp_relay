@@ -149,7 +149,6 @@
 
             document.body.appendChild(form);
             form.submit();
-            var submit = 1;
         }
 
         $(document).ready(function () {
@@ -159,11 +158,6 @@
             {% else %}
             document.getElementById("heatIndicator").style.display = "none";
             {% endif %}
-
-            if (submit == 1 ) {
-                $('.collapse').collapse('show');
-            }
-            var submit = 0
 
 
             window.setInterval(function () {
