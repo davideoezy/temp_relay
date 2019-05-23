@@ -27,7 +27,7 @@
                 var data = new google.visualization.DataTable(jsonData);
         
                 var options = {
-                title: 'Temperature',
+                title: false,
                 curveType: 'function',
                 width: 650, 
                 height: 350,
@@ -51,7 +51,7 @@
                         }
                     },
 
-                legend: {position: 'labeled', labeledValueText: 'both'},
+                legend: {position: 'none'},
                 backgroundColor: '#343a40' ,
                 series: {
                         0: { color: 'yellow' },
