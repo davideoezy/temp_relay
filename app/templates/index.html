@@ -73,7 +73,7 @@
         var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
         chart.draw(data, options);
 
-    }
+    };
 
 
 
@@ -124,59 +124,98 @@
             var xhr = new XMLHttpRequest();
             xhr.open('POST', '/', true);
             xhr.send(formData);
+        };
 
-            $(document).ready(function () {
+        $(document).ready(function () {
 
-                {% if heatRunning == 1 %}
-                document.getElementById("heatIndicator").style.display = "inline";
-                {% else %}
-                document.getElementById("heatIndicator").style.display = "none";
-                {% endif %}
+            {% if heatRunning == 1 %}
+            document.getElementById("heatIndicator").style.display = "inline";
+            {% else %}
+            document.getElementById("heatIndicator").style.display = "none";
+            {% endif %}
 
 
-                window.setInterval(function () {
-                    $.ajax({
-                        url: "/update",
-                        context: document.body
-                    }).done(function (data) {
-                        heatRunning = data["heatRunning"];
-                        indoorTemperature = data["currentTemperature"];
-                        currentTarget = data["currentTarget"];
-                        powerMode = data["powerMode"];
+            window.setInterval(function () {
+                const Http = new XMLHttpRequest();
+                const url = '/temps';
+                Http.open("GET", url);
+                Http.send();
+                Http.onreadystatechange = (e) => {
+                    var data = new google.visualization.DataTable(responseText);
+                    chart.draw(data, options);
+                }
+                const Http2 = new XMLHttpRequest();
+                const url2 = '/update';
+                Http2.open("GET", url2);
+                Http2.send();
+                Http2.onreadystatechange = (e) => {
+                    heatRunning = responseText["heatRunning"];
+                    indoorTemperature = responseText["currentTemperature"];
+                    currentTarget = responseText["currentTarget"];
+                    powerMode = responseText["powerMode"];
 
-                        $("#indoorTemperature").text(indoorTemperature +
-                            String.fromCharCode(176));
-                        $("#temperatureInput").text(Math.round(currentTarget) +
-                            String.fromCharCode(176));
+                    $("#indoorTemperature").text(indoorTemperature +
+                        String.fromCharCode(176));
+                    $("#temperatureInput").text(Math.round(currentTarget) +
+                        String.fromCharCode(176));
 
-                        {% if heatRunning == 1 %}
-                        document.getElementById("heatIndicator").style.display = "inline";
-                        {% else %}
-                        document.getElementById("heatIndicator").style.display = "none";
-                        {% endif %}
+                    {% if heatRunning == 1 %}
+                    document.getElementById("heatIndicator").style.display = "inline";
+                    {% else %}
+                    document.getElementById("heatIndicator").style.display = "none";
+                    {% endif %}
 
-                        {% if PowerMode == 1 %}
-                        document.getElementById('power_switch').checked = true;
-                        {% else %}
-                        document.getElementById('power_switch').checked = false;
-                        {% endif %}
+                    {% if PowerMode == 1 %}
+                    document.getElementById('power_switch').checked = true;
+                    {% else %}
+                    document.getElementById('power_switch').checked = false;
+                    {% endif %}
 
-                    });
-                }, 10000);
+                }
+            }, 10000);
+    
+        });
+                //     $.ajax({
+                //         url: "/update",
+                //         context: document.body
+                //     }).done(function (data) {
+                //         heatRunning = data["heatRunning"];
+                //         indoorTemperature = data["currentTemperature"];
+                //         currentTarget = data["currentTarget"];
+                //         powerMode = data["powerMode"];
 
-                window.setInterval(function () {
-                    var jsonGraphData = $.ajax({
-                        url: "/temps",
-                        dataType: "json",
-                        async: false
-                    }).responseText(function (jsonGraphData) {
-                        var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
-                        chart.draw(data, options);
-                    });
+                //         $("#indoorTemperature").text(indoorTemperature +
+                //             String.fromCharCode(176));
+                //         $("#temperatureInput").text(Math.round(currentTarget) +
+                //             String.fromCharCode(176));
 
-                }, 10000);
-            });
-        }
+                //         {% if heatRunning == 1 %}
+                //         document.getElementById("heatIndicator").style.display = "inline";
+                //         {% else %}
+                //         document.getElementById("heatIndicator").style.display = "none";
+                //         {% endif %}
+
+                //         {% if PowerMode == 1 %}
+                //         document.getElementById('power_switch').checked = true;
+                //         {% else %}
+                //         document.getElementById('power_switch').checked = false;
+                //         {% endif %}
+
+                //     });
+                // }, 10000);
+
+                // window.setInterval(function () {
+                //     var jsonGraphData = $.ajax({
+                //         url: "/temps",
+                //         dataType: "json",
+                //         async: false
+                //     }).responseText(function (jsonGraphData) {
+                //         chart.draw(data, options);
+                //     });
+
+                // }, 10000);
+            // });
+
     </script>
 
 
