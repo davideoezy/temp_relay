@@ -126,16 +126,16 @@
             document.body.appendChild(form);
 
             form.submit(function (ev) {
+                ev.preventDefault();
                 $.ajax({
                     type: form.attr('method'),
                     url: frm.attr('action'),
-                    data: form.serialize(),
-                    success: function (data) {
-                        alert('ok');
-                    }
+                    data: form.serialize()
+                }).done(function (data) {
+                    alert(data + "This is working");
+                }).fail(function (data) {
+                    alert("This is not working");
                 });
-
-                ev.preventDefault();
             });
 
             //form.submit();
