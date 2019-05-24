@@ -125,17 +125,13 @@
 
             document.body.appendChild(form);
 
-            form.submit(function (ev) {
-                ev.preventDefault();
-                $.ajax({
-                    type: form.attr('method'),
-                    url: frm.attr('action'),
-                    data: form.serialize()
-                }).done(function (data) {
-                    console.log(data + "This is working");
-                }).fail(function (data) {
-                    console.log("This is not working");
-                });
+            $.ajax({
+                type: form.attr('method'),
+                url: form.attr('action'),
+                data: form,
+            success: function(response) {
+                console.log(data + "This is working");
+                }
             });
 
             //form.submit();
