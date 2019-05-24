@@ -13,7 +13,6 @@
     <script type="text/javascript" src="{{ url_for('static', filename='loader.js') }}"></script>
     <script type="text/javascript">
         google.charts.load('current', { 'packages': ['corechart'] });
-        //google.charts.load('current', { 'packages': ['line'] });
         google.charts.setOnLoadCallback(drawChart);
 
         function drawChart() {
@@ -76,6 +75,8 @@
                 // }, 10000);
 
                  };
+
+        setInterval("drawChart();", 30000);
         </script>
 
 
@@ -128,38 +129,8 @@
             formData = new FormData(form);
         
             var xhr = new XMLHttpRequest();
-            // Add any event handlers here...
             xhr.open('POST', '/', true);
             xhr.send(formData);
-
-            // var formAction = form.attr('action');
-            // $.ajax({
-            //     url: '/upload',
-            //     data: formdata ? formdata : form.serialize(),
-            //     cache: false,
-            //     contentType: false,
-            //     processData: false,
-            //     type: 'POST',
-            //     success: function (data, textStatus, jqXHR) {
-            //         // Callback code
-            //     }
-            };
-
-            // var formAction = form.attr('action');
-            // $.ajax({
-            //     url: '/',
-            //     data: formdata ? formdata : form.serialize(),
-            //     cache: false,
-            //     contentType: false,
-            //     processData: false,
-            //     type: 'POST',
-            //     success: function (data, textStatus, jqXHR) {
-            //         // Callback code
-            //     }
-            // });
-
-            //form.submit();
-        //}
 
         $(document).ready(function () {
 
