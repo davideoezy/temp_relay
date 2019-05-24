@@ -125,10 +125,25 @@
 
             document.body.appendChild(form);
 
-            var formdata = false;
-            if (window.FormData) {
-                formdata = new FormData(form[0]);
-            }
+            formdata = new FormData(form);
+        
+            var xhr = new XMLHttpRequest();
+            // Add any event handlers here...
+            xhr.open('POST', '/', true);
+            xhr.send(formData);
+
+            // var formAction = form.attr('action');
+            // $.ajax({
+            //     url: '/upload',
+            //     data: formdata ? formdata : form.serialize(),
+            //     cache: false,
+            //     contentType: false,
+            //     processData: false,
+            //     type: 'POST',
+            //     success: function (data, textStatus, jqXHR) {
+            //         // Callback code
+            //     }
+            };
 
             var formAction = form.attr('action');
             $.ajax({
