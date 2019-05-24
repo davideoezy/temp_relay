@@ -132,9 +132,9 @@
                     url: frm.attr('action'),
                     data: form.serialize()
                 }).done(function (data) {
-                    alert(data + "This is working");
+                    console.log(data + "This is working");
                 }).fail(function (data) {
-                    alert("This is not working");
+                    console.log("This is not working");
                 });
             });
 
