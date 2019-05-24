@@ -142,6 +142,8 @@
                 Http.send();
                 Http.onreadystatechange = (e) => {
                     var data = new google.visualization.DataTable(responseText);
+                    var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+
                     chart.draw(data, options);
                 }
                 const Http2 = new XMLHttpRequest();
