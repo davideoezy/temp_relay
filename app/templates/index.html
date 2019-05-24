@@ -112,27 +112,35 @@
             var temperature = $("#temperatureInput").val();
 
             var hiddenField = document.createElement("input");
-            hiddenField.setAttribute("type", "hidden");
+            //hiddenField.setAttribute("type", "hidden");
             hiddenField.setAttribute("name", "power");
             hiddenField.setAttribute("value", power);
             form.appendChild(hiddenField);
 
             hiddenField = document.createElement("input");
-            hiddenField.setAttribute("type", "hidden");
+            //hiddenField.setAttribute("type", "hidden");
             hiddenField.setAttribute("name", "temperature");
             hiddenField.setAttribute("value", temperature);
             form.appendChild(hiddenField);
 
             document.body.appendChild(form);
 
-            var msg = form.toString();
+            var formdata = false;
+            if (window.FormData) {
+                formdata = new FormData(form[0]);
+            }
 
-            alert(msg);
-
+            var formAction = form.attr('action');
             $.ajax({
-                type: form.getAttribute("method"),
-                url: form.getAttribute("action"),
-                data: msg
+                url: '/',
+                data: formdata ? formdata : form.serialize(),
+                cache: false,
+                contentType: false,
+                processData: false,
+                type: 'POST',
+                success: function (data, textStatus, jqXHR) {
+                    // Callback code
+                }
             });
 
             //form.submit();
