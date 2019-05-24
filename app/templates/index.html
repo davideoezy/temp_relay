@@ -140,7 +140,7 @@
                 const url = '/temps';
                 Http.open("GET", url);
                 Http.send();
-                Http.onreadystatechange = (e) => function (){
+                Http.onreadystatechange = function (){
                     var data = new google.visualization.DataTable(responseText);
                     var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
 
@@ -150,7 +150,7 @@
                 const url2 = '/update';
                 Http2.open("GET", url2);
                 Http2.send();
-                Http2.onreadystatechange = (e) => function (){
+                Http2.onreadystatechange = function (){
                     heatRunning = responseText["heatRunning"];
                     indoorTemperature = responseText["currentTemperature"];
                     currentTarget = responseText["currentTarget"];
