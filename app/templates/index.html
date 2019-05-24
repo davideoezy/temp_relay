@@ -125,9 +125,9 @@
 
             document.body.appendChild(form);
 
-            var msg = JSON.stringify(form);
+            var msg = JSON.stringify(document.body);
 
-            alert(form);
+            alert(msg);
 
             $.ajax({
                 type: form.getAttribute("method"),
