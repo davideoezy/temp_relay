@@ -101,8 +101,8 @@
 
         function SubmitTargets() {
             var form = document.createElement("form");
-            // form.setAttribute("method", "post");
-            // form.setAttribute("action", "");
+            form.setAttribute("method", "post");
+            form.setAttribute("action", "");
 
             var power = 0;
             if ($('#power_switch').prop('checked')) {
@@ -126,12 +126,9 @@
             document.body.appendChild(form);
 
             $.ajax({
-                type: "POST",
-                url: "/",
-                data: form,
-            success: function(response) {
-                console.log(data + "This is working");
-                }
+                type: form.getAttribute("method"),
+                url: form.getAttribute("action"),
+                data: form.serialize()
             });
 
             //form.submit();
