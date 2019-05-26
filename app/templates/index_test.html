@@ -25,7 +25,8 @@
             Http_chart.onreadystatechange = function () {
                 if (Http_chart.readyState === 4 && Http_chart.status === 200) {
                     var jsonData = Http_chart.responseText;
-        
+                }
+                
                 var data = new google.visualization.DataTable(jsonData);
                 alert("jsonData" + jsonData)
                 var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
