@@ -14,7 +14,7 @@ def index():
     if request.args.get("power") is not None and request.args.get("temperature"):
         power = request.args.get("power")
         temperature = round(float(request.args.get("temperature")),0)
-        db_helper.insert_control_settings(temperature=temperature, power=power)
+        #db_helper.insert_control_settings(temperature=temperature, power=power)
 
     if 'POST' == request.method:
         data = request.form
