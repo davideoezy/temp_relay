@@ -20,11 +20,12 @@
         function drawChart() {
             const Http_chart = new XMLHttpRequest();
             const url_chart = '/temps';
+            Http_chart.responseType = 'json';
             Http_chart.open("GET", url_chart);
             Http_chart.send();
-            Http_chart.onreadystatechange = function () {
+            Http_chart.onload = function () {
                 if (Http_chart.readyState === 4 && Http_chart.status === 200) {
-                    var jsonData = Http_chart.responseText;
+                    var jsonData = Http_chart.response;
                 }
 
                 var data = new google.visualization.DataTable(jsonData);
@@ -142,11 +143,12 @@
             window.setInterval(function () {
                 const Http_update = new XMLHttpRequest();
                 const url_update = '/update';
+                Http_update.responseType = 'json';
                 Http_update.open("GET", url_update);
                 Http_update.send();
-                Http_update.onreadystatechange = function () {
+                Http_update.onload = function () {
                       if (Http_update.readyState === 4 && Http_update.status === 200) {
-                        var response = Http_update.responseText;
+                        var response = Http_update.response;
                     }
                 
                     alert("response" + response);
