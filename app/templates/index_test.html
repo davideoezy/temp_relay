@@ -94,15 +94,18 @@
 
 
             window.setInterval(function () {
-                const Http2 = new XMLHttpRequest();
-                const url2 = '/update';
-                Http2.open("GET", url2);
-                Http2.send();
-                Http2.onreadystatechange = function () {
-                    heatRunning = responseText["heatRunning"];
-                    indoorTemperature = responseText["currentTemperature"];
-                    currentTarget = responseText["currentTarget"];
-                    powerMode = responseText["powerMode"];
+                const Http_update = new XMLHttpRequest();
+                const url_update = '/update';
+                Http_update.open("GET", url_update);
+                Http_update.send();
+                Http_update.onreadystatechange = function () {
+
+                    var responseText = Http_update.responseText;
+
+                    var heatRunning = responseText["heatRunning"];
+                    var indoorTemperature = responseText["currentTemperature"];
+                    var currentTarget = responseText["currentTarget"];
+                    var powerMode = responseText["powerMode"];
 
                     $("#indoorTemperature").text(indoorTemperature +
                         String.fromCharCode(176));
