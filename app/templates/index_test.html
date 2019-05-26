@@ -171,11 +171,11 @@
 
 
                     {% if PowerMode == 1 %}
-                    $('#power_switch').prop('checked', true).change();
+                    $('#power_switch').prop('checked', false).change();
                     power = 1;
                     
                     {% else %}
-                    $('#power_switch').prop('checked', false).change();
+                    $('#power_switch').prop('checked', true).change();
                     power = 0;
                     
                     {% endif %}
