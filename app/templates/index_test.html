@@ -29,7 +29,7 @@
             Http_chart.onreadystatechange = function () {
 
                 var jsonData = Http_chart.responseText;
-                alert(jsonData)
+            
                 data = new google.visualization.DataTable(jsonData);
 
                 chart = new google.visualization.LineChart(document.getElementById('chart_div'));
