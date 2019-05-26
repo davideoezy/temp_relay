@@ -81,6 +81,54 @@
             };
         };
 
+            $(function () {
+                $('#power_switch').change(function () {
+                    SubmitTargets()
+                })
+            })
+
+
+            function ChangeTemperature(amount) {
+                var temperatureInput = $("#temperatureInput");
+                var temperature = parseFloat(temperatureInput.val());
+                temperature += amount;
+                temperatureInput.val(temperature.toFixed());
+                SubmitTargets();
+
+            }
+
+            function SubmitTargets() {
+                var form = document.createElement("form");
+                form.setAttribute("method", "post");
+                form.setAttribute("action", "");
+
+                var power = 0;
+                if ($('#power_switch').prop('checked')) {
+                    power = 1;
+                }
+
+                var temperature = $("#temperatureInput").val();
+
+                var hiddenField = document.createElement("input");
+                hiddenField.setAttribute("type", "hidden");
+                hiddenField.setAttribute("name", "power");
+                hiddenField.setAttribute("value", power);
+                form.appendChild(hiddenField);
+
+                hiddenField = document.createElement("input");
+                hiddenField.setAttribute("type", "hidden");
+                hiddenField.setAttribute("name", "temperature");
+                hiddenField.setAttribute("value", temperature);
+                form.appendChild(hiddenField);
+
+                document.body.appendChild(form);
+
+                formData = new FormData(form);
+
+                var xhr = new XMLHttpRequest();
+                xhr.open('POST', '/', true);
+                xhr.send(formData);
+            };
 
         $(document).ready(function () {
 
