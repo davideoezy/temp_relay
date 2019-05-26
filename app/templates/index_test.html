@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Thermostat</title>
+    <script src="{{ url_for('static', filename='jquery-3.4.1.min.js') }}"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.min.css') }}">
+    <script src="{{ url_for('static', filename='bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='bootstrap4-toggle.min.js') }}"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap4-toggle.min.css') }}">
+    
+    <script type="text/javascript" src="{{ url_for('static', filename='loader.js') }}"></script>
+
+    <script type="text/javascript">
+
+        google.charts.load('current', { 'packages': ['corechart'] });
+        google.charts.setOnLoadCallback(drawChart);
+
+        var data;
+        var options;
+        var chart = null;
+
+        function drawChart() {
+            const Http_chart = new XMLHttpRequest();
+            const url_chart = '/temps';
+            Http_chart.open("GET", url_chart);
+            Http_chart.send();
+            Http_chart.onreadystatechange = function () {
+
+                data = new google.visualization.DataTable(responseText);
+
+                chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+
+                options = {
+                    curveType: 'function',
+                    animation: {
+                        startup: true
+                    },
+                    width: 600,
+                    height: 350,
+                    theme: 'material',
+                    interpolateNulls: true,
+                    hAxis:
+                    {
+                        gridlines: {
+                            color: 'transparent'
+                        },
+                        textStyle: {
+                            color: "grey"
+                        }
+                    },
+                    vAxis: {
+                        gridlines: {
+                            color: 'grey'
+                        },
+                        minorGridlines: {
+                            color: 'transparent'
+                        },
+                        textStyle: {
+                            color: "white"
+                        },
+                        viewWindowMode: 'pretty'
+                    },
+                    chartArea: { left: 20, top: 20, width: "85%", height: "80%" },
+                    legend: { position: 'none' },
+                    backgroundColor: '#343a40',
+                    series: {
+                        0: { color: 'salmon' },
+                        1: { color: 'LightSkyBlue' },
+                        2: { color: 'Aquamarine' }
+                    },
+                    lineWidth: [6, 4, 4]
+
+                };
+
+                chart.draw(data, options);
+
+            };
+        };
+
+
+        $(document).ready(function () {
+
+            {% if heatRunning == 1 %}
+            document.getElementById("heatIndicator").style.display = "inline";
+            {% else %}
+            document.getElementById("heatIndicator").style.display = "none";
+            {% endif %}
+
+            drawChart();
+
+
+            window.setInterval(function () {
+                const Http2 = new XMLHttpRequest();
+                const url2 = '/update';
+                Http2.open("GET", url2);
+                Http2.send();
+                Http2.onreadystatechange = function () {
+                    heatRunning = responseText["heatRunning"];
+                    indoorTemperature = responseText["currentTemperature"];
+                    currentTarget = responseText["currentTarget"];
+                    powerMode = responseText["powerMode"];
+
+                    $("#indoorTemperature").text(indoorTemperature +
+                        String.fromCharCode(176));
+                    $("#temperatureInput").text(Math.round(currentTarget) +
+                        String.fromCharCode(176));
+
+                    {% if heatRunning == 1 %}
+                    document.getElementById("heatIndicator").style.display = "inline";
+                    {% else %}
+                    document.getElementById("heatIndicator").style.display = "none";
+                    {% endif %}
+
+                    {% if PowerMode == 1 %}
+                    document.getElementById('power_switch').checked = true;
+                    {% else %}
+                    document.getElementById('power_switch').checked = false;
+                    {% endif %}
+
+                }
+
+                drawChart();
+            }, 10000);
+
+        });
+
+    </script>
+
+
+</head>
+<body id="contentBody" class="mainContent">
+
+    <div class="container-fluid">
+        <div class="p-3 mb-2 bg-dark text-white">
+            <button class="btn btn-success" type="button" data-toggle="collapse" data-target="#collapseControls"
+                aria-expanded="false" aria-controls="collapseControls">
+                Controls
+            </button>
+        </div>
+    </div>
+    <div class="collapse" id="collapseControls">
+        <div class="container-fluid">
+            <div class="p-3 mb-2 bg-dark text-white">
+                <h4>Power</h4>
+                <div class="row align-items-center justify-content-center">
+                    <div class="col-2 col-md-2"></div>
+                    <div class="col-8 col-md-8 text-center">
+                        <input type="checkbox" id="power_switch" data-toggle="toggle" data-on="Heater On" data-off="Off"
+                            data-onstyle="danger" data-offstyle="primary" data-style="fast" data-height="40"
+                            data-width="120" {% if powerMode == 1 %} checked {% else %} {% endif %}>
+
+                    </div>
+                    <div class="col-2 col-md-2 justify-content-top">
+                        <span id="heatIndicator" class="badge badge-pill badge-danger">Heating</span>
+
+                    </div>
+
+                </div>
+                <br>
+                <hr class="divider">
+                <h4>Target</h4>
+                <div class="row align-items-center justify-content-center">
+
+                    <div class="col-5 col-md-5 text-center">
+                        <button id="down1" class="btn btn-primary modeButton" onclick="ChangeTemperature(-1)">
+                            -
+                        </button>
+                    </div>
+                    <div class="col-2 col-md-2 text-center">
+
+                        <input class="form-control-temp" id="temperatureInput" value={{ currentTarget }} type="text">
+
+
+                    </div>
+                    <div class="col-5 col-md-5 text-center">
+                        <button id="up1" class="btn btn-danger modeButton" onclick="ChangeTemperature(1)">
+                            +
+                        </button>
+
+                    </div>
+                    <br>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="p-3 mb-2 bg-dark block text-white">
+            <div class="row block ">
+                <div class="col-2 col-md-2">
+                    <p class="h5 temp-headings inside">Inside</p>
+                    <br>
+                    <h2 class="temps inside" id="indoorTemperature">{{ currentTemperature }}&deg;</h1>
+                        <br>
+                        <hr class="divider">
+
+                        <p class="h5 temp-headings outside">Outside</p>
+                        <h2 class="temps outside" id="outsideTemperature">{{ outside_temp }}&deg;</h1>
+
+                            <br>
+                            <p class="h6 temp-headings">Feels Like</p>
+                            <h3 class="temps" id="feelsLike">{{ feels_like }}&deg;</h3>
+                </div>
+                <div class="col-10 col-md-10">
+
+                    <div id="chart_div"></div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+</body>
+
+<style>
+.form-control-temp {
+    font-size: 350%;
+    background-color: #343a40;
+    color: white;
+    border: 0;
+    box-shadow: none;
+    text-align: center;
+    width: 100%;
+    height: 65%;/* You may want to include this as bootstrap applies these styles too */
+}
+
+/* .currentTemp {
+    font-size: 100%;
+    background-color: #343a40;
+    color: white;
+    border: 0;
+    box-shadow: none;
+    text-align: center;
+} */
+
+.temps {
+    text-align: center;
+}
+
+.temp-headings {
+    text-align: center;
+}
+
+.inside {
+    color: salmon;
+}
+
+.outside {
+    color: LightSkyBlue;
+}
+
+.modeButton {
+    width: 50px;
+    height: 50px;
+}
+
+.fast  .toggle-group { transition: left 0.1s; -webkit-transition: left 0.1s; }
+
+.block {
+    height: 380px;
+    margin-bottom: 30px;
+}
+
+.tempBlock {
+    height: 100px;
+    margin-bottom: 30px;
+}
+
+.smTempBlock {
+    height:100px;
+    margin-bottom: 30px;
+}
+
+hr.divider {
+  border: 1px solid white;
+}
+
+.mainContent {
+    background-color: lightslategray;
+}
+
+</style>
+</html>
