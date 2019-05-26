@@ -28,8 +28,9 @@
             Http_chart.send();
             Http_chart.onreadystatechange = function () {
 
-                alert(responseText)
-                data = new google.visualization.DataTable(responseText);
+                jsonData = responseText
+                alert(jsonData)
+                data = new google.visualization.DataTable(jsonData);
 
                 chart = new google.visualization.LineChart(document.getElementById('chart_div'));
 
