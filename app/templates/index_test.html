@@ -28,7 +28,7 @@
             Http_chart.send();
             Http_chart.onreadystatechange = function () {
 
-                var jsonData = XMLHttpRequest.responseText;
+                var jsonData = Http_chart.responseText;
                 alert(jsonData)
                 data = new google.visualization.DataTable(jsonData);
 
