@@ -144,12 +144,12 @@
                 Http_update.send();
                 Http_update.onreadystatechange = function () {
 
-                    var responseText = Http_update.responseText;
+                    var response = Http_update.responseText;
 
-                    var heatRunning = responseText["heatRunning"];
-                    var indoorTemperature = responseText["currentTemperature"];
-                    var currentTarget = responseText["currentTarget"];
-                    var powerMode = responseText["powerMode"];
+                    heatRunning = response["heatRunning"];
+                    indoorTemperature = response["currentTemperature"];
+                    currentTarget = response["currentTarget"];
+                    powerMode = response["powerMode"];
 
                     $("#indoorTemperature").text(indoorTemperature +
                         String.fromCharCode(176));
@@ -157,15 +157,15 @@
                         String.fromCharCode(176));
 
                     {% if heatRunning == 1 %}
-                    document.getElementById("heatIndicator").style.display = "inline";
+                    document.getElementById("#heatIndicator").style.display = "inline";
                     {% else %}
-                    document.getElementById("heatIndicator").style.display = "none";
+                    document.getElementById("#heatIndicator").style.display = "none";
                     {% endif %}
 
                     {% if PowerMode == 1 %}
-                    document.getElementById('power_switch').checked = true;
+                    document.getElementById('#power_switch').checked = true;
                     {% else %}
-                    document.getElementById('power_switch').checked = false;
+                    document.getElementById('#power_switch').checked = false;
                     {% endif %}
 
                 }
