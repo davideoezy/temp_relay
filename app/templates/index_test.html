@@ -27,7 +27,7 @@
                 var jsonData = Http_chart.responseText;
             
                 var data = new google.visualization.DataTable(jsonData);
-                alert(jsonData)
+                alert("jsonData" + jsonData)
                 var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
 
                 options = {
@@ -145,7 +145,7 @@
                 Http_update.onreadystatechange = function () {
                 
                     var response = Http_update.responseText;
-                    alert(response);
+                    alert("response" + response);
                     heatRunning = response["heatRunning"];
                     indoorTemperature = response["currentTemperature"];
                     currentTarget = response["currentTarget"];
