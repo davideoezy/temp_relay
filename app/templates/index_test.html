@@ -17,10 +17,6 @@
         google.charts.load('current', { 'packages': ['corechart'] });
         google.charts.setOnLoadCallback(drawChart);
 
-        var data;
-        var options;
-        var chart = null;
-
         function drawChart() {
             const Http_chart = new XMLHttpRequest();
             const url_chart = '/temps';
@@ -30,9 +26,9 @@
 
                 var jsonData = Http_chart.responseText;
             
-                data = new google.visualization.DataTable(jsonData);
+                var data = new google.visualization.DataTable(jsonData);
 
-                chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+                var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
 
                 options = {
                     curveType: 'function',
