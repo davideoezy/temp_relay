@@ -23,9 +23,9 @@
             Http_chart.open("GET", url_chart);
             Http_chart.send();
             Http_chart.onreadystatechange = function () {
-
-                var jsonData = Http_chart.responseText;
-            
+                if (Http_chart.readyState === 4 && Http_chart.status === 200) {
+                    var jsonData = Http_chart.responseText;
+        
                 var data = new google.visualization.DataTable(jsonData);
                 alert("jsonData" + jsonData)
                 var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
@@ -129,9 +129,9 @@
         $(document).ready(function () {
 
             {% if heatRunning == 1 %}
-            document.getElementById("heatIndicator").style.display = "inline";
+            document.getElementById("#heatIndicator").show();
             {% else %}
-            document.getElementById("heatIndicator").style.display = "none";
+            document.getElementById("#heatIndicator").hide();
             {% endif %}
 
             drawChart();
@@ -143,8 +143,10 @@
                 Http_update.open("GET", url_update);
                 Http_update.send();
                 Http_update.onreadystatechange = function () {
+                      if (Http_update.readyState === 4 && Http_update.status === 200) {
+                        var response = Http_update.responseText;
+                    }
                 
-                    var response = Http_update.responseText;
                     alert("response" + response);
                     heatRunning = response["heatRunning"];
                     indoorTemperature = response["currentTemperature"];
