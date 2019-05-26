@@ -157,9 +157,9 @@
                         String.fromCharCode(176));
 
                     {% if heatRunning == 1 %}
-                    document.getElementById("#heatIndicator").style.display = "inline";
+                    document.getElementById("#heatIndicator").show();
                     {% else %}
-                    document.getElementById("#heatIndicator").style.display = "none";
+                    document.getElementById("#heatIndicator").hide();
                     {% endif %}
 
                     {% if PowerMode == 1 %}
@@ -202,7 +202,7 @@
 
                     </div>
                     <div class="col-2 col-md-2 justify-content-top">
-                        <span id="heatIndicator" class="badge badge-pill badge-danger">Heating</span>
+                        <div id="heatIndicator" class="badge badge-pill badge-danger">Heating</div>
 
                     </div>
 
