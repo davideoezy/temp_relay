@@ -130,9 +130,9 @@
         $(document).ready(function () {
 
             {% if heatRunning == 1 %}
-            document.getElementById("#heatIndicator").style.display = "inline";
+            document.getElementById("heatIndicator").style.display = "inline";
             {% else %}
-            document.getElementById("#heatIndicator").style.display = "none";
+            document.getElementById("heatIndicator").style.display = "none";
             {% endif %}
 
 
@@ -161,16 +161,16 @@
                         String.fromCharCode(176));
 
                     {% if heatRunning == 1 %}
-                    document.getElementById("#heatIndicator").style.display = "inline";
+                    document.getElementById("heatIndicator").style.display = "inline";
                     {% else %}
-                    document.getElementById("#heatIndicator").style.display = "none";
+                    document.getElementById("heatIndicator").style.display = "none";
                     {% endif %}
 
 
                     {% if PowerMode == 1 %}
-                    document.getElementById('#power_switch').checked = true;
+                    document.getElementById('power_switch').checked = true;
                     {% else %}
-                    document.getElementById('#power_switch').checked = false;
+                    document.getElementById('power_switch').checked = false;
                     {% endif %}
 
                 }
