@@ -129,6 +129,45 @@
                 xhr.send(formData);
             };
 
+            function get_updates() {
+                const Http_update = new XMLHttpRequest();
+                const url_update = '/update';
+                Http_update.responseType = 'json';
+                Http_update.open("GET", url_update);
+                Http_update.send();
+                Http_update.onload = function () {
+                    if (Http_update.readyState === 4 && Http_update.status === 200) {
+                        var response = Http_update.response;
+                    }
+
+                    heatRunning = response["heatRunning"];
+                    indoorTemperature = response["currentTemperature"];
+                    currentTarget = response["currentTarget"];
+                    powerMode = response["powerMode"];
+
+                    $("#indoorTemperature").text(indoorTemperature +
+                        String.fromCharCode(176));
+                    $("#temperatureInput").text(Math.round(currentTarget) +
+                        String.fromCharCode(176));
+
+                    if (heatRunning == 1) {
+                        document.getElementById("heatIndicator").style.display = "inline";
+                    } else {
+                        document.getElementById("heatIndicator").style.display = "none";
+                    }
+
+                    if (PowerMode == 1) {
+                        $('#power_switch').prop('checked', true);
+                    } else {
+                        $('#power_switch').prop('checked', false);
+                    }
+
+
+            };
+        };
+
+        
+
         $(document).ready(function () {
 
             {% if heatRunning == 1 %}
@@ -142,42 +181,8 @@
 
 
             window.setInterval(function () {
-                const Http_update = new XMLHttpRequest();
-                const url_update = '/update';
-                Http_update.responseType = 'json';
-                Http_update.open("GET", url_update);
-                Http_update.send();
-                Http_update.onload = function () {
-                      if (Http_update.readyState === 4 && Http_update.status === 200) {
-                        var response = Http_update.response;
-                    }
-                
-                    heatRunning = response["heatRunning"];
-                    indoorTemperature = response["currentTemperature"];
-                    currentTarget = response["currentTarget"];
-                    powerMode = response["powerMode"];
 
-                    $("#indoorTemperature").text(indoorTemperature +
-                        String.fromCharCode(176));
-                    $("#temperatureInput").text(Math.round(currentTarget) +
-                        String.fromCharCode(176));
-
-                    {% if heatRunning == 1 %}
-                    document.getElementById("heatIndicator").style.display = "inline";
-                    {% else %}
-                    document.getElementById("heatIndicator").style.display = "none";
-                    {% endif %}
-
-
-                    {% if PowerMode == 1 %}
-                    $('#power_switch').prop('checked',true);
-                    
-                    {% else %}
-                    $('#power_switch').prop('checked',false);
-                    
-                    {% endif %}
-
-                }
+                get_updates();             
 
                 drawChart();
             }, 10000);
