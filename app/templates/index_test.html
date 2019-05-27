@@ -145,7 +145,7 @@
                     currentTarget = response["currentTarget"];
                     powerMode = response["powerMode"];
 
-                    var inputTemp = $("#temperatureInput");
+                    var inputTemp = document.getElementById("#temperatureInput");
                     inputTemp.text(Math.round(currentTarget) + String.fromCharCode(176));
 
                     $("#indoorTemperature").text(indoorTemperature +
