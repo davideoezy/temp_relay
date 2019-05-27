@@ -89,12 +89,12 @@
 
 
             function ChangeTemperature(amount) {
-                var temperatureInput = $("#temperatureInput2");
-                var temperature = temperatureInput.val();
+                var temperatureInput = $("#temperatureInput");
+                var temperature = parseFloat(temperatureInput.val());
                 temperature += amount;
-                $("#temperatureInput2").val(temperature);
-
+                temperatureInput.val(temperature.toFixed())
             };
+
 
             function SubmitTargets() {
                 var form = document.createElement("form");
@@ -151,7 +151,7 @@
                     
                     alert(target_display);
 
-                    $("#temperatureInput2").val(target_display);
+                    $("#temperatureInput").val(target_display);
 
                     // $("#indoorTemperature").text(indoorTemperature +
                     //     String.fromCharCode(176));
