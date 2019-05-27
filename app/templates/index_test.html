@@ -79,10 +79,6 @@
             };
         };
 
-            $('#power_switch').change(function() {
-                return alert("test");
-            });
-            
 
 
             function ChangeTemperature(amount) {
@@ -179,6 +175,10 @@
 
             get_updates();
             drawChart();
+
+            $('#power_switch').change(function () {
+                return alert("test");
+            });
             
 
             window.setInterval(function () {
