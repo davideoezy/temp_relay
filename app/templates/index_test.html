@@ -89,7 +89,7 @@
 
 
             function ChangeTemperature(amount) {
-                var temperatureInput = $("#temperatureInput");
+                var temperatureInput = $("#temperatureInput2");
                 var temperature = parseFloat(temperatureInput.val());
                 temperature += amount;
                 temperatureInput.val(temperature.toFixed());
@@ -148,11 +148,11 @@
                     alert(response);
                     alert(Math.round(currentTarget) + String.fromCharCode(176));
 
-                    var inputTemp = document.getElementById("#temperatureInput");
+                    var inputTemp = document.getElementById("#temperatureInput2");
                     inputTemp.text(Math.round(currentTarget) + String.fromCharCode(176));
 
-                    $("#indoorTemperature").text(indoorTemperature +
-                        String.fromCharCode(176));
+                    // $("#indoorTemperature").text(indoorTemperature +
+                    //     String.fromCharCode(176));
                     // $("#temperatureInput").text(Math.round(currentTarget) +
                     //     String.fromCharCode(176));
 
@@ -240,6 +240,7 @@
                     <div class="col-2 col-md-2 text-center">
 
                         <input class="form-control-temp" id="temperatureInput" value={{ currentTarget }} type="text">
+                        <p class="h4" id = "temperatureInput2"></p>
 
 
                     </div>
