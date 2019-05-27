@@ -145,10 +145,13 @@
                     currentTarget = response["currentTarget"];
                     powerMode = response["powerMode"];
 
+                    var inputTemp = $("#temperatureInput");
+                    inputTemp.text(Math.round(currentTarget) + String.fromCharCode(176));
+
                     $("#indoorTemperature").text(indoorTemperature +
                         String.fromCharCode(176));
-                    $("#temperatureInput").text(Math.round(currentTarget) +
-                        String.fromCharCode(176));
+                    // $("#temperatureInput").text(Math.round(currentTarget) +
+                    //     String.fromCharCode(176));
 
                     if (heatRunning == 1) {
                         document.getElementById("heatIndicator").style.display = "inline";
