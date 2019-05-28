@@ -214,7 +214,8 @@
                     </button>
                 </div>
                 <div class="col-md-6">
-                    <input class="h5" id="temperatureInput_summ" value="Target: {{ currentTarget }} type="text">
+                    <label for="temperatureInput_summ">Target:</label>
+                    <input class="h5" id="temperatureInput_summ" value={{ currentTarget }} type="text">
 
                 </div>
                 <div class="col-md-2 text-right">
@@ -307,6 +308,16 @@
 <style>
 .form-control-temp {
     font-size: 350%;
+    background-color: #343a40;
+    color: white;
+    border: 0;
+    box-shadow: none;
+    text-align: center;
+    width: 100%;
+    height: 65%;/* You may want to include this as bootstrap applies these styles too */
+}
+.form-control-temp-sm {
+    font-size: 250%;
     background-color: #343a40;
     color: white;
     border: 0;
