@@ -78,7 +78,12 @@
 
             };
         };
+            function() {
+                $('#heatSwitch').click( function() {
+                    SubmitTargets();
 
+                });
+            };
 
 
             function ChangeTemperature(amount) {
@@ -86,6 +91,7 @@
                 var temperature = parseFloat(temperatureInput.val());
                 temperature += amount;
                 temperatureInput.val(temperature.toFixed())
+                SubmitTargets();
             };
 
 
@@ -95,7 +101,7 @@
                 form.setAttribute("action", "");
 
                 var power = 0;
-                if ($('#power_switch').prop('checked') == true) {
+                if ($('#heatSwitch').prop('checked') == true) {
                     power = 1;
                 };
 
@@ -154,9 +160,9 @@
                     }
 
                     if (powerMode == 1) {
-                        $('#power_switch').bootstrapToggle('on');
+                        $('#heatSwitch').prop('checked',true);
                     } else {
-                        $('#power_switch').bootstrapToggle('false');
+                        $('#heatSwitch').prop('checked', false);
                     }
 
 
@@ -190,6 +196,8 @@
 
         });
 
+
+        document.getElementsByClassName("toggle_test")
     </script>
 
 
@@ -211,7 +219,13 @@
                 <div class="row align-items-center justify-content-center">
                     <div class="col-2 col-md-2"></div>
                     <div class="col-8 col-md-8 text-center">
-                        <input type="checkbox" id="power_switch" data-toggle="toggle" data-on="Heater On" data-off="Off"
+                        <label class="switch ">
+                            <input type="checkbox" id="heatSwitch" class="danger">
+                            <span class="slider round"></span>
+                        </label>
+                        
+                        
+                        <input type="checkbox" class="toggle_test" id="power_switch" data-toggle="toggle" data-on="Heater On" data-off="Off"
                             data-onstyle="danger" data-offstyle="primary" data-style="fast" data-height="40"
                             data-width="120" {% if powerMode == 1 %} checked {% else %} {% endif %}>
 
@@ -295,14 +309,11 @@
     height: 65%;/* You may want to include this as bootstrap applies these styles too */
 }
 
-/* .currentTemp {
-    font-size: 100%;
-    background-color: #343a40;
-    color: white;
-    border: 0;
-    box-shadow: none;
-    text-align: center;
-} */
+.hidden {
+    visibility: hidden;
+    max-height: 0px;
+}
+
 
 .temps {
     text-align: center;
@@ -350,5 +361,64 @@ hr.divider {
     background-color: lightslategray;
 }
 
+/* The switch - the box around the slider */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+  float:left;
+}
+
+/* Hide default HTML checkbox */
+.switch input {display:none;}
+
+/* The slider */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input.danger:checked + .slider {
+  background-color: #f44336;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
 </style>
 </html>
