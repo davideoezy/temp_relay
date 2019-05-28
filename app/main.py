@@ -80,4 +80,4 @@ def webpage_helper(function, type):
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=8500)
+    app.run()
