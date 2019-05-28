@@ -70,7 +70,7 @@ def webpage_helper(function, type):
                         outside_temp = outside_temp,
                         feels_like = feels_like)
 
-    return function('index_test.html',
+    return function('index.html',
                     heatRunning = heatRunning,
                     currentTemperature=currentTemperature,
                     currentTarget = currentTarget,
