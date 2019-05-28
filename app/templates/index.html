@@ -201,10 +201,18 @@
 
     <div class="container-fluid top-block">
         <div class="p-3 mb-2 bg-dark text-white">
-            <button class="btn btn-success" type="button" data-toggle="collapse" data-target="#collapseControls"
-                aria-expanded="false" aria-controls="collapseControls">
-                Controls
-            </button>
+            <div class="row align-items-left justify-content-center">
+                <div class="col-md-10">
+                    <button class="btn btn-success" type="button" data-toggle="collapse" data-target="#collapseControls"
+                        aria-expanded="false" aria-controls="collapseControls">
+                        Controls
+                    </button>
+                </div>
+                <div class="col-md-2">
+                    <div id="heatIndicator" class="badge badge-pill badge-danger">Heating</div>
+                </div>
+            </div>
+    
         </div>
     </div>
     <div class="collapse" id="collapseControls">
@@ -260,18 +268,18 @@
         <div class="p-3 mb-2 bg-dark block text-white">
             <div class="row block ">
                 <div class="col-3 col-md-3">
-                    <p class="h5 temp-headings inside">Inside</p>
+                    <p class="h4 temp-headings inside">Inside</p>
                     <br>
-                    <h2 class="temps inside" id="indoorTemperature">{{ currentTemperature }}&deg;</h1>
+                    <h1 class="temps inside" id="indoorTemperature">{{ currentTemperature }}&deg;</h1>
                         <br>
                         <hr class="divider">
 
-                        <p class="h5 temp-headings outside">Outside</p>
-                        <h2 class="temps outside" id="outsideTemperature">{{ outside_temp }}&deg;</h1>
+                        <p class="h4 temp-headings outside">Outside</p>
+                        <h1 class="temps outside" id="outsideTemperature">{{ outside_temp }}&deg;</h1>
 
                             <br>
-                            <p class="h6 temp-headings">Feels Like</p>
-                            <h3 class="temps" id="feelsLike">{{ feels_like }}&deg;</h3>
+                            <p class="h5 temp-headings">Feels Like</p>
+                            <h2 class="temps" id="feelsLike">{{ feels_like }}&deg;</h2>
                 </div>
                 <div class="col-10 col-md-9">
 
