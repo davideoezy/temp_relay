@@ -79,10 +79,7 @@
             };
         };
                 
-            $('#heatSwitch').click( function() {
-                SubmitTargets();
 
-                });
 
             function ChangeTemperature(amount) {
                 var temperatureInput = $("#temperatureInput");
@@ -180,10 +177,10 @@
             get_updates();
             drawChart();
 
-            $('#power_switch').change(function () {
-                return alert("test");
+            $('#heatSwitch').click(function () {
+                SubmitTargets();
+
             });
-            
 
             window.setInterval(function () {
 
