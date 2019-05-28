@@ -9,8 +9,8 @@
     <script src="{{ url_for('static', filename='bootstrap.bundle.min.js') }}"></script>
     <script src="{{ url_for('static', filename='bootstrap4-toggle.min.js') }}"></script>
     <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap4-toggle.min.css') }}">
-    
     <script type="text/javascript" src="{{ url_for('static', filename='loader.js') }}"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='all.css') }}">
 
     <script type="text/javascript">
 
@@ -202,17 +202,23 @@
     <div class="container-fluid top-block">
         <div class="p-3 mb-2 bg-dark text-white">
             <div class="row align-items-left justify-content-center">
-                <div class="col-md-10">
+                <div class="col-md-2">
                     <button class="btn btn-success" type="button" data-toggle="collapse" data-target="#collapseControls"
                         aria-expanded="false" aria-controls="collapseControls">
                         Controls
                     </button>
                 </div>
-                <div class="col-md-2">
-                    <div id="heatIndicator" class="badge badge-pill badge-danger">Heating</div>
+                <div class="col-md-6">
+
+                    
                 </div>
+                <div class="col-md-2">
+                    <i class="fas fa-power-off" id="power_ind" style="font-size:48px;color:red"></i>
+                </div>
+                <div class="col-md-2">
+                    <i class="fas fa-fire-alt" id="heat_ind" style="font-size:48px;color:red"></i>
+                </div>   
             </div>
-    
         </div>
     </div>
     <div class="collapse" id="collapseControls">
