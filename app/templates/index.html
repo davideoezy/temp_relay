@@ -159,10 +159,12 @@
 
                     if (powerMode == 1) {
                         $('#heatSwitch').prop('checked',true);
-                        document.getElementById('heat_ind').style.display = "inline";
+                        document.getElementById('power_ind').style.display = "inline";
+                        document.getElementsByClassName('grouping').style.display = "inline";
                     } else {
                         $('#heatSwitch').prop('checked', false);
-                        document.getElementById('heat_ind').style.display = "none";
+                        document.getElementById('power_ind').style.display = "none";
+                        document.getElementsByClassName('grouping').style.display = "none";
                     }
 
 
