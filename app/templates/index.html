@@ -9,8 +9,9 @@
     <script src="{{ url_for('static', filename='bootstrap.bundle.min.js') }}"></script>
     <script src="{{ url_for('static', filename='bootstrap4-toggle.min.js') }}"></script>
     <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap4-toggle.min.css') }}">
-    
     <script type="text/javascript" src="{{ url_for('static', filename='loader.js') }}"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
+        integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
 
     <script type="text/javascript">
 
@@ -37,8 +38,8 @@
                     animation: {
                         startup: true
                     },
-                    width: 600,
-                    height: 350,
+                    width: 550,
+                    height: 345,
                     theme: 'material',
                     interpolateNulls: true,
                     hAxis:
@@ -47,12 +48,12 @@
                             color: 'transparent'
                         },
                         textStyle: {
-                            color: "grey"
+                            color: "dimgray"
                         }
                     },
                     vAxis: {
                         gridlines: {
-                            color: 'grey'
+                            color: 'dimgray'
                         },
                         minorGridlines: {
                             color: 'transparent'
@@ -83,9 +84,11 @@
 
             function ChangeTemperature(amount) {
                 var temperatureInput = $("#temperatureInput");
+                var temperatureInput_summ = $("#temperatureInput_summ");
                 var temperature = parseFloat(temperatureInput.val());
                 temperature += amount;
                 temperatureInput.val(temperature.toFixed())
+                temperatureInput_summ.val(temperature.toFixed())
                 SubmitTargets();
             };
 
@@ -142,6 +145,7 @@
                     var target_display = Math.round(currentTarget);
                     
                     $("#temperatureInput").val(target_display);
+                    $('#temperatureInput_summ').val(target_display);
 
                     // $("#indoorTemperature").text(indoorTemperature +
                     //     String.fromCharCode(176));
@@ -156,8 +160,12 @@
 
                     if (powerMode == 1) {
                         $('#heatSwitch').prop('checked',true);
+                        document.getElementById('power_ind').style.display = "inline";
+
                     } else {
                         $('#heatSwitch').prop('checked', false);
+                        document.getElementById('power_ind').style.display = "none";
+
                     }
 
 
@@ -199,12 +207,28 @@
 </head>
 <body id="contentBody" class="mainContent">
 
-    <div class="container-fluid">
+    <div class="container-fluid top-block">
         <div class="p-3 mb-2 bg-dark text-white">
-            <button class="btn btn-success" type="button" data-toggle="collapse" data-target="#collapseControls"
-                aria-expanded="false" aria-controls="collapseControls">
-                Controls
-            </button>
+            <div class="row align-items-center ">
+                <div class="col-md-2">
+                    <button class="btn btn-success" type="button" data-toggle="collapse" data-target="#collapseControls"
+                        aria-expanded="false" aria-controls="collapseControls">
+                        Controls
+                    </button>
+                </div>
+                <div class="col-md-8 text-right">
+                    <div class="grouping">
+                    <label for="temperatureInput_summ">Target:</label>
+                    <input class="form-control-temp-sm" id="temperatureInput_summ" value={{ currentTarget }} type="text">
+</div>
+                </div>
+                <div class="col-md-1 text-right">
+                    <i class="fas fa-power-off" id="power_ind" style="font-size:24px;color:#FFF380"></i>
+                </div>
+                <div class="col-md-1 text-right">
+                    <i class="fas fa-fire-alt" id="heatIndicator" style="font-size:24px;color:#FFF380"></i>
+                </div>   
+            </div>
         </div>
     </div>
     <div class="collapse" id="collapseControls">
@@ -259,21 +283,21 @@
     <div class="container-fluid">
         <div class="p-3 mb-2 bg-dark block text-white">
             <div class="row block ">
-                <div class="col-2 col-md-2">
-                    <p class="h5 temp-headings inside">Inside</p>
-                    <br>
-                    <h2 class="temps inside" id="indoorTemperature">{{ currentTemperature }}&deg;</h1>
+                <div class="col-3 col-md-3">
+                    <p class="h4 temp-headings inside">Inside</p>
+                    
+                    <h1 class="temps inside" id="indoorTemperature">{{ currentTemperature }}&deg;</h1>
                         <br>
                         <hr class="divider">
 
-                        <p class="h5 temp-headings outside">Outside</p>
-                        <h2 class="temps outside" id="outsideTemperature">{{ outside_temp }}&deg;</h1>
+                        <p class="h4 temp-headings outside">Outside</p>
+                        <h1 class="temps outside" id="outsideTemperature">{{ outside_temp }}&deg;</h1>
 
                             <br>
-                            <p class="h6 temp-headings">Feels Like</p>
-                            <h3 class="temps" id="feelsLike">{{ feels_like }}&deg;</h3>
+                            <p class="h5 temp-headings">Feels Like</p>
+                            <h2 class="temps" id="feelsLike">{{ feels_like }}&deg;</h2>
                 </div>
-                <div class="col-10 col-md-10">
+                <div class="col-10 col-md-9">
 
                     <div id="chart_div"></div>
                 </div>
@@ -295,6 +319,20 @@
     text-align: center;
     width: 100%;
     height: 65%;/* You may want to include this as bootstrap applies these styles too */
+}
+.form-control-temp-sm {
+    font-size: 150%;
+    color: white;    
+    background-color: #343a40;
+    border: 0;
+    box-shadow: none;
+    text-align: left;
+    width: 10%;
+    height: 30%;/* You may want to include this as bootstrap applies these styles too */
+}
+.grouping {
+    font-size: 110%;
+    color: white;
 }
 
 .hidden {
@@ -324,29 +362,32 @@
     height: 50px;
 }
 
-.fast  .toggle-group { transition: left 0.1s; -webkit-transition: left 0.1s; }
-
 .block {
-    height: 380px;
-    margin-bottom: 30px;
+    height: 365px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+
+
+}
+.top-block {
+    margin-top: 5px;
+
 }
 
-.tempBlock {
-    height: 100px;
-    margin-bottom: 30px;
-}
-
-.smTempBlock {
-    height:100px;
-    margin-bottom: 30px;
-}
 
 hr.divider {
-  border: 1px solid white;
+  border: 1px solid dimgray;
 }
 
 .mainContent {
-    background-color: lightslategray;
+    background-color: dimgray;
+}
+
+.body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
 }
 
 /* The switch - the box around the slider */
