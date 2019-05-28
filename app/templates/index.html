@@ -83,9 +83,11 @@
 
             function ChangeTemperature(amount) {
                 var temperatureInput = $("#temperatureInput");
+                var temperatureInput_summ = $("#temperatureInput_summ");
                 var temperature = parseFloat(temperatureInput.val());
                 temperature += amount;
                 temperatureInput.val(temperature.toFixed())
+                temperatureInput_summ.val(temperature.toFixed())
                 SubmitTargets();
             };
 
@@ -142,6 +144,7 @@
                     var target_display = Math.round(currentTarget);
                     
                     $("#temperatureInput").val(target_display);
+                    $('#temperatureInput_summ').val(target_display);
 
                     // $("#indoorTemperature").text(indoorTemperature +
                     //     String.fromCharCode(176));
@@ -156,8 +159,10 @@
 
                     if (powerMode == 1) {
                         $('#heatSwitch').prop('checked',true);
+                        document.getElementById('heat_ind').style.display = "inline";
                     } else {
                         $('#heatSwitch').prop('checked', false);
+                        document.getElementById('heat_ind').style.display = "none";
                     }
 
 
@@ -209,14 +214,14 @@
                     </button>
                 </div>
                 <div class="col-md-6">
+                    <input class="h5" id="temperatureInput_summ" value="Target: {{ currentTarget }} type="text">
 
-                    
                 </div>
-                <div class="col-md-2">
-                    <i class="fas fa-power-off" id="power_ind" style="font-size:48px;color:red"></i>
+                <div class="col-md-2 text-right">
+                    <i class="fas fa-power-off" id="power_ind" style="font-size:36px;color:red"></i>
                 </div>
-                <div class="col-md-2">
-                    <i class="fas fa-fire-alt" id="heat_ind" style="font-size:48px;color:red"></i>
+                <div class="col-md-2 text-right">
+                    <i class="fas fa-fire-alt" id="heatIndicator" style="font-size:36px;color:red"></i>
                 </div>   
             </div>
         </div>
