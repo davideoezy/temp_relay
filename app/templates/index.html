@@ -141,16 +141,22 @@
                     indoorTemperature = response["currentTemperature"];
                     currentTarget = response["currentTarget"];
                     powerMode = response["powerMode"];
+                    outsideTemp = response["outside_temp"];
+                    feels_like = response["feels_like"];
                     
                     var target_display = Math.round(currentTarget);
                     
                     $("#temperatureInput").val(target_display);
                     $('#temperatureInput_summ').val(target_display);
 
-                    // $("#indoorTemperature").text(indoorTemperature +
-                    //     String.fromCharCode(176));
-                    // $("#temperatureInput").text(Math.round(currentTarget) +
-                    //     String.fromCharCode(176));
+                    $("#indoorTemperature").text(indoorTemperature +
+                        String.fromCharCode(176));
+
+                    $("#outsideTemperature").text(outsideTemp +
+                        String.fromCharCode(176));
+
+                    $("#feelsLike").text(feels_like +
+                        String.fromCharCode(176));
 
                     if (heatRunning == 1) {
                         document.getElementById("heatIndicator").style.display = "inline";
@@ -245,7 +251,6 @@
                         
                     </div>
                     <div class="col-2 col-md-2 justify-content-top">
-                        <div id="heatIndicator" class="badge badge-pill badge-danger">Heating</div>
 
                     </div>
 
