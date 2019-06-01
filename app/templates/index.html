@@ -19,7 +19,7 @@
         google.charts.setOnLoadCallback(drawChart);
 
         function drawChart() {
-            if (typeof chart !== 'undefined') {
+            if (chart) {
                 chart.clearChart();
             }
             
