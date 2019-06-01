@@ -197,20 +197,26 @@
 
         $(document).ready(function () {
 
+            $('#heatSwitch').click(function () {
+                SubmitTargets();
+            });
+
             get_updates();
             drawChart();
 
             window.setInterval(function () {
 
                 get_updates();             
-                drawChart();
             }, 10000);
+
+            window.setInterval(function () {
+
+                drawChart();
+            }, 30000);
 
         });
 
-        $('#heatSwitch').click(function () {
-                SubmitTargets();
-            });
+
 
 
     </script>
