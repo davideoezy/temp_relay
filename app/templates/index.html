@@ -91,12 +91,7 @@
 
             };
         };
-                
-        function () {
-            $('#heatSwitch').click(function () {
-                SubmitTargets();
-            });
-        }
+                    
 
 
         function ChangeTemperature(amount) {
@@ -212,6 +207,10 @@
             }, 10000);
 
         });
+
+        $('#heatSwitch').click(function () {
+                SubmitTargets();
+            });
 
 
     </script>
