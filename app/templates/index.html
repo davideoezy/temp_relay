@@ -27,16 +27,18 @@
             Http_chart.onload = function () {
                 
                 let jsonData = null;
+                let data = null;
+                let options = null;
 
                 if (Http_chart.readyState === 4 && Http_chart.status === 200) {
                     jsonData = Http_chart.response;
                 }
 
-                let data = new google.visualization.DataTable(jsonData);
+                data = new google.visualization.DataTable(jsonData);
                 
-                let chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+                chart = new google.visualization.LineChart(document.getElementById('chart_div'));
 
-                let options = {
+                options = {
                     curveType: 'function',
                     animation: {
                         startup: true
@@ -90,129 +92,122 @@
             };
         };
                 
-
-
-            function ChangeTemperature(amount) {
-                const temperatureInput = $("#temperatureInput");
-                const temperatureInput_summ = $("#temperatureInput_summ");
-                let temperature = parseFloat(temperatureInput.val());
-                temperature += amount;
-                temperatureInput.val(temperature.toFixed())
-                temperatureInput_summ.val(temperature.toFixed())
+        function () {
+            $('#heatSwitch').click(function () {
                 SubmitTargets();
-            };
+            });
+        }
 
 
-            function SubmitTargets() {
-                let form = document.createElement("form");
-                form.setAttribute("method", "post");
-                form.setAttribute("action", "");
-
-                let power = 0;
-                if ($('#heatSwitch').prop('checked') == true) {
-                    power = 1;
-                };
-
-                let temperature = $("#temperatureInput").val();
-
-                let hiddenField = document.createElement("input");
-                hiddenField.setAttribute("type", "hidden");
-                hiddenField.setAttribute("name", "power");
-                hiddenField.setAttribute("value", power);
-                form.appendChild(hiddenField);
-
-                hiddenField = document.createElement("input");
-                hiddenField.setAttribute("type", "hidden");
-                hiddenField.setAttribute("name", "temperature");
-                hiddenField.setAttribute("value", temperature);
-                form.appendChild(hiddenField);
-
-                document.body.appendChild(form);
-
-                let formData = new FormData(form);
-
-                const xhr = new XMLHttpRequest();
-                xhr.open('POST', '/', true);
-                xhr.send(formData);
-            };
-
-            function get_updates() {
-                const Http_update = new XMLHttpRequest();
-                const url_update = '/update';
-                Http_update.responseType = 'json';
-                Http_update.open("GET", url_update);
-                Http_update.send();
-                Http_update.onload = function () {
-                    
-                    let response = null;
-
-                    if (Http_update.readyState === 4 && Http_update.status === 200) {
-                        response = Http_update.response;
-                    }
-
-                    let heatRunning = response["heatRunning"];
-                    let indoorTemperature = response["currentTemperature"];
-                    let currentTarget = response["currentTarget"];
-                    let powerMode = response["powerMode"];
-                    let outsideTemp = response["outside_temp"];
-                    let feels_like = response["feels_like"];
-                    
-                    let target_display = Math.round(currentTarget);
-                    
-                    $("#temperatureInput").val(target_display);
-                    $('#temperatureInput_summ').val(target_display);
-
-                    $("#indoorTemperature").text(indoorTemperature +
-                        String.fromCharCode(176));
-
-                    $("#outsideTemperature").text(outsideTemp +
-                        String.fromCharCode(176));
-
-                    $("#feelsLike").text(feels_like +
-                        String.fromCharCode(176));
-
-                    if (heatRunning == 1) {
-                        document.getElementById("heatIndicator").style.display = "inline";
-                    } else {
-                        document.getElementById("heatIndicator").style.display = "none";
-                    }
-
-                    if (powerMode == 1) {
-                        $('#heatSwitch').prop('checked',true);
-                        document.getElementById('power_ind').style.display = "inline";
-
-                    } else {
-                        $('#heatSwitch').prop('checked', false);
-                        document.getElementById('power_ind').style.display = "none";
-
-                    }
-
-
-            };
+        function ChangeTemperature(amount) {
+            const temperatureInput = $("#temperatureInput");
+            const temperatureInput_summ = $("#temperatureInput_summ");
+            let temperature = parseFloat(temperatureInput.val());
+            temperature += amount;
+            temperatureInput.val(temperature.toFixed())
+            temperatureInput_summ.val(temperature.toFixed())
+            SubmitTargets();
         };
+
+
+        function SubmitTargets() {
+            let form = document.createElement("form");
+            form.setAttribute("method", "post");
+            form.setAttribute("action", "");
+
+            let power = 0;
+            if ($('#heatSwitch').prop('checked') == true) {
+                power = 1;
+            };
+
+            let temperature = $("#temperatureInput").val();
+
+            let hiddenField = document.createElement("input");
+            hiddenField.setAttribute("type", "hidden");
+            hiddenField.setAttribute("name", "power");
+            hiddenField.setAttribute("value", power);
+            form.appendChild(hiddenField);
+
+            hiddenField = document.createElement("input");
+            hiddenField.setAttribute("type", "hidden");
+            hiddenField.setAttribute("name", "temperature");
+            hiddenField.setAttribute("value", temperature);
+            form.appendChild(hiddenField);
+
+            document.body.appendChild(form);
+
+            let formData = new FormData(form);
+
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', '/', true);
+            xhr.send(formData);
+        };
+
+        function get_updates() {
+            const Http_update = new XMLHttpRequest();
+            const url_update = '/update';
+            Http_update.responseType = 'json';
+            Http_update.open("GET", url_update);
+            Http_update.send();
+            Http_update.onload = function () {
+
+                let response = null;
+
+                if (Http_update.readyState === 4 && Http_update.status === 200) {
+                    response = Http_update.response;
+                }
+
+                let heatRunning = response["heatRunning"];
+                let indoorTemperature = response["currentTemperature"];
+                let currentTarget = response["currentTarget"];
+                let powerMode = response["powerMode"];
+                let outsideTemp = response["outside_temp"];
+                let feels_like = response["feels_like"];
+
+                let target_display = Math.round(currentTarget);
+
+                $("#temperatureInput").val(target_display);
+                $('#temperatureInput_summ').val(target_display);
+
+                $("#indoorTemperature").text(indoorTemperature +
+                    String.fromCharCode(176));
+
+                $("#outsideTemperature").text(outsideTemp +
+                    String.fromCharCode(176));
+
+                $("#feelsLike").text(feels_like +
+                    String.fromCharCode(176));
+
+                if (heatRunning == 1) {
+                    document.getElementById("heatIndicator").style.display = "inline";
+                } else {
+                    document.getElementById("heatIndicator").style.display = "none";
+                }
+
+                if (powerMode == 1) {
+                    $('#heatSwitch').prop('checked', true);
+                    document.getElementById('power_ind').style.display = "inline";
+
+                } else {
+                    $('#heatSwitch').prop('checked', false);
+                    document.getElementById('power_ind').style.display = "none";
+
+                }
+
+
+                };
+            };
 
         
 
         $(document).ready(function () {
 
-            // {% if heatRunning == 1 %}
-            // document.getElementById("heatIndicator").style.display = "inline";
-            // {% else %}
-            // document.getElementById("heatIndicator").style.display = "none";
-            // {% endif %}
-
             get_updates();
             drawChart();
-
-            $('#heatSwitch').click(function () {
-                SubmitTargets();
-
-            });
 
             window.setInterval(function () {
 
                 get_updates();             
-
                 drawChart();
             }, 10000);
 
