@@ -19,9 +19,6 @@
         google.charts.setOnLoadCallback(drawChart);
 
         function drawChart() {
-            if (chart) {
-                chart.clearChart();
-            }
             
             let chart = null;   
             
@@ -210,7 +207,7 @@
             }, 10000);
 
             window.setInterval(function () {
-
+                chart.clearChart();
                 drawChart();
             }, 30000);
 
