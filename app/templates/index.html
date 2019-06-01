@@ -19,7 +19,16 @@
         google.charts.setOnLoadCallback(drawChart);
 
         function drawChart() {
-            const Http_chart = new XMLHttpRequest();
+            try {
+                chart.clearChart();
+
+            }
+            finally {
+                let chart = null;   
+            }
+ 
+            let Http_chart = null;
+            let Http_chart = new XMLHttpRequest();
             const url_chart = '/temps';
             Http_chart.responseType = 'json';
             Http_chart.open("GET", url_chart);
@@ -29,6 +38,7 @@
                 let jsonData = null;
                 let data = null;
                 let options = null;
+
 
                 if (Http_chart.readyState === 4 && Http_chart.status === 200) {
                     jsonData = Http_chart.response;
@@ -79,15 +89,8 @@
                     lineWidth: [6, 4, 4]
 
                 };
-                try {
-                    // tie up a resource
-                    chart.clearChart();
-                }
-                finally {
-                    chart.draw(data, options);
 
-                }
-                chart.draw(data, options);
+                  chart.draw(data, options);
 
             };
         };
@@ -202,17 +205,16 @@
             });
 
             get_updates();
-            drawChart();
 
             window.setInterval(function () {
 
                 get_updates();             
             }, 10000);
 
-            // window.setInterval(function () {
+            window.setInterval(function () {
 
-            //     drawChart();
-            // }, 30000);
+                drawChart();
+            }, 30000);
 
         });
 
@@ -318,6 +320,17 @@
 
                     <div id="chart_div"></div>
                 </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="p-3 mb-2 bg-dark block text-white">
+            <div class="row block ">
+
+
+
 
             </div>
         </div>
