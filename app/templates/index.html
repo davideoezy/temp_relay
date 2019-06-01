@@ -25,8 +25,11 @@
             Http_chart.open("GET", url_chart);
             Http_chart.send();
             Http_chart.onload = function () {
+                
+                let jsonData = null;
+
                 if (Http_chart.readyState === 4 && Http_chart.status === 200) {
-                    let jsonData = Http_chart.response;
+                    jsonData = Http_chart.response;
                 }
 
                 let data = new google.visualization.DataTable(jsonData);
@@ -133,8 +136,11 @@
                 Http_update.open("GET", url_update);
                 Http_update.send();
                 Http_update.onload = function () {
+                    
+                    let response = null;
+
                     if (Http_update.readyState === 4 && Http_update.status === 200) {
-                        let response = Http_update.response;
+                        response = Http_update.response;
                     }
 
                     let heatRunning = response["heatRunning"];
