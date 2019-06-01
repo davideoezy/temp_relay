@@ -26,14 +26,14 @@
             Http_chart.send();
             Http_chart.onload = function () {
                 if (Http_chart.readyState === 4 && Http_chart.status === 200) {
-                    var jsonData = Http_chart.response;
+                    let jsonData = Http_chart.response;
                 }
 
-                var data = new google.visualization.DataTable(jsonData);
+                let data = new google.visualization.DataTable(jsonData);
                 
-                var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+                let chart = new google.visualization.LineChart(document.getElementById('chart_div'));
 
-                options = {
+                let options = {
                     curveType: 'function',
                     animation: {
                         startup: true
@@ -83,9 +83,9 @@
 
 
             function ChangeTemperature(amount) {
-                var temperatureInput = $("#temperatureInput");
-                var temperatureInput_summ = $("#temperatureInput_summ");
-                var temperature = parseFloat(temperatureInput.val());
+                const temperatureInput = $("#temperatureInput");
+                const temperatureInput_summ = $("#temperatureInput_summ");
+                let temperature = parseFloat(temperatureInput.val());
                 temperature += amount;
                 temperatureInput.val(temperature.toFixed())
                 temperatureInput_summ.val(temperature.toFixed())
@@ -94,18 +94,18 @@
 
 
             function SubmitTargets() {
-                var form = document.createElement("form");
+                let form = document.createElement("form");
                 form.setAttribute("method", "post");
                 form.setAttribute("action", "");
 
-                var power = 0;
+                let power = 0;
                 if ($('#heatSwitch').prop('checked') == true) {
                     power = 1;
                 };
 
-                var temperature = $("#temperatureInput").val();
+                let temperature = $("#temperatureInput").val();
 
-                var hiddenField = document.createElement("input");
+                let hiddenField = document.createElement("input");
                 hiddenField.setAttribute("type", "hidden");
                 hiddenField.setAttribute("name", "power");
                 hiddenField.setAttribute("value", power);
@@ -119,9 +119,9 @@
 
                 document.body.appendChild(form);
 
-                formData = new FormData(form);
+                let formData = new FormData(form);
 
-                var xhr = new XMLHttpRequest();
+                const xhr = new XMLHttpRequest();
                 xhr.open('POST', '/', true);
                 xhr.send(formData);
             };
@@ -134,17 +134,17 @@
                 Http_update.send();
                 Http_update.onload = function () {
                     if (Http_update.readyState === 4 && Http_update.status === 200) {
-                        var response = Http_update.response;
+                        let response = Http_update.response;
                     }
 
-                    heatRunning = response["heatRunning"];
-                    indoorTemperature = response["currentTemperature"];
-                    currentTarget = response["currentTarget"];
-                    powerMode = response["powerMode"];
-                    outsideTemp = response["outside_temp"];
-                    feels_like = response["feels_like"];
+                    let heatRunning = response["heatRunning"];
+                    let indoorTemperature = response["currentTemperature"];
+                    let currentTarget = response["currentTarget"];
+                    let powerMode = response["powerMode"];
+                    let outsideTemp = response["outside_temp"];
+                    let feels_like = response["feels_like"];
                     
-                    var target_display = Math.round(currentTarget);
+                    let target_display = Math.round(currentTarget);
                     
                     $("#temperatureInput").val(target_display);
                     $('#temperatureInput_summ').val(target_display);
@@ -182,11 +182,11 @@
 
         $(document).ready(function () {
 
-            {% if heatRunning == 1 %}
-            document.getElementById("heatIndicator").style.display = "inline";
-            {% else %}
-            document.getElementById("heatIndicator").style.display = "none";
-            {% endif %}
+            // {% if heatRunning == 1 %}
+            // document.getElementById("heatIndicator").style.display = "inline";
+            // {% else %}
+            // document.getElementById("heatIndicator").style.display = "none";
+            // {% endif %}
 
             get_updates();
             drawChart();
@@ -206,7 +206,6 @@
         });
 
 
-        document.getElementsByClassName("toggle_test")
     </script>
 
 
