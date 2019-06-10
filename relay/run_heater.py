@@ -17,7 +17,13 @@ if __name__ == "__main__":
         else:
             relay.off()
 
-        db_helper.insert_log()
+        statement = """
+                    INSERT INTO heater_log
+                    (heater_on)
+                    VALUES
+                    ({})""".format(operate)
+
+        db_helper.insert_db_data(statement)
         
         time.sleep(10)
 

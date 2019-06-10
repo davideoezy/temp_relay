@@ -67,13 +67,4 @@ class db_helper():
 
         return self.db_data(n_variables = n_variables, statement = statement, default = default)
 
-    def insert_log(self):
-        statement = """
-                    INSERT INTO heater_log
-                    (heater_on)
-                    VALUES
-                    ({})""".format(operate)
-        
-        self.insert_db_data(statement)
 
-        return
