@@ -4,7 +4,7 @@ After=multi-user.target
 
 [Service]
 Type = simple
-ExecStart=/usr/bin/python3 -u /home/pi/git/temp_relay/heater_temp_reader/run_heater.py
+ExecStart=/usr/bin/python3 -u /home/pi/git/temp_relay/relay/run_heater.py
 WorkingDirectory=/home/pi/git/temp_relay/heater_temp_reader
 StandardOutput=inherit
 StandardError=inherit
