@@ -67,6 +67,6 @@ if __name__ == "__main__":
 
         insert_results(insert_stmt, db_host, db_host_port, db_user, db_pass, db)
         
-        time.sleep(30)
+        time.sleep(10)
 
         
