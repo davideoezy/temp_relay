@@ -13,7 +13,7 @@ class db_helper():
         self.db_user = 'rpi'
         self.db_pass = 'warm_me'
         self.db = 'temp_logger'
-        self.local_timezone = tzlocal.get_localzone()
+
 
     def db_data(self, n_variables, statement, default):
 
