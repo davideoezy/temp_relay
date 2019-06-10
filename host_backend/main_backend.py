@@ -86,5 +86,5 @@ while True:
     db_helper.insert_db_data(statement=insert_heater_rules)
 
 
-    time.sleep(30)
+    time.sleep(10)
 
