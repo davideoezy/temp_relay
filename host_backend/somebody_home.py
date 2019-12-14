@@ -70,7 +70,7 @@ if __name__ == "__main__":
 
         anybody_home.last_seen_prev = last_seen_curr[:]
 
-        reading = "%s, dev_1=%s,dev_2=%s,dev_3=%s,dev_4=%s".format(measurement, time_since_connected[0], time_since_connected[1], time_since_connected[2], time_since_connected[3])
+        reading = "%s, dev_1=%s,dev_2=%s,dev_3=%s,dev_4=%s" % (measurement, time_since_connected[0], time_since_connected[1], time_since_connected[2], time_since_connected[3])
         print(reading)
 
         client.publish(topic,str(reading))
