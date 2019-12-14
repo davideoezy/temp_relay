@@ -2,6 +2,7 @@
 import time
 import arpreq
 from db_helper import db_helper
+import paho.mqtt.client as mqtt
 
 
 class anybody_home():
@@ -44,12 +45,20 @@ class anybody_home():
         return duration
 
 
-# Below deprecated
 
 if __name__ == "__main__":
 
-    db_helper = db_helper()
     anybody_home = anybody_home()
+
+    # ---------------- Initialise variables ------------------
+
+    topic = "sensors/inside/anybody_home"
+    measurement = "presence"
+
+    # Broker details:
+    server_address="192.168.0.10" 
+    client = mqtt.Client("docker_anybody_home")
+    client.connect(broker_address, keepalive=60)
 
     while True:
         home_list_curr = anybody_home.whos_home()
@@ -63,13 +72,10 @@ if __name__ == "__main__":
 
         anybody_home.last_seen_prev = last_seen_curr[:]
 
-        insert_stmt = """
-        INSERT INTO somebody_home
-        (dev_1, dev_2, dev_3, dev_4, anybody_home)
-        VALUES
-        ({},{},{},{},{})""".format(time_since_connected[0], time_since_connected[1], time_since_connected[2], time_since_connected[3], somebody_home)
+        reading = "%s, dev_1=%s,dev_2=%s,dev_3=%s,dev_4=%s".format(measurement, time_since_connected[0], time_since_connected[1], time_since_connected[2], time_since_connected[3])
+        print(reading)
 
-        db_helper.db_data(query_type="insert", statement=insert_stmt)
+        client.publish(topic,str(reading))
 
         time.sleep(30)
 
