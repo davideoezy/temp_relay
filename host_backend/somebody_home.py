@@ -58,7 +58,7 @@ if __name__ == "__main__":
     # Broker details:
     server_address="192.168.0.10" 
     client = mqtt.Client("docker_anybody_home")
-    client.connect(broker_address, keepalive=60)
+    client.connect(server_address, keepalive=60)
 
     while True:
         home_list_curr = anybody_home.whos_home()
