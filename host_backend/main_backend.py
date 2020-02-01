@@ -23,9 +23,8 @@ MorningOn = datetime.time(6, 00)
 NightOff = datetime.time(22, 30)
 
 def publish_message(key, value):
-
-	topic = "home/inside/heater/control"
-
+    
+    topic = "home/inside/heater/control"
 	server_address="192.168.0.10" 
 
 	client_label = "docker_heater_control"
