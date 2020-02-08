@@ -13,36 +13,26 @@ anybody_home = anybody_home()
 ## Initialise variables
 
 server_address = "192.168.0.10"
-topic = "home/inside/sensor/lounge"
-#heater_rules = "home/heater/control/rules"
-#heater_rule_detail = "home/heater/control/details"
+client_label = "docker_heater_control"
 
+current_temp_topic = "home/inside/sensor/lounge"
 
+publish_heater_command = "home/inside/heater/control"
 
 MorningOn = datetime.time(6, 00)
 NightOff = datetime.time(22, 30)
 
-def publish_message(key, value):
+def publish_message(topic, key, value):
+      
+    dict_msg = {str(key):value}
+    msg = json.dumps(dict_msg)
     
-    topic = "home/inside/heater/control"
-	server_address="192.168.0.10" 
-
-	client_label = "docker_heater_control"
-	client = mqtt.Client(client_label)
-	client.connect(server_address, keepalive=60)
-
-	dict_msg = {str(key):value}
-	msg = json.dumps(dict_msg)
-
-	client.publish(topic,msg)	
+    client.publish(topic,msg)	
 
 # The callback for when the client receives a CONNACK response from the server.
 def on_connect(client, userdata, flags, rc):
     print("Connected with result code "+str(rc))
-
-    # Subscribing in on_connect() means that if we lose the connection and
-    # reconnect then subscriptions will be renewed.
-    client.subscribe(topic)
+    client.subscribe(current_temp_topic)
 
 # The callback for when a PUBLISH message is received from the server.
 def on_message(client, userdata, msg):
@@ -51,7 +41,7 @@ def on_message(client, userdata, msg):
     data = str(msg.payload.decode("utf-8"))
     jsonData=json.loads(data)
     currentTemperature = jsonData["temperature"]
-
+    
     try:
         manual_controls = db_helper.get_control_settings()
 
@@ -110,7 +100,7 @@ def on_message(client, userdata, msg):
 
         #client.publish(heater_rules,str(heater_rules_str))
         #client.publish(heater_rule_detail, str(heater_rule_detail_str))
-        publish_message("turn_heater_on", turn_heater_on)
+        publish_message(publish_heater_command, "turn_heater_on", turn_heater_on)
 
         
     except:
