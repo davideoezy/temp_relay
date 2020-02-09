@@ -166,8 +166,7 @@ class db_helper():
         temps = next(iter(response))
         
         for temp in temps:
-            temp['ts'] = datetime.datetime.fromtimestamp(temp['time'])
-            delete temp['time']
+            temp['time'] = datetime.datetime.fromtimestamp(temp['time'])
 
         return temps
 
