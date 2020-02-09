@@ -43,7 +43,7 @@ def temp_data():
     data_table_temp.LoadData(temps)
 
     return data_table_temp.ToJSon(columns_order=("time", "temp", "air_temp", "feels_like"),
-                                           order_by="ts")
+                                           order_by="time")
 
 
 
