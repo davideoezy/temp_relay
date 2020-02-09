@@ -1,5 +1,6 @@
 import mysql.connector as mariadb
 import datetime
+from influxdb import InfluxDBClient
 import tzlocal
 
 ####### TO_DO ########
@@ -12,6 +13,7 @@ class db_helper():
     def __init__(self):
         self.db_host = '192.168.0.10'
         self.db_host_port = '3306'
+        self.influx_port = '8086'
         self.db_user = 'rpi'
         self.db_pass = 'warm_me'
         self.db = 'temp_logger'
@@ -126,66 +128,47 @@ class db_helper():
         return
 
     def get_temps(self):
+        client = InfluxDBClient(host=self.db_host, port=self.influx_port)
+
+        client.switch_database('home')
+
         statement1 = """
-                    SELECT
-                    UNIX_TIMESTAMP(ts) as time,
-                    temp as value,
-                    device as metric
-                    FROM temperature
-                    where ts > DATE_SUB(now(), INTERVAL 4 hour)
-                    and device = 'RPi_1'
-                    ORDER BY ts asc
+                    select mean(temperature) as temp 
+                    into temp
+                    from sensor 
+                    where "location" = 'lounge' 
+                    and time > now() - 4h
+                    group by time(1m)
+                    tz('Australia/Melbourne')
                     """
-    
+
         statement2 = """
-                    SELECT
-                    UNIX_TIMESTAMP(ts) as time,
-                    air_temp,
-                    apparent_t as feels_like
-                    FROM outside_conditions
-                    where ts > DATE_SUB(now(), INTERVAL 4 hour)
-                    ORDER BY ts ASC
+                    select temperature as air_temp, feels_like
+                    into temp
+                    from sensor 
+                    where "location" = 'outside'
+                    and time > now() - 4h
+                    tz('Australia/Melbourne')
+
                     """
+
+        statement3 = """
+                    select *
+                    from temp
+                    where time > now() - 4h
+                    tz('Australia/Melbourne')
+                    """
+
+        client.query(statement1+";"+statement2)
+
+        response = client.query(statement3, epoch='s')
+
+        temps = next(iter(response))
         
-        con = mariadb.connect(host=self.db_host, port=self.db_host_port, user=self.db_user,
-                              password=self.db_pass, database=self.db)
-        cur = con.cursor()
-
-        cur.execute(statement1)
-
-        temps = []
-
-        for row in cur:
-            unix_timestamp = row[0]
-            local_time = datetime.datetime.fromtimestamp(
-                unix_timestamp, self.local_timezone)
-
-            ins = {
-                'ts': local_time,
-                'temp': row[1],
-                'air_temp': None,
-                'feels_like': None}
-            temps.append(ins)
-        
-        cur = con.cursor()
-
-        cur.execute(statement2)
-
-        for row in cur:
-            unix_timestamp = row[0]
-            local_time = datetime.datetime.fromtimestamp(
-                unix_timestamp, self.local_timezone)
-
-            outs = {
-                'ts': local_time,
-                'temp': None,
-                'air_temp': row[1],
-                'feels_like': row[2]}
-            temps.append(outs)
+        for temp in temps:
+            temp['time'] = datetime.datetime.fromtimestamp(temp['time'])
 
         return temps
-
-
 
 
 
