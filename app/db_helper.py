@@ -74,13 +74,13 @@ class db_helper():
     def get_outside_temp(self):
         n_variables = 2
         statement = """
-                        SELECT
-                        air_temp as outside_temp,
-                        apparent_t as feels_like
-                        FROM outside_conditions
-                        ORDER BY ts desc
-                        limit 1
-                        """
+                    select temperature, 
+                    feels_like
+                    from sensor
+                    where feels_like > 0
+                    order by time desc
+                    limit 1
+                    """
         default = 99
 
         return self.db_data(n_variables=n_variables, statement=statement, default=default)
