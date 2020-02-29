@@ -72,7 +72,11 @@ class db_helper():
         return self.db_data(n_variables = n_variables, statement = statement, default = default)
 
     def get_outside_temp(self):
-        n_variables = 2
+
+        client = InfluxDBClient(host=self.db_host, port=self.influx_port)
+
+        client.switch_database('home')
+        
         statement = """
                     select temperature, 
                     feels_like
@@ -81,10 +85,11 @@ class db_helper():
                     order by time desc
                     limit 1
                     """
-        default = 99
+        response = client.query(statement, epoch='s')
 
-        return self.db_data(n_variables=n_variables, statement=statement, default=default)
-
+        temps = next(iter(response))
+        
+        return temps[0]
 
 
     def get_control_settings(self):
