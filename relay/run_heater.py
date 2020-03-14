@@ -1,11 +1,14 @@
 from gpiozero import LED
 from time import sleep
 from db_helper import db_helper
+from mqtt_helper import mqtt_helper
 import time
 
-db_helper = db_helper()
-
 relay = LED(17)
+location = "heater_relay"
+
+db_helper = db_helper()
+mqtt_helper = mqtt_helper(location)
 
 if __name__ == "__main__":
     while True:
@@ -24,6 +27,8 @@ if __name__ == "__main__":
                     ({})""".format(operate)
 
         db_helper.insert_db_data(statement)
+
+        mqtt_helper.publish_status()
         
         time.sleep(10)
 
