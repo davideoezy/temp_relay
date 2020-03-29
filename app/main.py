@@ -2,9 +2,13 @@
 from flask import Flask, request, session, g, redirect, url_for, abort, render_template, \
     flash, jsonify
 from db_helper import db_helper
+from mqtt_helper import mqtt_helper
 import gviz_api
 
+location = "app_front_end"
+
 db_helper = db_helper()
+mqtt_helper = mqtt_helper(location)
 
 app = Flask(__name__)
 
@@ -22,6 +26,8 @@ def index():
         temperature = round(float(data["temperature"]),0)
 
         db_helper.insert_control_settings(temperature=temperature, power = power)
+        mqtt_helper.publish_controls(temperature, power)
+        mqtt_helper.publish_status()
 
     return webpage_helper(render_template, 'request')
 
