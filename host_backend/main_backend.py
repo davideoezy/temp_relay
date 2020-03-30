@@ -1,90 +1,92 @@
-from db_helper import db_helper
-from rules import rules
-from somebody_home import anybody_home
+
+import paho.mqtt.client as mqtt
+import json
 import datetime
-import time
+from rules import rules
 
-db_helper = db_helper()
+location = "heater_backend"
+
 rules = rules()
-anybody_home = anybody_home()
+mqtt_helper = mqtt_helper(location)
 
-while True:
+MorningOn = datetime.time(6, 00)
+NightOff = datetime.time(22, 30)
 
-    currentTemperature = db_helper.get_temp()
+server_address = "192.168.0.10"
 
-    manual_controls = db_helper.get_control_settings()
+topic_temp = "home/inside/sensor/CurrentTemp"
 
-    # On/off time in DB?
-    # Can then create function to update times based on calcs/manual update
+topic_anybody_home = "home/inside/sensor/presence"
 
-    MorningOn = datetime.time(6, 00)
-    NightOff = datetime.time(22, 30)
+topic_heater_controls = "home/inside/heater_control"
 
-    # Target Temperature
-    TargetTemperature = manual_controls[0]
+topic_run_heater = "home/inside/control/heater"
 
-    # power switch
-    power = manual_controls[1]
+CurrentTemp = 21
 
+somebody_home = 0
 
+power = 0
 
-    ## Derive
-
-    home_list_curr = anybody_home.whos_home()
-
-    last_seen_curr = anybody_home.last_time_seen(home_list_curr)
-
-    time_since_connected = anybody_home.time_since_seen(last_seen_curr)
+TargetTemperature = 20
 
 
+# The callback for when the client receives a CONNACK response from the server.
+def on_connect(client, userdata, flags, rc):
+    print("Connected with result code "+str(rc))
 
-    ## Rules
+    # Subscribing in on_connect() means that if we lose the connection and
+    # reconnect then subscriptions will be renewed.
+    client.subscribe([(topic_temp,0),(topic_anybody_home,0),(topic_heater_controls,0)])
 
-    temp_low = rules.temp_trigger(currentTemperature, TargetTemperature)
+# The callback for when a PUBLISH message is received from the server.
+def on_message(client, userdata, msg):
+    global CurrentTemp
+    global TargetTemperature
+    global power
+    global somebody_home
+    
+    topic = msg.topic
+    data = str(msg.payload.decode("utf-8"))
+    jsonData=json.loads(data)    
 
-    somebody_home = rules.anybody_home(time_since_connected)
+    
+    if topic == topic_temp:
+        CurrentTemp = jsonData["CurrentTemp"]
+
+    elif topic == topic_anybody_home:
+        somebody_home = jsonData["somebody_home"]
+
+    elif topic == topic_heater_controls:
+        TargetTemperature = jsonData["TargetTemp"]
+        power = jsonData["power"]
+    
+ 
+#------- Rules
+
+    temp_low = rules.temp_trigger(CurrentTemp, TargetTemperature)
 
     operating_hours = rules.hours_operation(MorningOn, NightOff)
     
-    print(temp_low, somebody_home, operating_hours)
-
-
-    # run all rules
-
     turn_heater_on = rules.aggregate_rules(
         power, somebody_home, operating_hours, temp_low)
 
-    print(turn_heater_on)
 
-    ## Reset variables
+##### Need to publish power on message for relay to pick up #####
 
-    anybody_home.last_seen_prev = last_seen_curr[:]
-
-
-    ## Insert logs
-
-    insert_rule_info = """
-            INSERT INTO rule_info
-            (temp_low, temp, threshold, 
-            anybody_home, dev_1, dev_2, dev_3, dev_4, 
-            operating_hours, MorningOn, NightOff)
-            VALUES
-            ({},{},{},{},{},{},{},{},{},'{}','{}')""".format(temp_low, currentTemperature, 
-                                                        TargetTemperature, somebody_home, 
-                                                        time_since_connected[0], time_since_connected[1], 
-                                                        time_since_connected[2], time_since_connected[3], 
-                                                        operating_hours, MorningOn, NightOff)
-
-    db_helper.insert_db_data(statement=insert_rule_info)
-
-    insert_heater_rules = """
-            INSERT INTO heater_rules
-            (power, temp_low, operating_hours, anybody_home, heater_on)
-            VALUES
-            ({},{},{},{},{})""".format(power, temp_low, operating_hours, somebody_home, turn_heater_on)
-
-    db_helper.insert_db_data(statement=insert_heater_rules)
+    dict_msg = {"heater_on": turn_heater_on}
+    mqtt_helper.publish_generic_message(topic_run_heater, dict_msg)
+    mqtt_helper.publish_status()
 
 
-    time.sleep(10)
+client1 = mqtt.Client()
+client1.on_connect = on_connect
+client1.on_message = on_message
 
+client1.connect(server_address)
+
+# Blocking call that processes network traffic, dispatches callbacks and
+# handles reconnecting.
+# Other loop*() functions are available that give a threaded interface and a
+# manual interface.
+client1.loop_start()
