@@ -76,6 +76,7 @@ def on_message(client, userdata, msg):
 ##### Need to publish power on message for relay to pick up #####
 
     dict_msg = {"heater_on": turn_heater_on}
+    print(dict_msg)
     mqtt_helper.publish_generic_message(topic_run_heater, dict_msg)
     mqtt_helper.publish_status()
 
@@ -90,4 +91,4 @@ client1.connect(server_address)
 # handles reconnecting.
 # Other loop*() functions are available that give a threaded interface and a
 # manual interface.
-client1.loop_start()
+client1.loop_forever()
