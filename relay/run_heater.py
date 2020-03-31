@@ -42,7 +42,7 @@ def on_message(client, userdata, msg):
     dict_msg = {"heater_running": heater_on}
     mqtt_helper.publish_generic_message(topic_heater_running, dict_msg)
 
-    mqtt_helper.publish_status
+    mqtt_helper.publish_status()
 
 
 client1 = mqtt.Client()
