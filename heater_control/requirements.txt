@@ -1,0 +1,6 @@
+mysql-connector-python
+flask
+gviz_api
+tzlocal
+influxdb
+paho-mqtt
