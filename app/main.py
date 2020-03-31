@@ -56,7 +56,7 @@ def webpage_helper(function, type):
     currentTarget = int(current[0]) 
     power = current[1]
     outside = db_helper.get_outside_temp() # influx
-    outside_temp = int(outside['temprature'])
+    outside_temp = int(outside['temperature'])
     feels_like = int(outside['feels_like'])
 
 
