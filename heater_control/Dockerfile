@@ -1,10 +1,11 @@
-FROM tiangolo/meinheld-gunicorn-flask:python3.7
+FROM jfloff/alpine-python:3.6-onbuild 
 COPY requirements.txt /tmp 
 WORKDIR /tmp 
-ARG TZ=Australia/Melbourne
-RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+RUN apk add --update tzdata
+ENV TZ=Australia/Melbourne
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 WORKDIR /.
-COPY . /app
+COPY . /
 
+CMD [ "python", "./heater_control_to_mqtt.py" ]
