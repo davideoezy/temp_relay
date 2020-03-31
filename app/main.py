@@ -1,31 +1,9 @@
-
 from flask import Flask, request, session, g, redirect, url_for, abort, render_template, \
     flash, jsonify
 from db_helper import db_helper
-from mqtt_helper import mqtt_helper
 import gviz_api
-import json
-import paho.mqtt.client as mqtt
-
-
-location = "app_front_end"
-
-server_address = "192.168.0.10"
-
-topic_heater_controls = "home/inside/heater_control"
-topic_current_temp = "home/inside/sensor/CurrentTemp"
-topic_heater_running = "home/inside/control/heater_running"
-topic_outside_conditions = "home/outside/sensor"
-
-currentTemperature = 99
-currentTarget = 99
-power = 0
-heatRunning = 0
-outside_temp = 99
-feels_like = 99
 
 db_helper = db_helper()
-mqtt_helper = mqtt_helper(location)
 
 app = Flask(__name__)
 
@@ -35,6 +13,7 @@ def index():
     if request.args.get("power") is not None and request.args.get("temperature"):
         power = request.args.get("power")
         temperature = round(float(request.args.get("temperature")),0)
+        #db_helper.insert_control_settings(temperature=temperature, power=power)
 
     if 'POST' == request.method:
         data = request.form
@@ -42,8 +21,6 @@ def index():
         temperature = round(float(data["temperature"]),0)
 
         db_helper.insert_control_settings(temperature=temperature, power = power)
-        mqtt_helper.publish_controls(temperature, power)
-        mqtt_helper.publish_status()
 
     return webpage_helper(render_template, 'request')
 
@@ -69,46 +46,19 @@ def temp_data():
 
 
 
-# The callback for when the client receives a CONNACK response from the server.
-def on_connect(client, userdata, flags, rc):
-    print("Connected with result code "+str(rc))
-
-    # Subscribing in on_connect() means that if we lose the connection and
-    # reconnect then subscriptions will be renewed.
-    client.subscribe([(topic_heater_controls,0),(topic_current_temp,0),
-                        (topic_heater_running,0),(topic_outside_conditions,0)])
-
-# The callback for when a PUBLISH message is received from the server.
-def on_message(client, userdata, msg):
-    global currentTemperature
-    global currentTarget
-    global power
-    global heatRunning
-    global outside_temp
-    global feels_like
-
-    topic = msg.topic
-    data = str(msg.payload.decode("utf-8"))
-    jsonData=json.loads(data)    
-
-    if topic == topic_heater_controls:
-        power = jsonData["power"]
-        currentTarget = int(jsonData["TargetTemperature"])
-
-    elif topic == topic_current_temp:
-        currentTemperature = round(float(jsonData["CurrentTemp"]),1)
-
-    elif topic == topic_heater_running:
-        heatRunning = jsonData["heater_running"]
-    
-    elif topic == topic_outside_conditions:
-        outside_temp = int(jsonData["temperature"])
-        feels_like = int(jsonData["feels_like"])
-
-     
 # take a function and gather necessary data for the web ui, then call the function
 # with the gathered data an an input and return the result
 def webpage_helper(function, type):
+# get current settings and house temperature
+    current = db_helper.get_control_settings() # mariadb
+    currentTemperature = round(float(db_helper.get_inside_temp()),1) # influx
+    heatRunning = db_helper.get_heat_indicator() # influx
+    currentTarget = int(current[0]) 
+    power = current[1]
+    outside = db_helper.get_outside_temp() # influx
+    outside_temp = int(outside['temprature'])
+    feels_like = int(outside['feels_like'])
+
 
 # check if we should include 'index.html' in the function call
     if 'update' == type:
@@ -129,11 +79,4 @@ def webpage_helper(function, type):
 
 
 if __name__ == "__main__":
-
-    client1 = mqtt.Client()
-    client1.on_connect = on_connect
-    client1.on_message = on_message
-    client1.connect(server_address)
-    client1.loop_forever()    
-
     app.run('0.0.0.0', port='8600')

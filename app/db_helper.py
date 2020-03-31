@@ -59,31 +59,75 @@ class db_helper():
         return
 
     def get_inside_temp(self):
-        n_variables = 1
-        statement = """
-                        SELECT
-                        avg(temp)
-                        FROM temperature 
-                        WHERE ts > DATE_SUB(now(), INTERVAL 90 second)
-                        ORDER BY ts ASC
-                        """
-        default = 99
+### new - influx
+        client = InfluxDBClient(host=self.db_host, port=self.influx_port)
 
-        return self.db_data(n_variables = n_variables, statement = statement, default = default)
+        client.switch_database('home')
 
-    def get_outside_temp(self):
-        n_variables = 2
         statement = """
-                    select temperature, 
-                    feels_like
+                    select CurrentTemp as temp 
                     from sensor
-                    where feels_like > 0
-                    order by time desc
+                    where "sensor_measurements" = 'home/inside/sensor/CurrentTemp' 
+                    order by time DESC
                     limit 1
                     """
-        default = 99
 
-        return self.db_data(n_variables=n_variables, statement=statement, default=default)
+        response = client.query(statement)
+
+        temps = next(iter(response))
+
+        return temps[0]['temp']
+
+#### old
+
+    #     n_variables = 1
+    #     statement = """
+    #                     SELECT
+    #                     avg(temp)
+    #                     FROM temperature 
+    #                     WHERE ts > DATE_SUB(now(), INTERVAL 90 second)
+    #                     ORDER BY ts ASC
+    #                     """
+    #     default = 99
+
+    #     return self.db_data(n_variables = n_variables, statement = statement, default = default)
+
+    def get_outside_temp(self):
+### new - influx
+        client = InfluxDBClient(host=self.db_host, port=self.influx_port)
+
+        client.switch_database('home')
+
+        statement = """
+                    select temperature,
+                    feels_like 
+                    from sensor
+                    where "sensor_measurements" = 'home/outside/sensor' 
+                    order by time DESC
+                    limit 1
+                    """
+
+        response = client.query(statement)
+
+        temps = next(iter(response))
+        
+        return temps[0]
+
+
+#### old
+
+        # n_variables = 2
+        # statement = """
+        #             select temperature, 
+        #             feels_like
+        #             from sensor
+        #             where feels_like > 0
+        #             order by time desc
+        #             limit 1
+        #             """
+        # default = 99
+
+        # return self.db_data(n_variables=n_variables, statement=statement, default=default)
 
 
 
@@ -103,17 +147,38 @@ class db_helper():
         return self.db_data(n_variables = n_variables, statement = statement, default = default)
 
     def get_heat_indicator(self):
-        n_variables = 1
+### new - influx
+        client = InfluxDBClient(host=self.db_host, port=self.influx_port)
+
+        client.switch_database('home')
+
         statement = """
-                    SELECT
-                    heater_on
-                    FROM heater_log
-                    ORDER BY ts DESC
+                    select heater_running
+                    from controls
+                    where "control_parameter" = 'home/inside/control/heater_running' 
+                    order by time DESC
                     limit 1
                     """
-        default = 0
 
-        return self.db_data(n_variables = n_variables, statement = statement, default = default)
+        response = client.query(statement)
+
+        ind = next(iter(response))
+        
+        return ind[0]['heater_running']
+
+
+#### old
+        # n_variables = 1
+        # statement = """
+        #             SELECT
+        #             heater_on
+        #             FROM heater_log
+        #             ORDER BY ts DESC
+        #             limit 1
+        #             """
+        # default = 0
+
+        # return self.db_data(n_variables = n_variables, statement = statement, default = default)
 
     def insert_control_settings(self, temperature, power):
         statement = """
