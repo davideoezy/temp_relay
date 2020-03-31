@@ -14,7 +14,7 @@ server_address = "192.168.0.10"
 
 topic_heater_controls = "home/inside/heater_control"
 topic_current_temp = "home/inside/sensor/CurrentTemp"
-topic_heater_power = "home/inside/control/heater"
+topic_heater_running = "home/inside/control/heater_running"
 topic_outside_conditions = "home/outside/sensor"
 
 currentTemperature = 99
@@ -76,7 +76,7 @@ def on_connect(client, userdata, flags, rc):
     # Subscribing in on_connect() means that if we lose the connection and
     # reconnect then subscriptions will be renewed.
     client.subscribe([(topic_heater_controls,0),(topic_current_temp,0),
-                        (topic_heater_power,0),(topic_outside_conditions,0)])
+                        (topic_heater_running,0),(topic_outside_conditions,0)])
 
 # The callback for when a PUBLISH message is received from the server.
 def on_message(client, userdata, msg):
@@ -98,8 +98,8 @@ def on_message(client, userdata, msg):
     elif topic == topic_current_temp:
         currentTemperature = round(float(jsonData["CurrentTemp"]),1)
 
-    elif topic == topic_heater_power:
-        heatRunning = jsonData["heater_on"]
+    elif topic == topic_heater_running:
+        heatRunning = jsonData["heater_running"]
     
     elif topic == topic_outside_conditions:
         outside_temp = int(jsonData["temperature"])
@@ -134,6 +134,6 @@ if __name__ == "__main__":
     client1.on_connect = on_connect
     client1.on_message = on_message
     client1.connect(server_address)
-    client1.loop_start()    
+    client1.loop_forever()    
 
     app.run('0.0.0.0', port='8600')

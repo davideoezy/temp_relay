@@ -11,7 +11,7 @@ class mqtt_helper():
         self.location = location
         self.value_topic = "home/inside/sensor/"+str(location)
         self.status_topic = "status/sensor/"+str(location)
-        self.control_topic = "home/inside/temp_control"
+        self.control_topic = "home/inside/heater_control"
 
         # client
         self.client_label = str(location)+"_conditions"
