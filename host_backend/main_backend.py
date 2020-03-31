@@ -3,6 +3,7 @@ import paho.mqtt.client as mqtt
 import json
 import datetime
 from rules import rules
+from mqtt_helper import mqtt_helper
 
 location = "heater_backend"
 
