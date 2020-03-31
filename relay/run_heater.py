@@ -39,7 +39,7 @@ def on_message(client, userdata, msg):
     else:
         relay.off()
 
-    dict_msg = {"heater_on": heater_on}
+    dict_msg = {"heater_running": heater_on}
     mqtt_helper.publish_generic_message(topic_heater_running, dict_msg)
 
     mqtt_helper.publish_status

@@ -29,10 +29,14 @@ class mqtt_helper():
         msg = json.dumps(dict_msg)
         self.client.publish(self.value_topic,msg)
 
+    def publish_generic_message(self, topic, dict_msg):
+        msg = json.dumps(dict_msg)
+        self.client.publish(topic,payload = msg)    
+
     def publish_status(self):
         online_msg = json.dumps({"location":self.location, "status":"online"})
         self.client.publish(self.status_topic, payload=online_msg, qos=0, retain=True)
 
     def publish_controls(self, temperature, power):
-        control_msg = {"Power":power, "temperature_control": temperature}
+        control_msg = {"power":power, "TargetTemperature": temperature}
         self.client.publish(self.control_topic, payload = control_msg, qos = 0, retain = True)
