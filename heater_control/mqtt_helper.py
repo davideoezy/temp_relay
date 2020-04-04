@@ -11,7 +11,7 @@ class mqtt_helper():
         self.location = location
         self.value_topic = "home/inside/sensor/"+str(location)
         self.status_topic = "status/sensor/"+str(location)
-        self.control_topic = "home/inside/temp_control"
+        self.control_topic = "home/inside/heater_control"
 
         # client
         self.client_label = str(location)+"_conditions"
@@ -38,5 +38,5 @@ class mqtt_helper():
         self.client.publish(self.status_topic, payload=online_msg, qos=0, retain=True)
 
     def publish_controls(self, temperature, power):
-        control_msg = {"power":power, "TargetTemperature": temperature}
+        control_msg = json.dumps({"power":power, "TargetTemp": temperature})
         self.client.publish(self.control_topic, payload = control_msg, qos = 0, retain = True)
