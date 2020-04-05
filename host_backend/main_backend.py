@@ -31,6 +31,8 @@ power = 0
 
 TargetTemperature = 20
 
+time_start = datetime.datetime.now()
+
 
 # The callback for when the client receives a CONNACK response from the server.
 def on_connect(client, userdata, flags, rc):
@@ -46,6 +48,7 @@ def on_message(client, userdata, msg):
     global TargetTemperature
     global power
     global somebody_home
+    global time_start
     
     topic = msg.topic
     data = str(msg.payload.decode("utf-8"))
@@ -65,19 +68,24 @@ def on_message(client, userdata, msg):
  
 #------- Rules
 
-    temp_low = rules.temp_trigger(CurrentTemp, TargetTemperature)
+    if (datetime.datetime.now() - time_start).total_seconds() > 5:
+        
+        temp_low = rules.temp_trigger(CurrentTemp, TargetTemperature)
 
-    operating_hours = rules.hours_operation(MorningOn, NightOff)
+        operating_hours = rules.hours_operation(MorningOn, NightOff)
     
-    turn_heater_on = rules.aggregate_rules(
-        power, somebody_home, operating_hours, temp_low)
+        turn_heater_on = rules.aggregate_rules(
+            power, somebody_home, operating_hours, temp_low)
 
 
 ##### Need to publish power on message for relay to pick up #####
 
-    dict_msg = {"heater_on": turn_heater_on, "power": power, "somebody_home":somebody_home, "operating_hours": operating_hours, "temp_low":temp_low}
-    mqtt_helper.publish_generic_message(topic_run_heater, dict_msg)
-    mqtt_helper.publish_status()
+        dict_msg = {"heater_on": turn_heater_on, "power": power, "somebody_home":somebody_home, "operating_hours": operating_hours, "temp_low":temp_low}
+        mqtt_helper.publish_generic_message(topic_run_heater, dict_msg)
+
+        time_start = datetime.datetime.now()
+
+        mqtt_helper.publish_status()
 
 
 client1 = mqtt.Client()
