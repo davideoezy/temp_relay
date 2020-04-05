@@ -1,10 +1,10 @@
-#from gpiozero import LED
+from gpiozero import LED
 from mqtt_helper import mqtt_helper
 import paho.mqtt.client as mqtt
 import json
 from datetime import datetime
 
-#relay = LED(17)
+relay = LED(17)
 location = "heater_relay"
 
 server_address = "192.168.0.10"
@@ -48,7 +48,7 @@ def on_message(client, userdata, msg):
         if heater_on_curr == 0:
             time_start = datetime.now()
 
-        #relay.on()
+        relay.on()
         print(time_start)
 
     else:
@@ -56,7 +56,7 @@ def on_message(client, userdata, msg):
             time_end = datetime.now()
             time_running = (time_end - time_start).total_seconds()
   
-        #relay.off()
+        relay.off()
         print(time_end, time_running)
     
     heater_on_curr = heater_on_new
