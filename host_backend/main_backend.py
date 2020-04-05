@@ -75,8 +75,7 @@ def on_message(client, userdata, msg):
 
 ##### Need to publish power on message for relay to pick up #####
 
-    dict_msg = {"heater_on": turn_heater_on}
-    print(dict_msg)
+    dict_msg = {"heater_on": turn_heater_on, "power": power, "somebody_home":somebody_home, "operating_hours": operating_hours, "temp_low":temp_low}
     mqtt_helper.publish_generic_message(topic_run_heater, dict_msg)
     mqtt_helper.publish_status()
 
