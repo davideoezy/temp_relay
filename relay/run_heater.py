@@ -39,7 +39,7 @@ def on_message(client, userdata, msg):
     data = str(msg.payload.decode("utf-8"))
     jsonData=json.loads(data)    
 
-    print(jsonData)
+    #print(jsonData)
 
     heater_on_new = jsonData["heater_on"]
     time_running = 0
@@ -49,7 +49,7 @@ def on_message(client, userdata, msg):
             time_start = datetime.now()
 
         relay.on()
-        print(time_start)
+        #print(time_start)
 
     else:
         if heater_on_curr == 1:
@@ -57,14 +57,14 @@ def on_message(client, userdata, msg):
             time_running = (time_end - time_start).total_seconds()
   
         relay.off()
-        print(time_end, time_running)
+        #print(time_end, time_running)
     
     heater_on_curr = heater_on_new
 
     dict_msg = {"heater_running": heater_on_curr, "time_running": time_running}
     mqtt_helper.publish_generic_message(topic_heater_running, dict_msg)
 
-    print(dict_msg)
+    #print(dict_msg)
 
     mqtt_helper.publish_status()
 
