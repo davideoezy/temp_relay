@@ -1,18 +1,15 @@
-from gpiozero import LED
 from mqtt_helper import mqtt_helper
 import paho.mqtt.client as mqtt
 import json
 from datetime import datetime
 
-relay = LED(17)
-location = "heater_relay"
-
 server_address = "192.168.0.10"
+location = "test"
 
 mqtt_helper = mqtt_helper(location)
 
-topic_run_heater = "home/inside/control/heater"
-topic_heater_running = "home/inside/control/heater_running"
+topic_test_input = "test/heater_in"
+topic_test_output= "test/heater_outg"
 
 heater_on_curr = 0
 time_start = datetime.now()
@@ -26,7 +23,7 @@ def on_connect(client, userdata, flags, rc):
 
     # Subscribing in on_connect() means that if we lose the connection and
     # reconnect then subscriptions will be renewed.
-    client.subscribe([(topic_run_heater,0)])
+    client.subscribe([(topic_test_input,0)])
 
 
 # The callback for when a PUBLISH message is received from the server.
@@ -39,7 +36,7 @@ def on_message(client, userdata, msg):
     data = str(msg.payload.decode("utf-8"))
     jsonData=json.loads(data)    
 
-    #print(jsonData)
+    print(jsonData)
 
     heater_on_new = jsonData["heater_on"]
     time_running = 0
@@ -48,25 +45,22 @@ def on_message(client, userdata, msg):
         if heater_on_curr == 0:
             time_start = datetime.now()
 
-        relay.on()
-        #print(time_start)
+            print(time_start)
 
     else:
         if heater_on_curr == 1:
             time_end = datetime.now()
             time_running = (time_end - time_start).total_seconds()
-  
-        relay.off()
-        #print(time_end, time_running)
     
+            print(time_end, time_running)
+
     heater_on_curr = heater_on_new
 
     dict_msg = {"heater_running": heater_on_curr, "time_running": time_running}
-    mqtt_helper.publish_generic_message(topic_heater_running, dict_msg)
 
-    #print(dict_msg)
+    print(dict_msg)
 
-    mqtt_helper.publish_status()
+    mqtt_helper.publish_generic_message(topic_test_output, dict_msg)
 
 
 client1 = mqtt.Client()

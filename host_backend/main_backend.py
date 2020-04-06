@@ -64,20 +64,20 @@ def on_message(client, userdata, msg):
     
  
 #------- Rules
-
+    
     temp_low = rules.temp_trigger(CurrentTemp, TargetTemperature)
 
     operating_hours = rules.hours_operation(MorningOn, NightOff)
-    
+
     turn_heater_on = rules.aggregate_rules(
         power, somebody_home, operating_hours, temp_low)
 
 
 ##### Need to publish power on message for relay to pick up #####
 
-    dict_msg = {"heater_on": turn_heater_on}
-    print(dict_msg)
+    dict_msg = {"heater_on": turn_heater_on, "power": power, "somebody_home":somebody_home, "operating_hours": operating_hours, "temp_low":temp_low}
     mqtt_helper.publish_generic_message(topic_run_heater, dict_msg)
+
     mqtt_helper.publish_status()
 
 
