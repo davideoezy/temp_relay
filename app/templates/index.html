@@ -17,17 +17,24 @@
 
     <script type="text/javascript">
 
-        google.charts.load('current', { 'packages': ['corechart'] });
-        google.charts.setOnLoadCallback(drawChart);
+        // google.charts.load('current', { 'packages': ['corechart'] });
+        // google.charts.setOnLoadCallback(drawChart);
+        google.load('visualization', '1.1', {packages: ['corechart'], callback: drawChart});
 
         function drawChart() {
+           
             
-            if (typeof chart != "undefined" ) {
-                chart.clearChart();
-                chart = null;
-            } else {
-                let chart = null;
-            }
+            // **** Original - there's an exception thrown and the chart doesn't update every now and then. *****
+            // **** Trying to leave it out. Was put there to deal with memory leak when updating. New GChart version may have fixed leak
+
+            // if (typeof chart != "undefined" ) {
+            //     chart.clearChart();
+            //     chart = null;
+            // } else {
+            //     let chart = null;
+            // }
+
+
 
             let Http_chart = null;
             Http_chart = new XMLHttpRequest();
@@ -47,6 +54,16 @@
                 }
 
                 data = new google.visualization.DataTable(jsonData);
+
+                //*** If above doesn't work, here's another alternative 
+
+                // if (chart === undefined || chart === null) {
+                //     chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+                // } else 
+                // {
+                //      chart.clearChart();
+                        // chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+                // }
                 
                 chart = new google.visualization.LineChart(document.getElementById('chart_div'));
 
