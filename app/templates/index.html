@@ -21,7 +21,9 @@
         // google.charts.setOnLoadCallback(drawChart);
         google.load('visualization', 'current', {packages: ['corechart'], callback: drawChart});
 
-        function drawChart() {1
+        var charts = [];
+
+        function drawChart() {
            
             
             // **** Original - there's an exception thrown and the chart doesn't update every now and then. *****
@@ -57,11 +59,11 @@
 
                 //*** If above doesn't work, here's another alternative 
 
-                if (chart === undefined || chart === null) {
-                    chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+                if (charts[chart] === undefined || charts[chart] === null) {
+                    charts[chart] = new google.visualization.LineChart(document.getElementById('chart_div'));
                 } else {
-                    chart.clearChart();
-                    chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+                    charts[chart].clearChart();
+                    charts[chart] = new google.visualization.LineChart(document.getElementById('chart_div'));
                 }
                 
                 // chart = new google.visualization.LineChart(document.getElementById('chart_div'));
@@ -108,7 +110,7 @@
 
                 };
 
-                  chart.draw(data, options);
+                  charts[chart].draw(data, options);
 
             };
         };
