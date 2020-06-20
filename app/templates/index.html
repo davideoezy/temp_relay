@@ -22,7 +22,7 @@
 
         function drawChart() {
             
-            if (typeof chart != "undefined" || chart != null) {
+            if (typeof chart != "undefined" || typeof chart != null) {
                 chart.clearChart();
                 chart = null;
             } else {
@@ -166,7 +166,7 @@
                 let outsideTemp = response["outside_temp"];
                 let feels_like = response["feels_like"];
 
-                let target_display = Math.round(currentTarget);
+                let target_display = currentTarget;
 
                 $("#temperatureInput").val(target_display);
                 $('#temperatureInput_summ').val(target_display);
