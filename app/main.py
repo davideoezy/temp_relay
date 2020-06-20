@@ -2,6 +2,7 @@ from flask import Flask, request, session, g, redirect, url_for, abort, render_t
     flash, jsonify
 from db_helper import db_helper
 import gviz_api
+import json
 
 db_helper = db_helper()
 
@@ -43,8 +44,8 @@ def temp_data():
 
     # return data_table_temp.ToJSon(columns_order=("time", "temp", "air_temp", "feels_like"),
     #                                        order_by="time")
-
-    return temps
+    temps_json = json.dumps(temps)
+    return temps_json
 
 
 
