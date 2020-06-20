@@ -233,7 +233,8 @@ class db_helper():
         for temp in temps:
             temp['time'] = datetime.datetime.fromtimestamp(temp['time'])
 
-        return temps
+        # return temps
+        return response
 
 
 
