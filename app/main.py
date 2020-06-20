@@ -53,7 +53,7 @@ def webpage_helper(function, type):
     current = db_helper.get_control_settings() # mariadb
     currentTemperature = round(float(db_helper.get_inside_temp()),1) # influx
     heatRunning = db_helper.get_heat_indicator() # influx
-    currentTarget = int(current[0]) 
+    currentTarget = float(current[0]) 
     power = current[1]
     outside = db_helper.get_outside_temp() # influx
     outside_temp = int(outside['temperature'])
