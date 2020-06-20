@@ -22,7 +22,7 @@
 
         function drawChart() {
             
-            if (typeof chart != "undefined" ) {
+            if (typeof chart != "undefined" || chart != null) {
                 chart.clearChart();
                 chart = null;
             } else {
@@ -280,7 +280,7 @@
                 <div class="row align-items-center justify-content-center">
 
                     <div class="col-5 col-md-5 text-center">
-                        <button id="down1" class="btn btn-primary modeButton" onclick="ChangeTemperature(-1)">
+                        <button id="down1" class="btn btn-primary modeButton" onclick="ChangeTemperature(-0.5)">
                             -
                         </button>
                     </div>
@@ -292,7 +292,7 @@
 
                     </div>
                     <div class="col-5 col-md-5 text-center">
-                        <button id="up1" class="btn btn-danger modeButton" onclick="ChangeTemperature(1)">
+                        <button id="up1" class="btn btn-danger modeButton" onclick="ChangeTemperature(0.5)">
                             +
                         </button>
 
