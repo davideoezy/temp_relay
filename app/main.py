@@ -33,16 +33,18 @@ def temp_data():
     temps = db_helper.get_temps()
     
 
-    temps_desc = {"time": ("datetime", "Timestamp"),
-                "temp": ("number", "Inside Temperature"),
-                "air_temp": ("number", "Outside Temperature"),
-                "feels_like": ("number", "Feels Like")}
+    # temps_desc = {"time": ("datetime", "Timestamp"),
+    #             "temp": ("number", "Inside Temperature"),
+    #             "air_temp": ("number", "Outside Temperature"),
+    #             "feels_like": ("number", "Feels Like")}
 
-    data_table_temp = gviz_api.DataTable(temps_desc)
-    data_table_temp.LoadData(temps)
+    # data_table_temp = gviz_api.DataTable(temps_desc)
+    # data_table_temp.LoadData(temps)
 
-    return data_table_temp.ToJSon(columns_order=("time", "temp", "air_temp", "feels_like"),
-                                           order_by="time")
+    # return data_table_temp.ToJSon(columns_order=("time", "temp", "air_temp", "feels_like"),
+    #                                        order_by="time")
+
+    return temps
 
 
 
