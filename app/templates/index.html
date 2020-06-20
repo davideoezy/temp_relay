@@ -97,10 +97,18 @@
             //       chart.draw(data, options);
 
             // };
-                };
-                var canvas = document.getElementById("chart_div");
-                var ctx = canvas.getContext("2d");
-                new Chart(ctx).Line(jsonData);
+
+                new Chart(document.getElementById("line-chart"), {
+                    type: 'line',
+                    data: jsonData,
+                    options: {
+                        title: {
+                        display: true,
+                        text: 'World population per region (in millions)'
+                        }
+                    }
+                    });
+            };
         };
 
 
@@ -329,7 +337,7 @@
                 </div>
                 <div class="col-10 col-md-9">
 
-                    <div id="chart_div"></div>
+                    <canvas id="chart_div" width="550" height="345"></canvas>
                 </div>
 
             </div>
