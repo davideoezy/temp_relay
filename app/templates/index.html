@@ -46,7 +46,6 @@
 
                 if (Http_chart.readyState === 4 && Http_chart.status === 200) {
                     jsonData = Http_chart.response;
-                    // data = JSON.parse(jsonData);
 
                     console.log(jsonData);
                 };
@@ -102,17 +101,23 @@
             // };
 
                 
-                new Chart(document.getElementById("chart_div"), {
-                    type: 'line',
-                    data: jsonData,
-                    options: {
+                var ctx = document.getElementById("chart_div");
+                var myChart = new Chart(ctx, {
+                type: "line",
+                data: {
+                    datasets: [{
+                    "data": jsonData,
+                        label: ["test"]
+                    }]
+                },
+                options: {
                     "scales": {
                     "xAxes": [{
                         "type": "time"
                     }]
                     }
-                    }
-                    });
+                }
+                });
             };
         };
 
