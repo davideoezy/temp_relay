@@ -2,6 +2,7 @@ import mysql.connector as mariadb
 import datetime
 from influxdb import InfluxDBClient
 import tzlocal
+import time
 
 ####### TO_DO ########
 
@@ -231,8 +232,9 @@ class db_helper():
         temps = next(iter(response))
         
         for temp in temps:
-            temp['time'] = datetime.datetime.fromtimestamp(temp['time'])
-
+            #temp['time'] = datetime.datetime.fromtimestamp(temp['time'])
+            temp['time'] = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(temp['time']))
+            #temp['time'] = datetime.datetime.fromtimestamp(temp['time']).strftime('%c') # ***working
         return temps
 
 
