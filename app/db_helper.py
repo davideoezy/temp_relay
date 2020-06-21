@@ -233,7 +233,8 @@ class db_helper():
         
         for temp in temps:
             #temp['time'] = datetime.datetime.fromtimestamp(temp['time'])
-            temp['time'] = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(temp['time']))
+            temp['t'] = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(temp['time']))
+            del temp['time']
             #temp['time'] = datetime.datetime.fromtimestamp(temp['time']).strftime('%c') # ***working
         return temps
 
