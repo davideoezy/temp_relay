@@ -235,6 +235,8 @@ class db_helper():
             #temp['time'] = datetime.datetime.fromtimestamp(temp['time'])
             temp['t'] = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(temp['time']))
             del temp['time']
+            del temp['air_temp'] # for testing
+            del temp['feels_like'] # for testing
             #temp['time'] = datetime.datetime.fromtimestamp(temp['time']).strftime('%c') # ***working
         return temps
 
