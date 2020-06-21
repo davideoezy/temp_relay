@@ -37,7 +37,7 @@
             Http_chart.responseType = 'json';
             Http_chart.open("GET", url_chart);
             Http_chart.send();
-            Http_chart.onload = function () {
+            Http_chart.onreadystatechange = function () {
                 
                 let jsonData = null;
                 let data = null;
@@ -46,6 +46,9 @@
 
                 if (Http_chart.readyState === 4 && Http_chart.status === 200) {
                     jsonData = Http_chart.response;
+                    data = JSON.parse(jsonData)
+
+                    console.log(data)
                 }
 
             //     data = new google.visualization.DataTable(jsonData);
@@ -98,6 +101,7 @@
 
             // };
 
+                
                 new Chart(document.getElementById("chart_div"), {
                     type: 'line',
                     data: jsonData,
