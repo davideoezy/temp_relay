@@ -1,7 +1,7 @@
 from flask import Flask, request, session, g, redirect, url_for, abort, render_template, \
     flash, jsonify
 from db_helper import db_helper
-import gviz_api
+#import gviz_api
 import json
 
 db_helper = db_helper()
@@ -30,21 +30,21 @@ def update():
     return webpage_helper(jsonify, 'update')
 
 @app.route("/inside_temp")
-def temp_data():
+def inside_temp_data():
     inside_temp = db_helper.get_inside_temp_chartjs()
 
     inside_temps_json = json.dumps(inside_temp)
-    return temps_json
+    return inside_temps_json
 
 @app.route("/outside_temp")
-def temp_data():
+def outside_temp_data():
     outside_temp = db_helper.get_outside_temp_chartjs
 
     outside_temp_json = json.dumps(outside_temp)
     return outside_temp_json
 
 @app.route("/outside_feels_like")
-def temp_data():
+def outside_feels_like_data():
     outside_feels_like = db_helper.get_outside_feels_like_chartjs()
 
     outside_feels_like_json = json.dumps(outside_feels_like)

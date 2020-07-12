@@ -24,13 +24,6 @@
 
         function drawChart() {
             
-            // if (typeof chart != "undefined" ) {
-            //     chart.clearChart();
-            //     chart = null;
-            // } else {
-            //     let chart = null;
-            // }
-
             let Http_chart = null;
             Http_chart = new XMLHttpRequest();
 
@@ -78,7 +71,6 @@
                 type: "line",
 
                 data: {
-                    labels: ['inside temp','outside temp','feels like'],
                     datasets: [{
                         label: "inside temp",
                         data: jsonData_inside,
