@@ -33,8 +33,8 @@ def update():
 def inside_temp_data():
     inside_temp = db_helper.get_inside_temp_chartjs()
 
-    inside_temps_json = json.dumps(inside_temp)
-    return inside_temps_json
+    inside_temp_json = json.dumps(inside_temp)
+    return inside_temp_json
 
 @app.route("/outside_temp")
 def outside_temp_data():
