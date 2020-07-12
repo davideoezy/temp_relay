@@ -242,7 +242,75 @@ class db_helper():
             #temp['time'] = datetime.datetime.fromtimestamp(temp['time']).strftime('%c') # ***working
         return temps
 
+    def get_inside_temp_chartjs(self):
+        client = InfluxDBClient(host=self.db_host, port=self.influx_port)
 
+        client.switch_database('home')
+        
+        statement = """
+                    select mean(CurrentTemp) as y 
+                    from sensor 
+                    where CurrentTemp > 0 
+                    and time > now() - 4h
+                    group by time(1m)
+                    tz('Australia/Melbourne')
+                    """
+        
+        response = client.query(statement, epoch='s')
+
+        inside_temp = next(iter(response))
+        
+        for temp in inside_temp:
+            temp['t'] = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(temp['time']))
+            del temp['time']
+
+        return inside_temp
+
+    def get_outside_temp_chartjs(self):
+        client = InfluxDBClient(host=self.db_host, port=self.influx_port)
+
+        client.switch_database('home')
+        
+        statement = """
+                    select temperature as y
+                    from sensor 
+                    where "location" = 'outside'
+                    and time > now() - 4h
+                    tz('Australia/Melbourne')
+                    """
+        
+        response = client.query(statement, epoch='s')
+
+        outside_temp = next(iter(response))
+        
+        for temp in outside_temp:
+            temp['t'] = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(temp['time']))
+            del temp['time']
+
+        return outside_temp    
+
+    def get_outside_feels_like_chartjs(self):
+        client = InfluxDBClient(host=self.db_host, port=self.influx_port)
+
+        client.switch_database('home')
+        
+        statement = """
+                    select feels_like as y
+                    from sensor 
+                    where "location" = 'outside'
+                    and time > now() - 4h
+                    tz('Australia/Melbourne')
+                    """
+        
+        response = client.query(statement, epoch='s')
+
+        outside_feels_like = next(iter(response))
+        
+        for temp in outside_feels_like:
+            temp['t'] = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(temp['time']))
+            del temp['time']
+
+        return outside_feels_like
 
 
     def get_outside_temps(self):
