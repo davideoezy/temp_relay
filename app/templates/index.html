@@ -59,17 +59,20 @@
 
             const inside_temp = fetch(url_chart_inside)
                 .then(response => {
-                    return response.json();
+                    return response;
+                //    return response.json();
                 })
             
             const outside_temp = fetch(url_chart_outside)
                 .then(response => {
-                    return response.json();
+                    return response;
+                //    return response.json();
                 })
 
             const outside_feels_like = fetch(url_chart_outside_feels_like)
                 .then(response => {
-                    return response.json();
+                    return response;
+                //    return response.json();
                 })
             
             // const inside_temp = async () => {
