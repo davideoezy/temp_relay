@@ -57,27 +57,41 @@
                 return output;
             }
 
+            const inside_temp = fetch(url_chart_inside)
+                .then(response => {
+                    return respose.json
+                })
             
-            const inside_temp = async () => {
-                const response = await fetch(url_chart_inside);
-                const json = await response.json();
-                const data = json.Data.Data
-                return data
-            }
+            const outside_temp = fetch(url_chart_outside)
+                .then(response => {
+                    return respose.json
+                })
 
-            const outside_temp = async () => {
-                const response = await fetch(url_chart_outside);
-                const json = await response.json();
-                const data = json.Data.Data
-                return data
-            }
+            const outside_feels_like = fetch(url_chart_outside_feels_like)
+                .then(response => {
+                    return respose.json
+                })
+            
+            // const inside_temp = async () => {
+            //     const response = await fetch(url_chart_inside);
+            //     const json = await response.json();
+            //     const data = json.Data.Data
+            //     return data
+            // }
 
-            const outside_feels_like = async () => {
-                const response = await fetch(url_chart_outside_feels_like);
-                const json = await response.json();
-                const data = json.Data.Data
-                return data
-            }
+            // const outside_temp = async () => {
+            //     const response = await fetch(url_chart_outside);
+            //     const json = await response.json();
+            //     const data = json.Data.Data
+            //     return data
+            // }
+
+            // const outside_feels_like = async () => {
+            //     const response = await fetch(url_chart_outside_feels_like);
+            //     const json = await response.json();
+            //     const data = json.Data.Data
+            //     return data
+            // }
 
             function graphResult(inside, outside, outside_feels_like) {
                 var ctx = document.getElementById("chart_div");
