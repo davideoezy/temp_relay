@@ -49,9 +49,12 @@
             function fetchJSON(pathToResource) {
                 fetch(pathToResource) // 1
                 .then(validateResponse) // 2
-                .then(readResponseAsJSON) // 3
+                .then(data => {
+                    const output = readResponseAsJSON
+                    }
+                ) // 3
                 .catch(logError);
-                return data;
+                return output;
             }
 
             function graphResult(inside, outside, outside_feels_like) {
