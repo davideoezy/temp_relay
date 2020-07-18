@@ -19,50 +19,83 @@
     <script type="text/javascript">
 
         function drawChart() {
-            
+         
             let Http_chart = null;
-            Http_chart = new XMLHttpRequest();
+            //Http_chart = new XMLHttpRequest();
 
             const url_chart_inside = '/inside_temp';
             const url_chart_outside = '/outside_temp';
             const url_chart_outside_feels_like = '/outside_feels_like';
 
-            Http_chart.responseType = 'json';
-
-            Http_chart.open("GET", url_chart_inside);
-            Http_chart.send();
-            
-            Http_chart.onreadystatechange = function () {
-                
-                if (Http_chart.readyState === 4 && Http_chart.status === 200) {
-                    jsonData_inside = Http_chart.response;
-
-                    console.log(jsonData_inside);
-                };
+            function logResult(result) {
+                console.log(result);
             }
 
-            Http_chart.open("GET", url_chart_outside);
-            Http_chart.send();
-            
-            Http_chart.onreadystatechange = function () {
-                
-                if (Http_chart.readyState === 4 && Http_chart.status === 200) {
-                    jsonData_outside = Http_chart.response;
+            function logError(error) {
+                console.log('Looks like there was a problem: \n', error);
+            }  
 
-                    console.log(jsonData_outside);
-                };
+            function validateResponse(response) {
+                if (!response.ok) {
+                    throw Error(response.statusText);
+                }
+                return response;
             }
 
-            Http_chart.open("GET", url_chart_outside_feels_like);
-            Http_chart.send();
-            
-            Http_chart.onreadystatechange = function () {
-                
-                if (Http_chart.readyState === 4 && Http_chart.status === 200) {
-                    jsonData_outside_feels_like = Http_chart.response;
+            function readResponseAsJSON(response) {
+                return response.json();
+            }
 
-                    console.log(jsonData_outside_feels_like);
-                };
+            function fetchJSON(pathToResource) {
+                fetch(pathToResource) // 1
+                .then(validateResponse) // 2
+                .then(readResponseAsJSON) // 3
+                .then(logResult) // 4
+                .catch(logError);
+                return data;
+            }
+
+            jsonData_inside = fetchJSON(url_chart_inside);
+            jsonData_outside = fetchJSON(url_chart_outside);
+            jsonData_outside_feels_like = fetchJSON(url_chart_outside_feels_like);
+
+
+            // Http_chart.responseType = 'json';
+
+            // Http_chart.open("GET", url_chart_inside);
+            // Http_chart.send();
+            
+            // Http_chart.onreadystatechange = function () {
+                
+            //     if (Http_chart.readyState === 4 && Http_chart.status === 200) {
+            //         jsonData_inside = Http_chart.regsponse;
+
+            //         console.log(jsonData_inside);
+            //     };
+            // }
+
+            // Http_chart.open("GET", url_chart_outside);
+            // Http_chart.send();
+            
+            // Http_chart.onreadystatechange = function () {
+                
+            //     if (Http_chart.readyState === 4 && Http_chart.status === 200) {
+            //         jsonData_outside = Http_chart.response;
+
+            //         console.log(jsonData_outside);
+            //     };
+            // }
+
+            // Http_chart.open("GET", url_chart_outside_feels_like);
+            // Http_chart.send();
+            
+            // Http_chart.onreadystatechange = function () {
+                
+            //     if (Http_chart.readyState === 4 && Http_chart.status === 200) {
+            //         jsonData_outside_feels_like = Http_chart.response;
+
+            //         console.log(jsonData_outside_feels_like);
+            //     };
              
                 var ctx = document.getElementById("chart_div");
                 var myChart = new Chart(ctx, {
