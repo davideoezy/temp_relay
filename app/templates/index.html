@@ -50,7 +50,6 @@
                 fetch(pathToResource) // 1
                 .then(validateResponse) // 2
                 .then(readResponseAsJSON) // 3
-                .then(logResult) // 4
                 .catch(logError);
             }
 
@@ -107,6 +106,10 @@
             jsonData_inside = fetchJSON(url_chart_inside);
             jsonData_outside = fetchJSON(url_chart_outside);
             jsonData_outside_feels_like = fetchJSON(url_chart_outside_feels_like);
+
+            logResult(jsonData_inside)
+            logResult(jsonData_outside)
+            logResult(jsonData_outside_feels_like)
 
             graphResult(jsonData_inside, jsonData_outside, jsonData_outside_feels_like);
         }
