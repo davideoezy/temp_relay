@@ -69,7 +69,7 @@
             });
         };
 
-        function updateChart() {
+        function updateChart(chartID) {
 
 
             const url_chart_inside = '/inside_temp';
@@ -458,7 +458,7 @@
             }, 10000);
 
             window.setInterval(function () {
-                 updateChart();
+                 updateChart(myChart);
             }, 30000);
 
         });
