@@ -50,6 +50,21 @@ def outside_feels_like_data():
     outside_feels_like_json = json.dumps(outside_feels_like)
     return outside_feels_like_json
 
+@app.route("/temps")
+def temp_data():
+    
+    inside_temp = db_helper.get_inside_temp_chartjs()
+    outside_temp = db_helper.get_outside_temp_chartjs()
+    outside_feels_like = db_helper.get_outside_feels_like_chartjs()
+
+    data = {
+        'inside_temp': inside_temp,
+        'outside_temp': outside_temp,
+        'outside_feels_like': outside_feels_like
+    }
+
+    return data
+
 
 # take a function and gather necessary data for the web ui, then call the function
 # with the gathered data an an input and return the result
