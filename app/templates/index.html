@@ -57,6 +57,28 @@
                 return output;
             }
 
+            
+            const inside_temp = async () => {
+                const response = await fetch(url_chart_inside);
+                const json = await response.json();
+                const data = json.Data.Data
+                return data
+            }
+
+            const outside_temp = async () => {
+                const response = await fetch(url_chart_outside);
+                const json = await response.json();
+                const data = json.Data.Data
+                return data
+            }
+
+            const outside_feels_like = async () => {
+                const response = await fetch(url_chart_outside_feels_like);
+                const json = await response.json();
+                const data = json.Data.Data
+                return data
+            }
+
             function graphResult(inside, outside, outside_feels_like) {
                 var ctx = document.getElementById("chart_div");
                 
@@ -107,15 +129,15 @@
             };
         
 
-            jsonData_inside = fetchJSON(url_chart_inside);
-            jsonData_outside = fetchJSON(url_chart_outside);
-            jsonData_outside_feels_like = fetchJSON(url_chart_outside_feels_like);
+            // jsonData_inside = fetchJSON(url_chart_inside);
+            // jsonData_outside = fetchJSON(url_chart_outside);
+            // jsonData_outside_feels_like = fetchJSON(url_chart_outside_feels_like);
 
-            logResult(jsonData_inside);
-            logResult(jsonData_outside);
-            logResult(jsonData_outside_feels_like);
+            logResult(inside_temp);
+            logResult(outside_temp);
+            logResult(outside_feels_like);
 
-            graphResult(jsonData_inside, jsonData_outside, jsonData_outside_feels_like);
+            //graphResult(jsonData_inside, jsonData_outside, jsonData_outside_feels_like);
         }
 
 
