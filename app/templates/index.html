@@ -51,6 +51,7 @@
                 .then(validateResponse) // 2
                 .then(readResponseAsJSON) // 3
                 .catch(logError);
+                return data;
             }
 
             function graphResult(inside, outside, outside_feels_like) {
