@@ -38,7 +38,7 @@ def inside_temp_data():
 
 @app.route("/outside_temp")
 def outside_temp_data():
-    outside_temp = db_helper.get_outside_temp_chartjs
+    outside_temp = db_helper.get_outside_temp_chartjs()
 
     outside_temp_json = json.dumps(outside_temp)
     return outside_temp_json
