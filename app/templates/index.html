@@ -20,7 +20,7 @@
 
         function drawChart() {
          
-            let Http_chart = null;
+            //let Http_chart = null;
             //Http_chart = new XMLHttpRequest();
 
             const url_chart_inside = '/inside_temp';
@@ -47,17 +47,69 @@
             }
 
             function fetchJSON(pathToResource) {
-                fetch(pathToResource) // 1
+                fetch(pathToResource_1) // 1
                 .then(validateResponse) // 2
                 .then(readResponseAsJSON) // 3
                 .then(logResult) // 4
                 .catch(logError);
-                return data;
             }
+
+            function graphResult(inside, outside, outside_feels_like) {
+                var ctx = document.getElementById("chart_div");
+                
+                var myChart = new Chart(ctx, {
+                    type: "line",
+                    data: {
+                        datasets: [{
+                        label: "inside temp",
+                        data: inside,
+                        borderWidth: 2,
+                        backgroundColor: "rgba(6, 167, 125, 0.1)",
+                        borderColor: "rgba(6, 167, 125, 1)",
+                        pointBackgroundColor: "rgba(225, 225, 225, 1)",
+                        pointBorderColor: "rgba(6, 167, 125, 1)",
+                        pointHoverBackgroundColor: "rgba(6, 167, 125, 1)",
+                        pointHoverBorderColor: "#fff"
+                        }, {
+                        label: "outside temp",
+                        data: outside,
+                        borderWidth: 2,
+                        backgroundColor: "rgba(246, 71, 64, 0.1)",
+                        borderColor: "rgba(246, 71, 64, 1)",
+                        pointBackgroundColor: "rgba(225, 225, 225, 1)",
+                        pointBorderColor: "rgba(246, 71, 64, 1)",
+                        pointHoverBackgroundColor: "rgba(246, 71, 64, 1)",
+                        pointHoverBorderColor: "#fff"
+                        }, {
+                        label: "feels_like",
+                        data: outside_feels_like,
+                        borderWidth: 2,
+                        backgroundColor: "rgba(26, 143, 227, 0.1)",
+                        borderColor: "rgba(26, 143, 227, 1)",
+                        pointBackgroundColor: "rgba(225, 225, 225, 1)",
+                        pointBorderColor: "rgba(26, 143, 227, 1)",
+                        pointHoverBackgroundColor: "rgba(26, 143, 227, 1)",
+                        pointHoverBorderColor: "#fff"
+                        }]
+                    },
+
+                    options: {
+                        "scales": {
+                            "xAxes": [{
+                                "type": "time"
+                            }]
+                        }
+                    }
+                });
+            };
+        
 
             jsonData_inside = fetchJSON(url_chart_inside);
             jsonData_outside = fetchJSON(url_chart_outside);
             jsonData_outside_feels_like = fetchJSON(url_chart_outside_feels_like);
+
+            graphResult(jsonData_inside, jsonData_outside, jsonData_outside_feels_like);
+        }
 
 
             // Http_chart.responseType = 'json';
@@ -97,54 +149,54 @@
             //         console.log(jsonData_outside_feels_like);
             //     };
              
-                var ctx = document.getElementById("chart_div");
-                var myChart = new Chart(ctx, {
-                type: "line",
+    //         var ctx = document.getElementById("chart_div");
+    //         var myChart = new Chart(ctx, {
+    //         type: "line",
 
-                data: {
-                    datasets: [{
-                        label: "inside temp",
-                        data: jsonData_inside,
-                        borderWidth: 2,
-                        backgroundColor: "rgba(6, 167, 125, 0.1)",
-                        borderColor: "rgba(6, 167, 125, 1)",
-                        pointBackgroundColor: "rgba(225, 225, 225, 1)",
-                        pointBorderColor: "rgba(6, 167, 125, 1)",
-                        pointHoverBackgroundColor: "rgba(6, 167, 125, 1)",
-                        pointHoverBorderColor: "#fff"
-                    }, {
-                        label: "outside temp",
-                        data: jsonData_outside,
-                        borderWidth: 2,
-                        backgroundColor: "rgba(246, 71, 64, 0.1)",
-                        borderColor: "rgba(246, 71, 64, 1)",
-                        pointBackgroundColor: "rgba(225, 225, 225, 1)",
-                        pointBorderColor: "rgba(246, 71, 64, 1)",
-                        pointHoverBackgroundColor: "rgba(246, 71, 64, 1)",
-                        pointHoverBorderColor: "#fff"
-                    }, {
-                        label: "feels_like",
-                        data: jsonData_outside_feels_like,
-                        borderWidth: 2,
-                        backgroundColor: "rgba(26, 143, 227, 0.1)",
-                        borderColor: "rgba(26, 143, 227, 1)",
-                        pointBackgroundColor: "rgba(225, 225, 225, 1)",
-                        pointBorderColor: "rgba(26, 143, 227, 1)",
-                        pointHoverBackgroundColor: "rgba(26, 143, 227, 1)",
-                        pointHoverBorderColor: "#fff"
-                    }]
-                },
+    //         data: {
+    //             datasets: [{
+    //                 label: "inside temp",
+    //                 data: jsonData_inside,
+    //                 borderWidth: 2,
+    //                 backgroundColor: "rgba(6, 167, 125, 0.1)",
+    //                 borderColor: "rgba(6, 167, 125, 1)",
+    //                 pointBackgroundColor: "rgba(225, 225, 225, 1)",
+    //                 pointBorderColor: "rgba(6, 167, 125, 1)",
+    //                 pointHoverBackgroundColor: "rgba(6, 167, 125, 1)",
+    //                 pointHoverBorderColor: "#fff"
+    //             }, {
+    //                 label: "outside temp",
+    //                 data: jsonData_outside,
+    //                 borderWidth: 2,
+    //                 backgroundColor: "rgba(246, 71, 64, 0.1)",
+    //                 borderColor: "rgba(246, 71, 64, 1)",
+    //                 pointBackgroundColor: "rgba(225, 225, 225, 1)",
+    //                 pointBorderColor: "rgba(246, 71, 64, 1)",
+    //                 pointHoverBackgroundColor: "rgba(246, 71, 64, 1)",
+    //                 pointHoverBorderColor: "#fff"
+    //             }, {
+    //                 label: "feels_like",
+    //                 data: jsonData_outside_feels_like,
+    //                 borderWidth: 2,
+    //                 backgroundColor: "rgba(26, 143, 227, 0.1)",
+    //                 borderColor: "rgba(26, 143, 227, 1)",
+    //                 pointBackgroundColor: "rgba(225, 225, 225, 1)",
+    //                 pointBorderColor: "rgba(26, 143, 227, 1)",
+    //                 pointHoverBackgroundColor: "rgba(26, 143, 227, 1)",
+    //                 pointHoverBorderColor: "#fff"
+    //             }]
+    //         },
 
-                options: {
-                    "scales": {
-                    "xAxes": [{
-                        "type": "time"
-                    }]
-                    }
-                }
-                });
-            };
-        };
+    //         options: {
+    //             "scales": {
+    //             "xAxes": [{
+    //                 "type": "time"
+    //             }]
+    //             }
+    //         }
+    //         });
+    //     };
+    // };
 
 
                     
@@ -467,7 +519,7 @@ hr.divider {
   display: inline-block;
   width: 60px;
   height: 34px;
-  float:center;
+  float: center;
 }
 
 /* Hide default HTML checkbox */
