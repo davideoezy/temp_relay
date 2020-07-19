@@ -90,7 +90,7 @@
                 return response.json();
             }
 
-            function fetchJSON(pathToResource) {
+            function fetchJSON(pathToResource, chart) {
                 fetch(pathToResource) // 1
                 .then(validateResponse) // 2
                 .then(data => {
@@ -131,14 +131,14 @@
                     }
                 )
                 .then(dataset => {
-                    myChart.data.datasets[0].data = dataset;
+                    chart.data.datasets[0].data = dataset;
             
-                    myChart.update()
+                    chart.update()
                 })
                 .catch(logError);
             }
 
-            fetchJSON(url_chart);
+            fetchJSON(url_chart, myChart);
         };
 
      
