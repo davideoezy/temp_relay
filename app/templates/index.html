@@ -75,9 +75,12 @@
                         },
 
                         options: {
-                            "scales": {
-                                "xAxes": [{
-                                    "type": "time"
+                            scales: {
+                                xAxes: [{
+                                    type: "time",
+                                    time: {
+                                        unit: 'hour'
+                                    }
                                 }]
                             },
                             legend: {
