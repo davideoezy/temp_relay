@@ -47,13 +47,13 @@
                 .then(validateResponse) // 2
                 .then(readResponseAsJSON)
                 .then(data => {
-                    var inside_temp = data.inside_temp;
-                    var outside_temp = data.outside_temp;
-                    var outside_feels_like = data.outside_feels_like;
+                    let inside_temp = data.inside_temp;
+                    let outside_temp = data.outside_temp;
+                    let outside_feels_like = data.outside_feels_like;
 
-                    var ctx = document.getElementById("chart_div");
+                    let ctx = document.getElementById("chart_div");
                 
-                    var myChart = new Chart(ctx, {
+                    let myChart = new Chart(ctx, {
                         type: "line",
                         data: {
                             datasets: [{
@@ -227,15 +227,16 @@
             });
 
             get_updates();
+            updateChart();
 
             window.setInterval(function () {
 
                 get_updates();             
-            }, 30000);
+            }, 10000);
 
             window.setInterval(function () {
                  updateChart();
-            }, 5000);
+            }, 30000);
 
         });
 
