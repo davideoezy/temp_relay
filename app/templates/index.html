@@ -74,6 +74,9 @@
 
             const url_chart = '/temps';
 
+            function logResult(result) {
+                console.log(result);
+            }
 
             function logError(error) {
                 console.log('Looks like there was a problem: \n', error);
@@ -93,11 +96,11 @@
             function fetchJSON(pathToResource) {
                 fetch(pathToResource) // 1
                 .then(validateResponse) // 2
+                .then(readResponseAsJSON)
                 .then(data => {
-                    const output = readResponseAsJSON;
-                    const inside_temp = output.inside_temp;
-                    const outside_temp = output.outside_temp;
-                    const outside_feels_like = output.outside_feels_like;
+                    const inside_temp = data.inside_temp;
+                    const outside_temp = data.outside_temp;
+                    const outside_feels_like = data.outside_feels_like;
 
                     dataset = [{
                         data: inside_temp,
@@ -130,7 +133,7 @@
                     return dataset;
                     }
                 )
-                .then(console.log(dataset))
+                .then(logResult)
                 // .then(dataset => {
                 //     '#chart_div'.data.datasets[0].data = dataset;
             
