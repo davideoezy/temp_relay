@@ -72,9 +72,7 @@
         function updateChart() {
 
 
-            const url_chart_inside = '/inside_temp';
-            const url_chart_outside = '/outside_temp';
-            const url_chart_outside_feels_like = '/outside_feels_like';
+            const url_chart = '/temps';
 
 
             function logError(error) {
@@ -140,6 +138,8 @@
                 .catch(logError);
                 return output;
             }
+
+            fetchJSON(url_chart);
         };
 
      
@@ -248,8 +248,6 @@
 
         $(document).ready(function () {
 
-
-
             $('#heatSwitch').click(function () {
                 SubmitTargets();
             });
@@ -265,7 +263,7 @@
 
             window.setInterval(function () {
                  updateChart();
-            }, 30000);
+            }, 15000);
 
         });
 
