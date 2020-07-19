@@ -18,65 +18,64 @@
 
     <script type="text/javascript">
 
-        inside_temp = [];
-        outside_temp = [];
-        outside_feels_like = [];
+        function createChart() {
+            inside_temp = [];
+            outside_temp = [];
+            outside_feels_like = [];
 
-        var ctx = document.getElementById("chart_div");
-            
-        var myChart = new Chart(ctx, {
-            type: "line",
-            data: {
-                datasets: [{
-                data: inside_temp,
-                borderWidth: 2,
-                backgroundColor: "rgba(6, 167, 125, 0.1)",
-                borderColor: "rgba(6, 167, 125, 1)",
-                pointBackgroundColor: "rgba(225, 225, 225, 1)",
-                pointBorderColor: "rgba(6, 167, 125, 1)",
-                pointHoverBackgroundColor: "rgba(6, 167, 125, 1)",
-                pointHoverBorderColor: "#fff"
-                }, {
-                data: outside_temp,
-                borderWidth: 2,
-                backgroundColor: "rgba(246, 71, 64, 0.1)",
-                borderColor: "rgba(246, 71, 64, 1)",
-                pointBackgroundColor: "rgba(225, 225, 225, 1)",
-                pointBorderColor: "rgba(246, 71, 64, 1)",
-                pointHoverBackgroundColor: "rgba(246, 71, 64, 1)",
-                pointHoverBorderColor: "#fff"
-                }, {
-                data: outside_feels_like,
-                borderWidth: 2,
-                backgroundColor: "rgba(26, 143, 227, 0.1)",
-                borderColor: "rgba(26, 143, 227, 1)",
-                pointBackgroundColor: "rgba(225, 225, 225, 1)",
-                pointBorderColor: "rgba(26, 143, 227, 1)",
-                pointHoverBackgroundColor: "rgba(26, 143, 227, 1)",
-                pointHoverBorderColor: "#fff"
-                }]
-            },
-
-            options: {
-                "scales": {
-                    "xAxes": [{
-                        "type": "time"
+            var ctx = document.getElementById("chart_div");
+                
+            var myChart = new Chart(ctx, {
+                type: "line",
+                data: {
+                    datasets: [{
+                    data: inside_temp,
+                    borderWidth: 2,
+                    backgroundColor: "rgba(6, 167, 125, 0.1)",
+                    borderColor: "rgba(6, 167, 125, 1)",
+                    pointBackgroundColor: "rgba(225, 225, 225, 1)",
+                    pointBorderColor: "rgba(6, 167, 125, 1)",
+                    pointHoverBackgroundColor: "rgba(6, 167, 125, 1)",
+                    pointHoverBorderColor: "#fff"
+                    }, {
+                    data: outside_temp,
+                    borderWidth: 2,
+                    backgroundColor: "rgba(246, 71, 64, 0.1)",
+                    borderColor: "rgba(246, 71, 64, 1)",
+                    pointBackgroundColor: "rgba(225, 225, 225, 1)",
+                    pointBorderColor: "rgba(246, 71, 64, 1)",
+                    pointHoverBackgroundColor: "rgba(246, 71, 64, 1)",
+                    pointHoverBorderColor: "#fff"
+                    }, {
+                    data: outside_feels_like,
+                    borderWidth: 2,
+                    backgroundColor: "rgba(26, 143, 227, 0.1)",
+                    borderColor: "rgba(26, 143, 227, 1)",
+                    pointBackgroundColor: "rgba(225, 225, 225, 1)",
+                    pointBorderColor: "rgba(26, 143, 227, 1)",
+                    pointHoverBackgroundColor: "rgba(26, 143, 227, 1)",
+                    pointHoverBorderColor: "#fff"
                     }]
+                },
+
+                options: {
+                    "scales": {
+                        "xAxes": [{
+                            "type": "time"
+                        }]
+                    }
                 }
-            }
-        });
+            });
+        };
 
 
-        function updateChart(chartID) {
+        function updateChart() {
 
 
             const url_chart_inside = '/inside_temp';
             const url_chart_outside = '/outside_temp';
             const url_chart_outside_feels_like = '/outside_feels_like';
 
-            function logResult(result) {
-                console.log(result);
-            }
 
             function logError(error) {
                 console.log('Looks like there was a problem: \n', error);
@@ -97,244 +96,52 @@
                 fetch(pathToResource) // 1
                 .then(validateResponse) // 2
                 .then(data => {
-                    const output = readResponseAsJSON
+                    const output = readResponseAsJSON;
+                    const inside_temp = output.inside_temp;
+                    const outside_temp = output.outside_temp;
+                    const outside_feels_like = output.outside_feels_like;
+
+                    dataset = [{
+                        data: inside_temp,
+                        borderWidth: 2,
+                        backgroundColor: "rgba(6, 167, 125, 0.1)",
+                        borderColor: "rgba(6, 167, 125, 1)",
+                        pointBackgroundColor: "rgba(225, 225, 225, 1)",
+                        pointBorderColor: "rgba(6, 167, 125, 1)",
+                        pointHoverBackgroundColor: "rgba(6, 167, 125, 1)",
+                        pointHoverBorderColor: "#fff"
+                        }, {
+                        data: outside_temp,
+                        borderWidth: 2,
+                        backgroundColor: "rgba(246, 71, 64, 0.1)",
+                        borderColor: "rgba(246, 71, 64, 1)",
+                        pointBackgroundColor: "rgba(225, 225, 225, 1)",
+                        pointBorderColor: "rgba(246, 71, 64, 1)",
+                        pointHoverBackgroundColor: "rgba(246, 71, 64, 1)",
+                        pointHoverBorderColor: "#fff"
+                        }, {
+                        data: outside_feels_like,
+                        borderWidth: 2,
+                        backgroundColor: "rgba(26, 143, 227, 0.1)",
+                        borderColor: "rgba(26, 143, 227, 1)",
+                        pointBackgroundColor: "rgba(225, 225, 225, 1)",
+                        pointBorderColor: "rgba(26, 143, 227, 1)",
+                        pointHoverBackgroundColor: "rgba(26, 143, 227, 1)",
+                        pointHoverBorderColor: "#fff"
+                    }];
+                    return dataset;
                     }
-                ) // 3
+                )
+                .then(dataset => {
+                    myChart.data.datasets[0].data = dataset;
+            
+                    myChart.update()
+                })
                 .catch(logError);
                 return output;
             }
 
-
-            var jsonfile = fetch(url_chart_inside)
-                .then(response => {
-                    return response.json();
-                })
-
-            var inside_temp = jsonfile.inside_temp;
-
-            var outside_temp = jsonfile.outside_temp;
-
-            var outside_feels_like = jsonfile.outside_feels_like;
-
-            console.log(inside_temp);
-            console.log(outside_temp);
-            console.log(outside_feels_like);
-
-            
-            // outside_temp = fetch(url_chart_outside)
-            //     .then(response => {
-            //         return response.json();
-            //     })
-
-            // outside_feels_like = fetch(url_chart_outside_feels_like)
-            //     .then(response => {
-            //         return response.json();
-            //     })
-            
-            // const inside_temp = async () => {
-            //     const response = await fetch(url_chart_inside);
-            //     const json = await response.json();
-            //     const data = json.Data.Data
-            //     return data
-            // }
-
-            // const outside_temp = async () => {
-            //     const response = await fetch(url_chart_outside);
-            //     const json = await response.json();
-            //     const data = json.Data.Data
-            //     return data
-            // }
-
-            // const outside_feels_like = async () => {
-            //     const response = await fetch(url_chart_outside_feels_like);
-            //     const json = await response.json();
-            //     const data = json.Data.Data
-            //     return data
-            // }
-
-            // function graphResult(inside, outside, outside_feels_like) {
-            //     var ctx = document.getElementById("chart_div");
-                
-            //     var myChart = new Chart(ctx, {
-            //         type: "line",
-            //         data: {
-            //             datasets: [{
-            //             label: "inside temp",
-            //             data: inside,
-            //             borderWidth: 2,
-            //             backgroundColor: "rgba(6, 167, 125, 0.1)",
-            //             borderColor: "rgba(6, 167, 125, 1)",
-            //             pointBackgroundColor: "rgba(225, 225, 225, 1)",
-            //             pointBorderColor: "rgba(6, 167, 125, 1)",
-            //             pointHoverBackgroundColor: "rgba(6, 167, 125, 1)",
-            //             pointHoverBorderColor: "#fff"
-            //             }, {
-            //             label: "outside temp",
-            //             data: outside,
-            //             borderWidth: 2,
-            //             backgroundColor: "rgba(246, 71, 64, 0.1)",
-            //             borderColor: "rgba(246, 71, 64, 1)",
-            //             pointBackgroundColor: "rgba(225, 225, 225, 1)",
-            //             pointBorderColor: "rgba(246, 71, 64, 1)",
-            //             pointHoverBackgroundColor: "rgba(246, 71, 64, 1)",
-            //             pointHoverBorderColor: "#fff"
-            //             }, {
-            //             label: "feels_like",
-            //             data: outside_feels_like,
-            //             borderWidth: 2,
-            //             backgroundColor: "rgba(26, 143, 227, 0.1)",
-            //             borderColor: "rgba(26, 143, 227, 1)",
-            //             pointBackgroundColor: "rgba(225, 225, 225, 1)",
-            //             pointBorderColor: "rgba(26, 143, 227, 1)",
-            //             pointHoverBackgroundColor: "rgba(26, 143, 227, 1)",
-            //             pointHoverBorderColor: "#fff"
-            //             }]
-            //         },
-
-            //         options: {
-            //             "scales": {
-            //                 "xAxes": [{
-            //                     "type": "time"
-            //                 }]
-            //             }
-            //         }
-            //     });
-            // };
-        
-
-            // jsonData_inside = fetchJSON(url_chart_inside);
-            // jsonData_outside = fetchJSON(url_chart_outside);
-            // jsonData_outside_feels_like = fetchJSON(url_chart_outside_feels_like);
-
-            // logResult(inside_temp);
-            // logResult(outside_temp);
-            // logResult(outside_feels_like);
-
-            // graphResult(inside_temp, outside_temp, outside_feels_like);
-
-            myChart.config.data = {
-                datasets: [{
-                data: inside_temp,
-                borderWidth: 2,
-                backgroundColor: "rgba(6, 167, 125, 0.1)",
-                borderColor: "rgba(6, 167, 125, 1)",
-                pointBackgroundColor: "rgba(225, 225, 225, 1)",
-                pointBorderColor: "rgba(6, 167, 125, 1)",
-                pointHoverBackgroundColor: "rgba(6, 167, 125, 1)",
-                pointHoverBorderColor: "#fff"
-                }, {
-                data: outside_temp,
-                borderWidth: 2,
-                backgroundColor: "rgba(246, 71, 64, 0.1)",
-                borderColor: "rgba(246, 71, 64, 1)",
-                pointBackgroundColor: "rgba(225, 225, 225, 1)",
-                pointBorderColor: "rgba(246, 71, 64, 1)",
-                pointHoverBackgroundColor: "rgba(246, 71, 64, 1)",
-                pointHoverBorderColor: "#fff"
-                }, {
-                data: outside_feels_like,
-                borderWidth: 2,
-                backgroundColor: "rgba(26, 143, 227, 0.1)",
-                borderColor: "rgba(26, 143, 227, 1)",
-                pointBackgroundColor: "rgba(225, 225, 225, 1)",
-                pointBorderColor: "rgba(26, 143, 227, 1)",
-                pointHoverBackgroundColor: "rgba(26, 143, 227, 1)",
-                pointHoverBorderColor: "#fff"
-                }]
-            };
-            myChart.update();
-
-        }
-
-
-            // Http_chart.responseType = 'json';
-
-            // Http_chart.open("GET", url_chart_inside);
-            // Http_chart.send();
-            
-            // Http_chart.onreadystatechange = function () {
-                
-            //     if (Http_chart.readyState === 4 && Http_chart.status === 200) {
-            //         jsonData_inside = Http_chart.regsponse;
-
-            //         console.log(jsonData_inside);
-            //     };
-            // }
-
-            // Http_chart.open("GET", url_chart_outside);
-            // Http_chart.send();
-            
-            // Http_chart.onreadystatechange = function () {
-                
-            //     if (Http_chart.readyState === 4 && Http_chart.status === 200) {
-            //         jsonData_outside = Http_chart.response;
-
-            //         console.log(jsonData_outside);
-            //     };
-            // }
-
-            // Http_chart.open("GET", url_chart_outside_feels_like);
-            // Http_chart.send();
-            
-            // Http_chart.onreadystatechange = function () {
-                
-            //     if (Http_chart.readyState === 4 && Http_chart.status === 200) {
-            //         jsonData_outside_feels_like = Http_chart.response;
-
-            //         console.log(jsonData_outside_feels_like);
-            //     };
-             
-    //         var ctx = document.getElementById("chart_div");
-    //         var myChart = new Chart(ctx, {
-    //         type: "line",
-
-    //         data: {
-    //             datasets: [{
-    //                 label: "inside temp",
-    //                 data: jsonData_inside,
-    //                 borderWidth: 2,
-    //                 backgroundColor: "rgba(6, 167, 125, 0.1)",
-    //                 borderColor: "rgba(6, 167, 125, 1)",
-    //                 pointBackgroundColor: "rgba(225, 225, 225, 1)",
-    //                 pointBorderColor: "rgba(6, 167, 125, 1)",
-    //                 pointHoverBackgroundColor: "rgba(6, 167, 125, 1)",
-    //                 pointHoverBorderColor: "#fff"
-    //             }, {
-    //                 label: "outside temp",
-    //                 data: jsonData_outside,
-    //                 borderWidth: 2,
-    //                 backgroundColor: "rgba(246, 71, 64, 0.1)",
-    //                 borderColor: "rgba(246, 71, 64, 1)",
-    //                 pointBackgroundColor: "rgba(225, 225, 225, 1)",
-    //                 pointBorderColor: "rgba(246, 71, 64, 1)",
-    //                 pointHoverBackgroundColor: "rgba(246, 71, 64, 1)",
-    //                 pointHoverBorderColor: "#fff"
-    //             }, {
-    //                 label: "feels_like",
-    //                 data: jsonData_outside_feels_like,
-    //                 borderWidth: 2,
-    //                 backgroundColor: "rgba(26, 143, 227, 0.1)",
-    //                 borderColor: "rgba(26, 143, 227, 1)",
-    //                 pointBackgroundColor: "rgba(225, 225, 225, 1)",
-    //                 pointBorderColor: "rgba(26, 143, 227, 1)",
-    //                 pointHoverBackgroundColor: "rgba(26, 143, 227, 1)",
-    //                 pointHoverBorderColor: "#fff"
-    //             }]
-    //         },
-
-    //         options: {
-    //             "scales": {
-    //             "xAxes": [{
-    //                 "type": "time"
-    //             }]
-    //             }
-    //         }
-    //         });
-    //     };
-    // };
-
-
-                    
+     
 
 
         function ChangeTemperature(amount) {
