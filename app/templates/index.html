@@ -47,9 +47,9 @@
                 .then(validateResponse) // 2
                 .then(readResponseAsJSON)
                 .then(data => {
-                    const inside_temp = data.inside_temp;
-                    const outside_temp = data.outside_temp;
-                    const outside_feels_like = data.outside_feels_like;
+                    var inside_temp = data.inside_temp;
+                    var outside_temp = data.outside_temp;
+                    var outside_feels_like = data.outside_feels_like;
 
                     var ctx = document.getElementById("chart_div");
                 
