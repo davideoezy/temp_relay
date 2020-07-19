@@ -133,12 +133,12 @@
                     return dataset;
                     }
                 )
-                .then(logResult)
-                // .then(dataset => {
-                //     '#chart_div'.data.datasets[0].data = dataset;
+                //.then(logResult)
+                .then(chartData => {
+                    '#chart_div'.data.datasets[0].data = Chartdata;
             
-                //     '#chart_div'.update()
-                // })
+                    '#chart_div'.update()
+                })
                 .catch(logError);
             }
 
