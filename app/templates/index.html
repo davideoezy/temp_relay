@@ -77,6 +77,9 @@
                                     "type": "time"
                                 }]
                             },
+                            legend: {
+                                display: false
+                            },
                             animation: {
                                 duration: 0
                             }
@@ -311,7 +314,7 @@
                             <p class="h5 temp-headings">Feels Like</p>
                             <h2 class="temps" id="feelsLike">{{ feels_like }}&deg;</h2>
                 </div>
-                <div class="col-10 col-md-9">
+                <div class="col-10 col-md-9" id ="chartContainer">
 
                     <canvas id="chart_div" width="550" height="345"></canvas>
                 </div>
@@ -322,6 +325,10 @@
 </body>
 
 <style>
+.chart-container {
+    width: 550px;
+    height:345px
+}
 .form-control-temp {
     font-size: 350%;
     background-color: #343a40;
