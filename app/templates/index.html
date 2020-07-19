@@ -130,11 +130,12 @@
                     return dataset;
                     }
                 )
-                .then(dataset => {
-                    '#chart_div'.data.datasets[0].data = dataset;
+                .then(console.log(dataset))
+                // .then(dataset => {
+                //     '#chart_div'.data.datasets[0].data = dataset;
             
-                    '#chart_div'.update()
-                })
+                //     '#chart_div'.update()
+                // })
                 .catch(logError);
             }
 
