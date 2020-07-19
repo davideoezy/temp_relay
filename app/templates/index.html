@@ -59,17 +59,14 @@
                             datasets: [{
                             data: inside_temp,
                             borderWidth: 2,
-                            backgroundColor: "rgba(246, 71, 64, 0.1)",
                             borderColor: "rgba(246, 71, 64, 1)",
                             }, {
                             data: outside_temp,
                             borderWidth: 2,
-                            backgroundColor: "rgba(26, 143, 227, 0.1)",
                             borderColor: "rgba(26, 143, 227, 1)",
                             }, {
                             data: outside_feels_like,
                             borderWidth: 2,
-                            backgroundColor: "rgba(6, 167, 125, 0.1)",
                             borderColor: "rgba(6, 167, 125, 1)",
                             }]
                         },
@@ -79,6 +76,9 @@
                                 "xAxes": [{
                                     "type": "time"
                                 }]
+                            },
+                            animation: {
+                                duration: 0
                             }
                         }
                     });
