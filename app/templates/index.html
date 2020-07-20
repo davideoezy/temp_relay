@@ -18,10 +18,75 @@
 
     <script type="text/javascript">
 
+        function createChart() {
+
+            let inside_temp = [];
+            let outside_temp = [];
+            let outside_feels_like = [];
+
+            ctx = document.getElementById("chart_div");
+        
+            myChart = new Chart(ctx, {
+                type: "line",
+                data: {
+                    datasets: [{
+                    data: inside_temp,
+                    borderWidth: 2,
+                    borderColor: "salmon",
+                    pointRadius: 0,
+                    fill: false
+                    }, {
+                    data: outside_temp,
+                    borderWidth: 2,
+                    borderColor: "LightSkyBlue",
+                    pointRadius: 0,
+                    fill: false
+                    }, {
+                    data: outside_feels_like,
+                    borderWidth: 2,
+                    borderColor: "whitesmoke",
+                    pointRadius: 0,
+                    fill:false
+                    }]
+                },
+
+                options: {
+                    scales: {
+                        xAxes: [{
+                            type: "time",
+                            time: {
+                                unit: 'hour'
+                            },
+                            gridLines : {
+                                display : false
+                            },
+                            ticks: {
+                                fontColor: 'whitesmoke'
+                            }
+                        }],
+                        yAxes: [{
+                            gridLines: { 
+                                color: "dimgray" 
+                            },
+                            ticks: {
+                                fontColor: 'whitesmoke'
+                            }
+                        }]
+                    },
+                    legend: {
+                        display: false
+                    },
+                    animation: {
+                        duration: 0
+                    }
+                }
+            });
+        }
+
+
         function updateChart() {
 
-
-            const url_chart = '/temps';
+            let url_chart = '/temps';
 
             function logResult(result) {
                 console.log(result);
@@ -42,74 +107,42 @@
                 return response.json();
             }
 
+            function update(data) {
+                let inside_temp = data.inside_temp;
+                let outside_temp = data.outside_temp;
+                let outside_feels_like = data.outside_feels_like;
+
+                chartData = [{
+                    data: inside_temp,
+                    borderWidth: 2,
+                    borderColor: "salmon",
+                    pointRadius: 0,
+                    fill: false
+                    }, {
+                    data: outside_temp,
+                    borderWidth: 2,
+                    borderColor: "LightSkyBlue",
+                    pointRadius: 0,
+                    fill: false
+                    }, {
+                    data: outside_feels_like,
+                    borderWidth: 2,
+                    borderColor: "whitesmoke",
+                    pointRadius: 0,
+                    fill:false
+                    }];
+
+                myChart.data.datasets[0].data = chartData
+
+                myChart.update();
+
+            };
+
             function fetchJSON(pathToResource) {
                 fetch(pathToResource) // 1
                 .then(validateResponse) // 2
                 .then(readResponseAsJSON)
-                .then(data => {
-                    let inside_temp = data.inside_temp;
-                    let outside_temp = data.outside_temp;
-                    let outside_feels_like = data.outside_feels_like;
-
-                    let ctx = document.getElementById("chart_div");
-                
-                    let myChart = new Chart(ctx, {
-                        type: "line",
-                        data: {
-                            datasets: [{
-                            data: inside_temp,
-                            borderWidth: 2,
-                            borderColor: "salmon",
-                            pointRadius: 0,
-                            fill: false
-                            }, {
-                            data: outside_temp,
-                            borderWidth: 2,
-                            borderColor: "LightSkyBlue",
-                            pointRadius: 0,
-                            fill: false
-                            }, {
-                            data: outside_feels_like,
-                            borderWidth: 2,
-                            borderColor: "whitesmoke",
-                            pointRadius: 0,
-                            fill:false
-                            }]
-                        },
-
-                        options: {
-                            scales: {
-                                xAxes: [{
-                                    type: "time",
-                                    time: {
-                                        unit: 'hour'
-                                    },
-                                    gridLines : {
-                                        display : false
-                                    },
-                                    ticks: {
-                                        fontColor: 'whitesmoke'
-                                    }
-                                }],
-                                yAxes: [{
-                                    gridLines: { 
-                                        color: "dimgray" 
-                                    },
-                                    ticks: {
-                                        fontColor: 'whitesmoke'
-                                    }
-                                }]
-                            },
-                            legend: {
-                                display: false
-                            },
-                            animation: {
-                                duration: 0
-                            }
-                        }
-                    });
-                })
-                //.then(logResult)
+                .then(chartData)
                 .catch(logError);
             }
 
@@ -227,7 +260,7 @@
             });
 
             get_updates();
-            updateChart();
+            createChart();
 
             window.setInterval(function () {
 
