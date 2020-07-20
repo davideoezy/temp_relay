@@ -107,7 +107,7 @@
                 return response.json();
             }
 
-            function update(data) {
+            function renderChart(data) {
                 let inside_temp = data.inside_temp;
                 let outside_temp = data.outside_temp;
                 let outside_feels_like = data.outside_feels_like;
@@ -147,7 +147,7 @@
                 fetch(pathToResource) // 1
                 .then(validateResponse) // 2
                 .then(readResponseAsJSON)
-                .then(chartData)
+                .then(renderChart)
                 .catch(logError);
             }
 
