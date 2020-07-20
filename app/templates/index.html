@@ -107,39 +107,41 @@
                 return response.json();
             }
 
-            function renderChart(data) {
-                let inside_temp = data.inside_temp;
-                let outside_temp = data.outside_temp;
-                let outside_feels_like = data.outside_feels_like;
+            function renderChart(input_data) {
+                // let inside_temp = data.inside_temp;
+                // let outside_temp = data.outside_temp;
+                // let outside_feels_like = data.outside_feels_like;
 
-                let chartData = [{
-                    data: inside_temp,
-                    borderWidth: 2,
-                    borderColor: "salmon",
-                    pointRadius: 0,
-                    fill: false
-                    }, {
-                    data: outside_temp,
-                    borderWidth: 2,
-                    borderColor: "LightSkyBlue",
-                    pointRadius: 0,
-                    fill: false
-                    }, {
-                    data: outside_feels_like,
-                    borderWidth: 2,
-                    borderColor: "whitesmoke",
-                    pointRadius: 0,
-                    fill:false
-                    }];
+                // let chartData = [{
+                //     data: inside_temp,
+                //     borderWidth: 2,
+                //     borderColor: "salmon",
+                //     pointRadius: 0,
+                //     fill: false
+                //     }, {
+                //     data: outside_temp,
+                //     borderWidth: 2,
+                //     borderColor: "LightSkyBlue",
+                //     pointRadius: 0,
+                //     fill: false
+                //     }, {
+                //     data: outside_feels_like,
+                //     borderWidth: 2,
+                //     borderColor: "whitesmoke",
+                //     pointRadius: 0,
+                //     fill:false
+                //     }];
 
-                myChart.data.datasets[0].data = chartData
+                myChart.data.datasets[0].data[0] = input_data.inside_temp;
+                myChart.data.datasets[0].data[1] = input_data.outside_temp;
+                myChart.data.datasets[0].data[2] = input_data.outside_feels_like;
 
                 myChart.update();
                 
-                chartData = null;
-                inside_temp = null;
-                outside_temp = null;
-                outside_feels_like = null;
+                // chartData = null;
+                // inside_temp = null;
+                // outside_temp = null;
+                // outside_feels_like = null;
 
             };
 
