@@ -137,6 +137,8 @@
                 myChart.data.datasets[0].data[2] = input_data.outside_feels_like;
 
                 myChart.update();
+
+                console.log(myChart.data.datasets)
                 
                 // chartData = null;
                 // inside_temp = null;
@@ -268,6 +270,7 @@
 
             get_updates();
             createChart();
+            updateChart();
 
             window.setInterval(function () {
 
