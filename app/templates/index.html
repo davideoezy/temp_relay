@@ -108,42 +108,13 @@
             }
 
             function renderChart(input_data) {
-                // let inside_temp = data.inside_temp;
-                // let outside_temp = data.outside_temp;
-                // let outside_feels_like = data.outside_feels_like;
 
-                // let chartData = [{
-                //     data: inside_temp,
-                //     borderWidth: 2,
-                //     borderColor: "salmon",
-                //     pointRadius: 0,
-                //     fill: false
-                //     }, {
-                //     data: outside_temp,
-                //     borderWidth: 2,
-                //     borderColor: "LightSkyBlue",
-                //     pointRadius: 0,
-                //     fill: false
-                //     }, {
-                //     data: outside_feels_like,
-                //     borderWidth: 2,
-                //     borderColor: "whitesmoke",
-                //     pointRadius: 0,
-                //     fill:false
-                //     }];
 
                 myChart.data.datasets[0].data = input_data.inside_temp;
                 myChart.data.datasets[1].data = input_data.outside_temp;
                 myChart.data.datasets[2].data = input_data.outside_feels_like;
 
                 myChart.update();
-
-                console.log(myChart.data.datasets)
-                
-                // chartData = null;
-                // inside_temp = null;
-                // outside_temp = null;
-                // outside_feels_like = null;
 
             };
 
