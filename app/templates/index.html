@@ -132,9 +132,9 @@
                 //     fill:false
                 //     }];
 
-                myChart.data.datasets[0].data[0] = input_data.inside_temp;
-                myChart.data.datasets[0].data[1] = input_data.outside_temp;
-                myChart.data.datasets[0].data[2] = input_data.outside_feels_like;
+                myChart.data.datasets[0].data = input_data.inside_temp;
+                myChart.data.datasets[1].data = input_data.outside_temp;
+                myChart.data.datasets[2].data = input_data.outside_feels_like;
 
                 myChart.update();
 
