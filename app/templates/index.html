@@ -112,7 +112,7 @@
                 let outside_temp = data.outside_temp;
                 let outside_feels_like = data.outside_feels_like;
 
-                chartData = [{
+                let chartData = [{
                     data: inside_temp,
                     borderWidth: 2,
                     borderColor: "salmon",
@@ -135,6 +135,11 @@
                 myChart.data.datasets[0].data = chartData
 
                 myChart.update();
+                
+                chartData = null;
+                inside_temp = null;
+                outside_temp = null;
+                outside_feels_like = null;
 
             };
 
