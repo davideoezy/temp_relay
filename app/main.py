@@ -1,7 +1,8 @@
 from flask import Flask, request, session, g, redirect, url_for, abort, render_template, \
     flash, jsonify
 from db_helper import db_helper
-import gviz_api
+#import gviz_api
+import json
 
 db_helper = db_helper()
 
@@ -28,22 +29,40 @@ def index():
 def update():
     return webpage_helper(jsonify, 'update')
 
+@app.route("/inside_temp")
+def inside_temp_data():
+    inside_temp = db_helper.get_inside_temp_chartjs()
+
+    inside_temp_json = json.dumps(inside_temp)
+    return inside_temp_json
+
+@app.route("/outside_temp")
+def outside_temp_data():
+    outside_temp = db_helper.get_outside_temp_chartjs()
+
+    outside_temp_json = json.dumps(outside_temp)
+    return outside_temp_json
+
+@app.route("/outside_feels_like")
+def outside_feels_like_data():
+    outside_feels_like = db_helper.get_outside_feels_like_chartjs()
+
+    outside_feels_like_json = json.dumps(outside_feels_like)
+    return outside_feels_like_json
+
 @app.route("/temps")
 def temp_data():
-    temps = db_helper.get_temps()
-    
+    inside_temp = db_helper.get_inside_temp_chartjs()
+    outside_temp = db_helper.get_outside_temp_chartjs()
+    outside_feels_like = db_helper.get_outside_feels_like_chartjs()
+    temps = {
+        'inside_temp': inside_temp,
+        'outside_temp': outside_temp,
+        'outside_feels_like': outside_feels_like
+    }
 
-    temps_desc = {"time": ("datetime", "Timestamp"),
-                "temp": ("number", "Inside Temperature"),
-                "air_temp": ("number", "Outside Temperature"),
-                "feels_like": ("number", "Feels Like")}
-
-    data_table_temp = gviz_api.DataTable(temps_desc)
-    data_table_temp.LoadData(temps)
-
-    return data_table_temp.ToJSon(columns_order=("time", "temp", "air_temp", "feels_like"),
-                                           order_by="time")
-
+    temps_json = json.dumps(temps)
+    return temps_json
 
 
 # take a function and gather necessary data for the web ui, then call the function

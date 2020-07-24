@@ -13,92 +13,126 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
         integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.min.js"></script>
 
     <script type="text/javascript">
 
-        google.charts.load('current', { 'packages': ['corechart'] });
-        google.charts.setOnLoadCallback(drawChart);
+        function createChart() {
 
-        function drawChart() {
-            
-            if (typeof chart != "undefined" ) {
-                chart.clearChart();
-                chart = null;
-            } else {
-                let chart = null;
+            let inside_temp = [];
+            let outside_temp = [];
+            let outside_feels_like = [];
+
+            ctx = document.getElementById("chart_div");
+        
+            myChart = new Chart(ctx, {
+                type: "line",
+                data: {
+                    datasets: [{
+                    data: inside_temp,
+                    borderWidth: 2,
+                    borderColor: "salmon",
+                    pointRadius: 0,
+                    fill: false,
+                    lineTension: 0.3
+                    }, {
+                    data: outside_temp,
+                    borderWidth: 2,
+                    borderColor: "LightSkyBlue",
+                    pointRadius: 0,
+                    fill: false,
+                    lineTension: 0.3
+                    }, {
+                    data: outside_feels_like,
+                    borderWidth: 2,
+                    borderColor: "whitesmoke",
+                    pointRadius: 0,
+                    fill:false,
+                    lineTension: 0.3
+                    }]
+                },
+
+                options: {
+                    scales: {
+                        xAxes: [{
+                            type: "time",
+                            time: {
+                                unit: 'hour'
+                            },
+                            gridLines : {
+                                display : false
+                            },
+                            ticks: {
+                                fontColor: 'whitesmoke'
+                            }
+                        }],
+                        yAxes: [{
+                            gridLines: { 
+                                color: "dimgray" 
+                            },
+                            ticks: {
+                                fontColor: 'whitesmoke'
+                            }
+                        }]
+                    },
+                    legend: {
+                        display: false
+                    },
+                    animation: {
+                        duration: 0
+                    }
+                }
+            });
+        }
+
+
+        function updateChart() {
+
+            let url_chart = '/temps';
+
+            function logResult(result) {
+                console.log(result);
             }
 
-            let Http_chart = null;
-            Http_chart = new XMLHttpRequest();
-            const url_chart = '/temps';
-            Http_chart.responseType = 'json';
-            Http_chart.open("GET", url_chart);
-            Http_chart.send();
-            Http_chart.onload = function () {
-                
-                let jsonData = null;
-                let data = null;
-                let options = null;
+            function logError(error) {
+                console.log('Looks like there was a problem: \n', error);
+            }  
 
-
-                if (Http_chart.readyState === 4 && Http_chart.status === 200) {
-                    jsonData = Http_chart.response;
+            function validateResponse(response) {
+                if (!response.ok) {
+                    throw Error(response.statusText);
                 }
+                return response;
+            }
 
-                data = new google.visualization.DataTable(jsonData);
-                
-                chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+            function readResponseAsJSON(response) {
+                return response.json();
+            }
 
-                options = {
-                    curveType: 'function',
-                    animation: {
-                        startup: true
-                    },
-                    width: 550,
-                    height: 345,
-                    theme: 'material',
-                    interpolateNulls: true,
-                    hAxis:
-                    {
-                        gridlines: {
-                            color: 'transparent'
-                        },
-                        textStyle: {
-                            color: "dimgray"
-                        }
-                    },
-                    vAxis: {
-                        gridlines: {
-                            color: 'dimgray'
-                        },
-                        minorGridlines: {
-                            color: 'transparent'
-                        },
-                        textStyle: {
-                            color: "white"
-                        },
-                        viewWindowMode: 'pretty'
-                    },
-                    chartArea: { left: 20, top: 20, width: "85%", height: "80%" },
-                    legend: { position: 'none' },
-                    backgroundColor: '#343a40',
-                    series: {
-                        0: { color: 'salmon' },
-                        1: { color: 'LightSkyBlue' },
-                        2: { color: 'Aquamarine' }
-                    },
-                    lineWidth: [6, 4, 4]
+            function renderChart(input_data) {
 
-                };
 
-                  chart.draw(data, options);
+                myChart.data.datasets[0].data = input_data.inside_temp;
+                myChart.data.datasets[1].data = input_data.outside_temp;
+                myChart.data.datasets[2].data = input_data.outside_feels_like;
+
+                myChart.update();
 
             };
+
+            function fetchJSON(pathToResource) {
+                fetch(pathToResource) // 1
+                .then(validateResponse) // 2
+                .then(readResponseAsJSON)
+                .then(renderChart)
+                .catch(logError);
+            }
+
+            fetchJSON(url_chart);
         };
 
-
-                    
+     
 
 
         function ChangeTemperature(amount) {
@@ -204,13 +238,13 @@
 
         $(document).ready(function () {
 
-
-
             $('#heatSwitch').click(function () {
                 SubmitTargets();
             });
 
             get_updates();
+            createChart();
+            updateChart();
 
             window.setInterval(function () {
 
@@ -218,7 +252,7 @@
             }, 10000);
 
             window.setInterval(function () {
-                 drawChart();
+                 updateChart();
             }, 30000);
 
         });
@@ -318,12 +352,12 @@
                         <h1 class="temps outside" id="outsideTemperature">{{ outside_temp }}&deg;</h1>
 
                             <br>
-                            <p class="h5 temp-headings">Feels Like</p>
-                            <h2 class="temps" id="feelsLike">{{ feels_like }}&deg;</h2>
+                            <p class="h5 temp-headings feels_like">Feels Like</p>
+                            <h2 class="temps feels_like" id="feelsLike">{{ feels_like }}&deg;</h2>
                 </div>
-                <div class="col-10 col-md-9">
+                <div class="col-10 col-md-9" id ="chartContainer">
 
-                    <div id="chart_div"></div>
+                    <canvas id="chart_div" width="550" height="345"></canvas>
                 </div>
 
             </div>
@@ -332,6 +366,10 @@
 </body>
 
 <style>
+.chart-container {
+    width: 550px;
+    height:345px
+}
 .form-control-temp {
     font-size: 350%;
     background-color: #343a40;
@@ -379,6 +417,10 @@
     color: LightSkyBlue;
 }
 
+.feels_like {
+    color: whitesmoke;
+}
+
 .modeButton {
     width: 50px;
     height: 50px;
@@ -418,7 +460,7 @@ hr.divider {
   display: inline-block;
   width: 60px;
   height: 34px;
-  float:center;
+  float: center;
 }
 
 /* Hide default HTML checkbox */
