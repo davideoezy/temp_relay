@@ -15,7 +15,7 @@ NightOff = datetime.time(22, 30)
 
 server_address = "192.168.0.10"
 
-topic_temp = "home/inside/sensor/CurrentTemp"
+topic_temp = "home/inside/sensor/lounge"
 
 topic_anybody_home = "home/inside/sensor/presence"
 
@@ -53,7 +53,7 @@ def on_message(client, userdata, msg):
 
     
     if topic == topic_temp:
-        CurrentTemp = jsonData["CurrentTemp"]
+        CurrentTemp = jsonData["temperature"]
 
     elif topic == topic_anybody_home:
         somebody_home = jsonData["somebody_home"]
