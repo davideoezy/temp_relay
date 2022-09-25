@@ -68,7 +68,7 @@ class db_helper():
         statement = """
                     select CurrentTemp as temp 
                     from sensor
-                    where "sensor_measurements" = 'home/inside/sensor/CurrentTemp' 
+                    where "sensor_measurements" = 'home/inside/sensor/lounge' 
                     order by time DESC
                     limit 1
                     """
