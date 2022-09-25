@@ -66,7 +66,7 @@ class db_helper():
         client.switch_database('home')
 
         statement = """
-                    select CurrentTemp as temp 
+                    select temperature as temp 
                     from sensor
                     where "sensor_measurements" = 'home/inside/sensor/lounge' 
                     order by time DESC
