@@ -199,10 +199,11 @@ class db_helper():
         client.switch_database('home')
 
         statement1 = """
-                    select mean(CurrentTemp) as temp 
+                    select mean(temperature) as temp 
                     into temp
                     from sensor 
-                    where CurrentTemp > 0 
+                    where temperature > 0
+                    and "sensor_measurements" = 'home/inside/sensor/lounge' 
                     and time > now() - 4h
                     group by time(1m)
                     tz('Australia/Melbourne')
@@ -248,9 +249,10 @@ class db_helper():
         client.switch_database('home')
         
         statement = """
-                    select mean(CurrentTemp) as y 
+                    select mean(temperature) as y 
                     from sensor 
                     where CurrentTemp > 0 
+                    and "sensor_measurements" = 'home/inside/sensor/lounge'
                     and time > now() - 4h
                     group by time(1m)
                     tz('Australia/Melbourne')
