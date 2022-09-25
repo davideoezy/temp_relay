@@ -251,7 +251,7 @@ class db_helper():
         statement = """
                     select mean(temperature) as y 
                     from sensor 
-                    where CurrentTemp > 0 
+                    where temperature > 0 
                     and "sensor_measurements" = 'home/inside/sensor/lounge'
                     and time > now() - 4h
                     group by time(1m)
