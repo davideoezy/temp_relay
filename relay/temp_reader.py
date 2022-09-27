@@ -12,7 +12,7 @@ import subprocess
 
 device_label = 'RPi_heat_switch'
 wifi_interface = "wlan0"
-db_host = '192.168.0.10'
+db_host = '192.168.0.115'
 db_host_port = '3306'
 db_user = 'rpi'
 db_pass = 'warm_me'

@@ -7,7 +7,7 @@ from datetime import datetime
 relay = LED(17)
 location = "heater_relay"
 
-server_address = "192.168.0.10"
+server_address = "192.168.0.115"
 
 mqtt_helper = mqtt_helper(location)
 

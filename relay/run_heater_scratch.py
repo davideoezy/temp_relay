@@ -3,7 +3,7 @@ import paho.mqtt.client as mqtt
 import json
 from datetime import datetime
 
-server_address = "192.168.0.10"
+server_address = "192.168.0.115"
 location = "test"
 
 mqtt_helper = mqtt_helper(location)
