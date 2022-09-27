@@ -13,7 +13,7 @@ mqtt_helper = mqtt_helper(location)
 MorningOn = datetime.time(6, 00)
 NightOff = datetime.time(22, 30)
 
-server_address = "192.168.0.10"
+server_address = "192.168.0.115"
 
 topic_temp = "home/inside/sensor/lounge"
 
