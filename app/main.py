@@ -8,14 +8,30 @@ import json
 
 db_helper = db_helper()
 
+def on_message(client, userdata, message):
+	global TargetTemp
+    global pwr
+	msg = json.loads(message.payload.decode())
+    TargetTemp = round(float(msg["TargetTemp"]),0)
+    pwr = msg["power"]
+ 
+broker_address="192.168.0.115"
+
+client = mqtt.Client("heater_control") 
+client.on_message=on_message #attach function to callback
+client.connect(broker_address) #connect to broker
+client.loop_start() #start the loop
+
+client.subscribe("home/inside/control/heater_control")
+
 app = Flask(__name__)
 
 # prepare method to call when / is navigated to
 @app.route("/", methods=['GET', 'POST'])
 def index():
     if request.args.get("power") is not None and request.args.get("temperature"):
-        power = request.args.get("power")
-        temperature = round(float(request.args.get("temperature")),0)
+        power = pwr
+        temperature = TargetTemp
         #db_helper.insert_control_settings(temperature=temperature, power=power)
 
     if 'POST' == request.method:
@@ -77,11 +93,11 @@ def temp_data():
 # with the gathered data an an input and return the result
 def webpage_helper(function, type):
 # get current settings and house temperature
-    current = db_helper.get_control_settings() # influx
+#    current = db_helper.get_control_settings() # influx
     currentTemperature = round(float(db_helper.get_inside_temp()),1) # influx
     heatRunning = db_helper.get_heat_indicator() # influx
-    currentTarget = int(current[0]['TargetTemp']) 
-    power = current[0]['power']
+    currentTarget = TargetTemp 
+    power = pwr
     outside = db_helper.get_outside_temp() # influx
     outside_temp = int(outside['temperature'])
     feels_like = int(outside['feels_like'])
