@@ -129,4 +129,4 @@ def webpage_helper(function, type):
 
 
 if __name__ == "__main__":
-    app.run('0.0.0.0', port='8600')
+    app.run('0.0.0.0', port='8500')
