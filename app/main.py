@@ -8,9 +8,10 @@ import json
 
 db_helper = db_helper()
 
+TargetTemp = 20
+pwr = 0
+
 def on_message(client, userdata, message):
-	global TargetTemp
-    global pwr
 	msg = json.loads(message.payload.decode())
     TargetTemp = round(float(msg["TargetTemp"]),0)
     pwr = msg["power"]
