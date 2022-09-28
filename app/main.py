@@ -8,6 +8,9 @@ import json
 
 db_helper = db_helper()
 
+pwr = 0
+TargetTemp = 20
+
 def on_message(client, userdata, message):
     global TargetTemp
     global pwr
@@ -29,6 +32,8 @@ app = Flask(__name__)
 # prepare method to call when / is navigated to
 @app.route("/", methods=['GET', 'POST'])
 def index():
+    global pwr
+    global TargetTemp
     if request.args.get("power") is not None and request.args.get("temperature"):
         power = pwr
         temperature = TargetTemp
@@ -37,11 +42,11 @@ def index():
     if 'POST' == request.method:
         data = request.form
         power = data["power"]
-        temperature = round(float(data["temperature"]),0)
+        TargetTemp = round(float(data["temperature"]),0)
 
         #db_helper.insert_control_settings(temperature=temperature, power = power)
         #mqtt_helper.publish_controls(temperature,power)
-        control_msg = json.dumps({"power":power, "TargetTemp": temperature})
+        control_msg = json.dumps({"power":power, "TargetTemp": TargetTemp})
 
         client = mqtt.Client("heater_control")
         client.connect("192.168.0.115", keepalive=60)
@@ -92,6 +97,8 @@ def temp_data():
 # take a function and gather necessary data for the web ui, then call the function
 # with the gathered data an an input and return the result
 def webpage_helper(function, type):
+    global pwr
+    global TargetTemp
 # get current settings and house temperature
 #    current = db_helper.get_control_settings() # influx
     currentTemperature = round(float(db_helper.get_inside_temp()),1) # influx
@@ -122,4 +129,4 @@ def webpage_helper(function, type):
 
 
 if __name__ == "__main__":
-    app.run('0.0.0.0', port='8500')
+    app.run('0.0.0.0', port='8600')
