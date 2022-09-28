@@ -1,4 +1,4 @@
-FROM tiangolo/meinheld-gunicorn-flask:python3.7
+FROM tiangolo/meinheld-gunicorn-flask:latest
 COPY requirements.txt /tmp 
 WORKDIR /tmp 
 ARG TZ=Australia/Melbourne

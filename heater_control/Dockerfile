@@ -1,4 +1,4 @@
-FROM jfloff/alpine-python:3.6-onbuild 
+FROM ubuntu:latest
 COPY requirements.txt /tmp 
 WORKDIR /tmp 
 RUN apk add --update tzdata
