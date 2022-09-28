@@ -1,4 +1,4 @@
-import mysql.connector as mariadb
+import mariadb
 import datetime
 from influxdb import InfluxDBClient
 import tzlocal
