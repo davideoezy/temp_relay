@@ -71,7 +71,7 @@ def temp_data():
 # with the gathered data an an input and return the result
 def webpage_helper(function, type):
 # get current settings and house temperature
-    current = db_helper.get_control_settings() # mariadb
+    current = db_helper.get_control_settings() # influx
     currentTemperature = round(float(db_helper.get_inside_temp()),1) # influx
     heatRunning = db_helper.get_heat_indicator() # influx
     currentTarget = int(current[0]['TargetTemp']) 

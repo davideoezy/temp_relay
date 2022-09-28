@@ -1,4 +1,4 @@
-import mariadb
+#import mariadb
 import datetime
 from influxdb import InfluxDBClient
 import tzlocal
@@ -13,51 +13,51 @@ import time
 class db_helper():
     def __init__(self):
         self.db_host = '192.168.0.115'
-        self.db_host_port = '3316'
+        # self.db_host_port = '3316'
         self.influx_port = '8086'
         self.db_user = 'rpi'
         self.db_pass = 'warm_me'
         self.db = 'temp_logger'
         self.local_timezone = tzlocal.get_localzone()
 
-    def db_data(self, n_variables, statement, default):
+    # def db_data(self, n_variables, statement, default):
 
-        con = mariadb.connect(host=self.db_host, port=self.db_host_port, user=self.db_user,
-                              password=self.db_pass, database=self.db)
-        cur = con.cursor()
+    #     con = mariadb.connect(host=self.db_host, port=self.db_host_port, user=self.db_user,
+    #                           password=self.db_pass, database=self.db)
+    #     cur = con.cursor()
 
-        cur.execute(statement)
+    #     cur.execute(statement)
 
-        if n_variables == 1:
-            output = default
+    #     if n_variables == 1:
+    #         output = default
 
-            for row in cur:
-                output = row[0]
+    #         for row in cur:
+    #             output = row[0]
             
-            return output
+    #         return output
 
-        elif n_variables > 1:
-            output = [default] * n_variables
+    #     elif n_variables > 1:
+    #         output = [default] * n_variables
 
-            for row in cur:
-                output = row
+    #         for row in cur:
+    #             output = row
 
-            return output
+    #         return output
     
-    def insert_db_data(self, statement):
+    # def insert_db_data(self, statement):
 
-        con = mariadb.connect(host=self.db_host, port=self.db_host_port, user=self.db_user,
-                              password=self.db_pass, database=self.db)
-        cur = con.cursor()
+    #     con = mariadb.connect(host=self.db_host, port=self.db_host_port, user=self.db_user,
+    #                           password=self.db_pass, database=self.db)
+    #     cur = con.cursor()
 
-        try:
-            cur.execute(statement)
-            con.commit()
-        except:
-            con.rollback()
-        con.close()
+    #     try:
+    #         cur.execute(statement)
+    #         con.commit()
+    #     except:
+    #         con.rollback()
+    #     con.close()
 
-        return
+    #     return
 
     def get_inside_temp(self):
 ### new - influx
@@ -202,17 +202,17 @@ class db_helper():
 
         # return self.db_data(n_variables = n_variables, statement = statement, default = default)
 
-    def insert_control_settings(self, temperature, power):
-        statement = """
-                    INSERT into heater_controls
-                    (temp_setting,
-                    power)
-                    VALUES
-                    ({},{})""".format(temperature, power)
+    # def insert_control_settings(self, temperature, power):
+    #     statement = """
+    #                 INSERT into heater_controls
+    #                 (temp_setting,
+    #                 power)
+    #                 VALUES
+    #                 ({},{})""".format(temperature, power)
         
-        self.insert_db_data(statement)
+    #     self.insert_db_data(statement)
 
-        return
+    #     return
 
     def get_temps(self):
         client = InfluxDBClient(host=self.db_host, port=self.influx_port)
@@ -336,33 +336,33 @@ class db_helper():
         return outside_feels_like
 
 
-    def get_outside_temps(self):
-        statement = """
-                SELECT
-                UNIX_TIMESTAMP(ts) as time,
-                air_temp,
-                apparent_t as feels_like
-                FROM outside_conditions
-                where ts > DATE_SUB(now(), INTERVAL 12 hour)
-                ORDER BY ts ASC
-                """
+    # def get_outside_temps(self):
+    #     statement = """
+    #             SELECT
+    #             UNIX_TIMESTAMP(ts) as time,
+    #             air_temp,
+    #             apparent_t as feels_like
+    #             FROM outside_conditions
+    #             where ts > DATE_SUB(now(), INTERVAL 12 hour)
+    #             ORDER BY ts ASC
+    #             """
 
-        con = mariadb.connect(host=self.db_host, port=self.db_host_port, user=self.db_user,
-                            password=self.db_pass, database=self.db)
-        cur = con.cursor()
+    #     con = mariadb.connect(host=self.db_host, port=self.db_host_port, user=self.db_user,
+    #                         password=self.db_pass, database=self.db)
+    #     cur = con.cursor()
 
-        cur.execute(statement)
+    #     cur.execute(statement)
 
-        outside = []
-        for row in cur:
-            unix_timestamp = row[0]
-            local_time = datetime.datetime.fromtimestamp(
-                unix_timestamp, self.local_timezone)
+    #     outside = []
+    #     for row in cur:
+    #         unix_timestamp = row[0]
+    #         local_time = datetime.datetime.fromtimestamp(
+    #             unix_timestamp, self.local_timezone)
 
-            outs = {
-                'ts': local_time,
-                'air_temp': row[1],
-                'feels_like': row[2]}
-            outside.append(outs)
-        return outside
+    #         outs = {
+    #             'ts': local_time,
+    #             'air_temp': row[1],
+    #             'feels_like': row[2]}
+    #         outside.append(outs)
+    #     return outside
 
