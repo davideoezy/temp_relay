@@ -7,7 +7,7 @@ location = "heater_controls"
 mqtt_helper = mqtt_helper(location)
 db_helper = db_helper()
 
-topic_heater_controls = "home/inside/heater_control"
+topic_heater_controls = "home/inside/control/heater_control"
 
 while True:
 
