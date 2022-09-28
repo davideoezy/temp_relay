@@ -8,6 +8,9 @@ import json
 
 db_helper = db_helper()
 
+pwr = 0
+TargetTemp = 20
+
 def on_message(client, userdata, message):
     global TargetTemp
     global pwr
@@ -29,6 +32,8 @@ app = Flask(__name__)
 # prepare method to call when / is navigated to
 @app.route("/", methods=['GET', 'POST'])
 def index():
+    global pwr
+    global TargetTemp
     if request.args.get("power") is not None and request.args.get("temperature"):
         power = pwr
         temperature = TargetTemp
@@ -37,11 +42,11 @@ def index():
     if 'POST' == request.method:
         data = request.form
         power = data["power"]
-        temperature = round(float(data["temperature"]),0)
+        TargetTemp = round(float(data["temperature"]),0)
 
         #db_helper.insert_control_settings(temperature=temperature, power = power)
         #mqtt_helper.publish_controls(temperature,power)
-        control_msg = json.dumps({"power":power, "TargetTemp": temperature})
+        control_msg = json.dumps({"power":power, "TargetTemp": TargetTemp})
 
         client = mqtt.Client("heater_control")
         client.connect("192.168.0.115", keepalive=60)
