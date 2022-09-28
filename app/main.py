@@ -8,8 +8,10 @@ import json
 
 db_helper = db_helper()
 
-pwr = 0
-TargetTemp = 20
+if pwr is None:
+    pwr = 0
+if TargetTemp is None:
+    TargetTemp = 20
 
 def on_message(client, userdata, message):
     global TargetTemp
