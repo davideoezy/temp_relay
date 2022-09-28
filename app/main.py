@@ -41,12 +41,12 @@ def index():
 
     if 'POST' == request.method:
         data = request.form
-        power = data["power"]
+        pwr = data["power"]
         TargetTemp = round(float(data["temperature"]),0)
 
         #db_helper.insert_control_settings(temperature=temperature, power = power)
         #mqtt_helper.publish_controls(temperature,power)
-        control_msg = json.dumps({"power":power, "TargetTemp": TargetTemp})
+        control_msg = json.dumps({"power":pwr, "TargetTemp": TargetTemp})
 
         client = mqtt.Client("heater_control")
         client.connect("192.168.0.115", keepalive=60)
