@@ -131,21 +131,42 @@ class db_helper():
         # return self.db_data(n_variables=n_variables, statement=statement, default=default)
 
 
-
     def get_control_settings(self):
-        n_variables = 2
+### new - influx
+        client = InfluxDBClient(host=self.db_host, port=self.influx_port)
+
+        client.switch_database('home')
+
         statement = """
-                    SELECT
-                    temp_setting,
-                    power
-                    FROM heater_controls 
-                    ORDER BY ts DESC
-                    limit 1
-                    """
+            SELECT
+            TargetTemp,
+            power
+            FROM controls
+            where control_parameter = 'home/inside/control/heater_control'
+            ORDER BY time DESC
+            limit 1
+            """
 
-        default = 0
+        response = client.query(statement)
 
-        return self.db_data(n_variables = n_variables, statement = statement, default = default)
+        controls = next(iter(response))
+        
+        return controls
+
+    # def get_control_settings(self):
+    #     n_variables = 2
+    #     statement = """
+    #                 SELECT
+    #                 temp_setting,
+    #                 power
+    #                 FROM heater_controls 
+    #                 ORDER BY ts DESC
+    #                 limit 1
+    #                 """
+
+    #     default = 0
+
+    #     return self.db_data(n_variables = n_variables, statement = statement, default = default)
 
     def get_heat_indicator(self):
 ### new - influx
