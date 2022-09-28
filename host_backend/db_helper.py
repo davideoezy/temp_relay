@@ -1,4 +1,4 @@
-import mysql.connector as mariadb
+import mariadb
 
 ####### TO_DO ########
 
@@ -9,7 +9,7 @@ import mysql.connector as mariadb
 class db_helper():
     def __init__(self):
         self.db_host = '192.168.0.115'
-        self.db_host_port = '3306'
+        self.db_host_port = '3316'
         self.db_user = 'rpi'
         self.db_pass = 'warm_me'
         self.db = 'temp_logger'
