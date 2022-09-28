@@ -4,7 +4,7 @@ WORKDIR /tmp
 RUN apk add --update tzdata
 ENV TZ=Australia/Melbourne
 RUN pip install --upgrade pip
-RUN apt install libmariadb3 libmariadb-dev
+RUN apt update && apt install -y libmariadb3 libmariadb-dev && rm -rf /var/lib/apt/lists/*
 RUN pip install -r requirements.txt
 WORKDIR /.
 COPY . /
