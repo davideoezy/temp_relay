@@ -127,23 +127,44 @@ class db_helper():
 
         # return self.db_data(n_variables=n_variables, statement=statement, default=default)
 
-
-
     def get_control_settings(self):
-        n_variables = 2
+### new - influx
+        client = InfluxDBClient(host=self.db_host, port=self.influx_port)
+
+        client.switch_database('home')
+
         statement = """
-                    SELECT
-                    temp_setting,
-                    power
-                    FROM heater_controls 
-                    ORDER BY ts DESC
-                    limit 1
-                    """
+            SELECT
+            TargetTemp,
+            power
+            FROM controls
+            where control_parameter = 'home/inside/control/heater_control'
+            ORDER BY time DESC
+            limit 1
+            """
 
-        default = 0
+        response = client.query(statement)
 
-        return self.db_data(n_variables = n_variables, statement = statement, default = default)
+        controls = next(iter(response))
+        
+        return controls
+# 
+#     def get_control_settings(self):
+#         #n_variables = 2
+#         statement = """
+#                     SELECT
+#                     TargetTemp,
+#                     power
+#                     FROM controls
+#                     where control_parameter = 'home/inside/control/heater_control'
+#                     ORDER BY ts DESC
+#                     limit 1
+#                     """
 
+#         default = 0
+
+#         return self.db_data(n_variables = n_variables, statement = statement, default = default)
+ 
     def get_heat_indicator(self):
 ### new - influx
         client = InfluxDBClient(host=self.db_host, port=self.influx_port)
@@ -178,17 +199,17 @@ class db_helper():
 
         # return self.db_data(n_variables = n_variables, statement = statement, default = default)
 
-    def insert_control_settings(self, temperature, power):
-        statement = """
-                    INSERT into heater_controls
-                    (temp_setting,
-                    power)
-                    VALUES
-                    ({},{})""".format(temperature, power)
+    # def insert_control_settings(self, temperature, power):
+    #     statement = """
+    #                 INSERT into heater_controls
+    #                 (temp_setting,
+    #                 power)
+    #                 VALUES
+    #                 ({},{})""".format(temperature, power)
         
-        self.insert_db_data(statement)
+    #     self.insert_db_data(statement)
 
-        return
+    #     return
 
     def get_temps(self):
         client = InfluxDBClient(host=self.db_host, port=self.influx_port)

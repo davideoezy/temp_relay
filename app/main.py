@@ -1,6 +1,7 @@
 from flask import Flask, request, session, g, redirect, url_for, abort, render_template, \
     flash, jsonify
 from db_helper import db_helper
+from mqtt_helper import mqtt_helper
 #import gviz_api
 import json
 
@@ -21,7 +22,8 @@ def index():
         power = data["power"]
         temperature = round(float(data["temperature"]),0)
 
-        db_helper.insert_control_settings(temperature=temperature, power = power)
+        #db_helper.insert_control_settings(temperature=temperature, power = power)
+        mqtt_helper.publish_controls(temperature,power)
 
     return webpage_helper(render_template, 'request')
 
@@ -72,8 +74,8 @@ def webpage_helper(function, type):
     current = db_helper.get_control_settings() # mariadb
     currentTemperature = round(float(db_helper.get_inside_temp()),1) # influx
     heatRunning = db_helper.get_heat_indicator() # influx
-    currentTarget = int(current[0]) 
-    power = current[1]
+    currentTarget = int(current[0]['TargetTemp']) 
+    power = current[0]['power']
     outside = db_helper.get_outside_temp() # influx
     outside_temp = int(outside['temperature'])
     feels_like = int(outside['feels_like'])
