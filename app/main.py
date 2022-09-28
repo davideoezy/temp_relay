@@ -97,6 +97,8 @@ def temp_data():
 # take a function and gather necessary data for the web ui, then call the function
 # with the gathered data an an input and return the result
 def webpage_helper(function, type):
+    global pwr
+    global TargetTemp
 # get current settings and house temperature
 #    current = db_helper.get_control_settings() # influx
     currentTemperature = round(float(db_helper.get_inside_temp()),1) # influx
