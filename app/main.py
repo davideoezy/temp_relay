@@ -27,7 +27,7 @@ def index():
         #mqtt_helper.publish_controls(temperature,power)
         control_msg = json.dumps({"power":power, "TargetTemp": temperature})
 
-        client = mqtt.Client(heater_control)
+        client = mqtt.Client("heater_control")
         client.connect("192.168.0.115", keepalive=60)
         client.publish("home/inside/control/heater_control", payload = control_msg, qos = 0, retain = True)
 
