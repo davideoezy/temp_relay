@@ -19,7 +19,7 @@ topic_temp = "home/inside/sensor/lounge"
 
 topic_anybody_home = "home/inside/sensor/presence"
 
-topic_heater_controls = "home/inside/heater_control"
+topic_heater_controls = "home/inside/control/heater_control"
 
 topic_run_heater = "home/inside/control/heater"
 
