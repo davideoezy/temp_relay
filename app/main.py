@@ -2,6 +2,7 @@ from flask import Flask, request, session, g, redirect, url_for, abort, render_t
     flash, jsonify
 from db_helper import db_helper
 from mqtt_helper import mqtt_helper
+import mqtt
 #import gviz_api
 import json
 
@@ -24,6 +25,11 @@ def index():
 
         #db_helper.insert_control_settings(temperature=temperature, power = power)
         mqtt_helper.publish_controls(temperature,power)
+        control_msg = json.dumps({"power":power, "TargetTemp": temperature})
+
+        client = mqtt.Client(heater_control)
+        client.connect("192.168.0.115", keepalive=60)
+        client.publish("home/inside/control/heater_control", payload = control_msg, qos = 0, retain = True)
 
     return webpage_helper(render_template, 'request')
 
