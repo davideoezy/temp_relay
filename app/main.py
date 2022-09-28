@@ -2,7 +2,7 @@ from flask import Flask, request, session, g, redirect, url_for, abort, render_t
     flash, jsonify
 from db_helper import db_helper
 from mqtt_helper import mqtt_helper
-import mqtt
+import paho.mqtt.client as mqtt
 #import gviz_api
 import json
 
