@@ -1,4 +1,4 @@
-mariadb
+#mariadb
 flask
 gviz_api
 tzlocal
