@@ -21,8 +21,7 @@ class db_helper():
 
     def db_data(self, n_variables, statement, default):
 
-        con = mariadb.connect(host=self.db_host, port=self.db_host_port, user=self.db_user,
-                              password=self.db_pass, database=self.db)
+        con = mariadb.connect(host=self.db_host, port=self.db_host_port, user=self.db_user,password=self.db_pass, database=self.db)
         cur = con.cursor()
 
         cur.execute(statement)
@@ -45,8 +44,7 @@ class db_helper():
     
     def insert_db_data(self, statement):
 
-        con = mariadb.connect(host=self.db_host, port=self.db_host_port, user=self.db_user,
-                              password=self.db_pass, database=self.db)
+        con = mariadb.connect(host=self.db_host, port=self.db_host_port, user=self.db_user, password=self.db_pass, database=self.db)
         cur = con.cursor()
 
         try:
