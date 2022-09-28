@@ -24,7 +24,7 @@ def index():
         temperature = round(float(data["temperature"]),0)
 
         #db_helper.insert_control_settings(temperature=temperature, power = power)
-        mqtt_helper.publish_controls(temperature,power)
+        #mqtt_helper.publish_controls(temperature,power)
         control_msg = json.dumps({"power":power, "TargetTemp": temperature})
 
         client = mqtt.Client(heater_control)
