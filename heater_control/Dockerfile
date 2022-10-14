@@ -5,7 +5,7 @@ WORKDIR /tmp
 ENV TZ=Australia/Melbourne
 RUN apt update && apt install -y libmariadb3 libmariadb-dev python-pip && rm -rf /var/lib/apt/lists/*
 #RUN pip install --upgrade pip
-RUN pip3 install -r requirements.txt
+RUN python3 -m pip install -r requirements.txt
 WORKDIR /.
 COPY . /
 
