@@ -1,7 +1,7 @@
 FROM ubuntu:latest
 COPY requirements.txt /tmp 
 WORKDIR /tmp 
-RUN apk add --update tzdata
+#RUN apt add --update tzdata
 ENV TZ=Australia/Melbourne
 RUN apt update && apt install -y libmariadb3 libmariadb-dev python-pip && rm -rf /var/lib/apt/lists/*
 RUN pip install --upgrade pip
