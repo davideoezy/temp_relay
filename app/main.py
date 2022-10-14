@@ -18,7 +18,7 @@ def on_message(client, userdata, message):
     TargetTemp = round(float(msg["TargetTemp"]),0)
     pwr = msg["power"]
  
-broker_address="192.168.0.115"
+broker_address="192.168.0.10"
 
 client = mqtt.Client("heater_control") 
 client.on_message=on_message #attach function to callback
@@ -49,7 +49,7 @@ def index():
         control_msg = json.dumps({"power":pwr, "TargetTemp": TargetTemp})
 
         client = mqtt.Client("heater_control")
-        client.connect("192.168.0.115", keepalive=60)
+        client.connect("192.168.0.10", keepalive=60)
         client.publish("home/inside/control/heater_control", payload = control_msg, qos = 0, retain = True)
 
     return webpage_helper(render_template, 'request')
