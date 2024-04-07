@@ -2,4 +2,4 @@ mysql-connector-python
 arpreq
 gviz_api
 tzlocal
-paho-mqtt
+paho-mqtt<2.0.0

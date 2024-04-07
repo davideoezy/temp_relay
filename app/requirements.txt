@@ -3,4 +3,4 @@ flask
 gviz_api
 tzlocal
 influxdb
-paho-mqtt
+paho-mqtt<2.0.0
