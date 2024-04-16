@@ -68,7 +68,7 @@ class db_helper():
         statement = """
                     select temperature as temp 
                     from sensor
-                    where "sensor_measurements" = 'home/inside/sensor/lounge' 
+                    where "sensor_measurements" = 'zigbee2mqtt/sensor/temp_sensor_lounge' 
                     order by time DESC
                     limit 1
                     """
@@ -224,7 +224,7 @@ class db_helper():
                     into temp
                     from sensor 
                     where temperature > 0
-                    and "sensor_measurements" = 'home/inside/sensor/lounge' 
+                    and "sensor_measurements" = 'zigbee2mqtt/sensor/temp_sensor_lounge' 
                     and time > now() - 4h
                     group by time(1m)
                     tz('Australia/Melbourne')
@@ -273,7 +273,7 @@ class db_helper():
                     select mean(temperature) as y 
                     from sensor 
                     where temperature > 0 
-                    and "sensor_measurements" = 'home/inside/sensor/lounge'
+                    and "sensor_measurements" = 'zigbee2mqtt/sensor/temp_sensor_lounge'
                     and time > now() - 4h
                     group by time(1m)
                     tz('Australia/Melbourne')

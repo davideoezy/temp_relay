@@ -15,7 +15,7 @@ NightOff = datetime.time(22, 30)
 
 server_address = "192.168.0.10"
 
-topic_temp = "zigbee2mqtt/temp_sensor_lounge"
+topic_temp = "zigbee2mqtt/sensor/temp_sensor_lounge"
 
 topic_anybody_home = "home/inside/sensor/presence"
 
